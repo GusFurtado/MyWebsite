@@ -1,0 +1,3687 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	
+		<title>DAB - Documentação</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="styles/dab_styles.css">
+		
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/dab_icons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/dab_icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/dab_icons/favicon-16x16.png">
+		<link rel="manifest" href="assets/dab_icons/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#ffc40d">
+		<meta name="theme-color" content="#ffffff">
+			
+	</head>
+	
+	<body class=SvgBackground>
+	
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style='background-color:#002776'>
+			<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+				<a class="navbar-brand" href="https://www.gustavofurtado.com/dab.html">
+					<img src="assets/dab_nav_brand.png" height="48" alt="">
+				</a>
+			</div>
+
+			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="https://www.gustavofurtado.com/dab.html#modulos">Módulos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://www.gustavofurtado.com/doc.html">Documentação</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Contribua</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	
+		<div class='container Text dark' id=SessaoDocumentacao style='margin-top: 100px; background-color: white; padding: 30px'>
+
+			<p class='Title azul'>Documentação</p>
+			<p>Dados Abertos Brasil é uma iniciativa para facilitar o acesso a dados abertos e APIs do governo brasileiro.</p>
+			<p>É um pacote open-source para Python e Pandas e a forma mais simples de acessar dados de instituições como IGBE, IPEA , etc.</p>
+			<p>Atualmente o pacote Dados Abertos Brasil possui quatro módulos:</p>
+
+			<ul>
+				<li>DadosAbertosBrasil.<a href="#SessaoIBGE">ibge</a></li>
+				<li>DadosAbertosBrasil.<a href="#SessaoIPEA">ipea</a></li>
+				<li>DadosAbertosBrasil.<a href="#SessaoCamara">camara</a></li>
+				<li>DadosAbertosBrasil.<a href="#SessaoFavoritos">favoritos</a></li>
+			</ul>
+			
+			<p><strong><em>Dependências:</em></strong></p>
+			<ul>
+				<li><a href="https://pandas.pydata.org/">pandas</a></li>
+				<li><a href="https://requests.readthedocs.io/en/master/">requests</a></li>
+			</ul>
+			
+			<p><strong><em>Licença:</em></strong></p>
+			<ul>
+				<li><a href="https://github.com/GusFurtado/DadosAbertosBrasil/blob/master/LICENSE.txt">MIT</a></li>
+			</ul>
+
+		</div>
+		
+		<div class='container Text dark' id=SessaoIBGE style='margin-top: 30px; background-color: white; padding: 30px'>
+
+			<p class='Title'>DadosAbertosBrasil.<strong class='verde'>ibge</strong></p>
+			<p>Módulo para captura dos dados abertos das APIs do IBGE.</p>
+			<ul>
+				<li>ibge.<a href="#IBGEnomes">nomes</a></li>
+				<li>ibge.<a href="#IBGEnomesuf">nomes_uf</a></li>
+				<li>ibge.<a href="#IBGEnomesranking">nomes_ranking</a></li>
+				<li>ibge.<a href="#IBGElocalidades">localidades</a></li>
+				<li>ibge.<a href="#IBGEmalha">malha</a></li>
+				<li>ibge.<a href="#IBGEpopulacao">populacao</a></li>
+				<li><a href="#Sidra">SIDRA</a>
+					<ul>
+						<li>ibge.<a href="#IBGEAgregados">Agregados</a></li>
+						<li>ibge.<a href="#IBGEMetadados">Metadados</a></li>
+						<li>ibge.<a href="#IBGEreferencias">referencias</a></li>
+						<li>ibge.<a href="#IBGESidra">Sidra</a></li>
+					</ul>
+				</li>
+			</ul>
+			<p>Importe o módulo com <code>from DadosAbertosBrasil import ibge</code></p>
+
+			<hr>
+
+			<p class='SubTitle' id=IBGEnomes>def DadosAbertosBrasil.ibge.<strong class='verde'>nomes</strong> (<em>nomes, sexo=None, localidade=None</em>)</h3>
+			<p>Obtém a frequência de nascimentos por década para o(s) nome(s) consultado(s).</p>
+			<p><strong><em>Parâmetros:</em></strong></p>
+			
+			<ul>
+				<li><strong>nomes:</strong> string ou lista de strings</li>
+			</ul>
+			<p>Nome(s) que se deseja pesquisar</p>
+			
+			<ul>
+				<li><strong>sexo:</strong> (Opcional) <code>&#39;M&#39;</code> ou <code>&#39;F&#39;</code></li>
+			</ul>
+			<p><code>&#39;M&#39;</code> se deseja pesquisar apenas por ocorrências do sexo masculino e <code>&#39;F&#39;</code> se deseja pesquisar apenas por ocorrências do sexo feminino.</p>
+
+			<ul>
+				<li><strong>localidade:</strong> (Opcional) int</li>
+			</ul>
+			<p>Código da localidade que se deseja limitar a pesquisa.</p>
+			<p>Utilizar a função <code>ibge.localidades()</code> para consultar os códigos das localidades.</p>
+			<p><strong><em>Retorna:</em></strong></p>
+
+			<ul>
+				<li><strong>pandas.DataFrame</strong>, onde cada column é um dos nomes pesquisados e cada row é uma década.</li>
+			</ul>
+
+			<p><strong><em>Exemplos:</em></strong></p>
+			<p>Pesquisar pela frequência de nascimento de Maria e Ana:</p>
+			<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.nomes([<span class="PyString">'Maria'</span>, <span class="PyString">'Ana'</span>])</code></pre>
+			
+			<div class='table-responsive'><table class='table'>
+				<thead>
+					<tr>
+						<th style="text-align:left"></th>
+						<th style="text-align:right">PERIODO</th>
+						<th style="text-align:right">ANA</th>
+						<th style="text-align:right">MARIA</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align:left">0</td>
+						<td style="text-align:right">1930</td>
+						<td style="text-align:right">33395</td>
+						<td style="text-align:right">336477</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">1</td>
+						<td style="text-align:right">1930,1940</td>
+						<td style="text-align:right">56160</td>
+						<td style="text-align:right">749053</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">2</td>
+						<td style="text-align:right">1940,1950</td>
+						<td style="text-align:right">101259</td>
+						<td style="text-align:right">1487042</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">3</td>
+						<td style="text-align:right">1950,1960</td>
+						<td style="text-align:right">183941</td>
+						<td style="text-align:right">2476482</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">4</td>
+						<td style="text-align:right">1960,1970</td>
+						<td style="text-align:right">292835</td>
+						<td style="text-align:right">2495491</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">5</td>
+						<td style="text-align:right">1970,1980</td>
+						<td style="text-align:right">421531</td>
+						<td style="text-align:right">1616019</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">6</td>
+						<td style="text-align:right">1980,1990</td>
+						<td style="text-align:right">529266</td>
+						<td style="text-align:right">917968</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">7</td>
+						<td style="text-align:right">1990,2000</td>
+						<td style="text-align:right">536302</td>
+						<td style="text-align:right">544296</td>
+					</tr>
+					<tr>
+						<td style="text-align:left">8</td>
+						<td style="text-align:right">2000,2010</td>
+						<td style="text-align:right">935169</td>
+						<td style="text-align:right">1111301</td>
+					</tr>
+				</tbody>
+			</table></div>
+			<p>Pesquisar pela frequência de nascimentos de Maria no estado de São Paulo (código 35):</p>
+			<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.nomes(<span class="PyString">'Maria'</span>, localidade=<span class="PyNumber">35</span>)</code></pre>
+			<div class='table-responsive'><table class='table'>
+			<thead>
+			<tr>
+			<th style="text-align:left"></th>
+			<th style="text-align:right">PERIODO</th>
+			<th style="text-align:right">ANA</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td style="text-align:left">0</td>
+			<td style="text-align:right">1930</td>
+			<td style="text-align:right">65218</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">1</td>
+			<td style="text-align:right">1930,1940</td>
+			<td style="text-align:right">150588</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">2</td>
+			<td style="text-align:right">1940,1950</td>
+			<td style="text-align:right">313277</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">3</td>
+			<td style="text-align:right">1950,1960</td>
+			<td style="text-align:right">541950</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">4</td>
+			<td style="text-align:right">1960,1970</td>
+			<td style="text-align:right">487742</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">5</td>
+			<td style="text-align:right">1970,1980</td>
+			<td style="text-align:right">252657</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">6</td>
+			<td style="text-align:right">1980,1990</td>
+			<td style="text-align:right">105600</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">7</td>
+			<td style="text-align:right">1990,2000</td>
+			<td style="text-align:right">48444</td>
+			</tr>
+			<tr>
+			<td style="text-align:left">8</td>
+			<td style="text-align:right">2000,2010</td>
+			<td style="text-align:right">177756</td>
+			</tr>
+			</tbody>
+			</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Nomes-nomeGet">https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Nomes-nomeGet</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEnomesuf>def DadosAbertosBrasil.ibge.<strong class='verde'>nomes_uf</strong> (<em>nome</em>)</p>
+<p>Obtém a frequência de nascimentos por UF para o nome consultado</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>nome:</strong> string</li>
+</ul>
+<p>Nome que se deseja pesquisar</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, onde cada row é uma localidade (UF).</li>
+</ul>
+<p>Contém três columns: Frequência de nascimento do nome pesquisado, população total da localidade e proporção de nascimentos por 100.000 habitantes.</p>
+<p>Utilizar a função <code>ibge.localidades()</code> para consultar os códigos das localidades.</p>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pela frequência de nascimento de Maria por UF:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.nomes_uf(<span class="PyString">'Maria'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">localidade</th>
+<th style="text-align:right">frequencia</th>
+<th style="text-align:right">populacao</th>
+<th style="text-align:right">proporcao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:right">72579</td>
+<td style="text-align:right">1562409</td>
+<td style="text-align:right">4645.33</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:right">63172</td>
+<td style="text-align:right">733559</td>
+<td style="text-align:right">8611.71</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:right">173034</td>
+<td style="text-align:right">3483985</td>
+<td style="text-align:right">4966.55</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:right">20848</td>
+<td style="text-align:right">450479</td>
+<td style="text-align:right">4627.96</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:right">472891</td>
+<td style="text-align:right">7581051</td>
+<td style="text-align:right">6237.80</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Nomes-nomeGet">https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Nomes-nomeGet</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEnomesranking>def DadosAbertosBrasil.ibge.<strong class='verde'>nomes_ranking</strong> (<em>decada=None, sexo=None, localidade=None</em>)</p>
+<p>Obtém o ranking dos nomes segundo a frequência de nascimentos por década</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>decada:</strong> (Opcional) int</li>
+</ul>
+<p>Década que se deseja limitar a pesquisa de nascimentos.</p>
+<p>Deve estar no formato <em>AAAA</em>, sendo múltiplo de 10.</p>
+<p><em>Exemplos: 1930, 1980, 2000...</em></p>
+<ul>
+<li><strong>sexo:</strong> (Opcional) <code>&#39;M&#39;</code> ou <code>&#39;F&#39;</code></li>
+</ul>
+<p><code>&#39;M&#39;</code> se deseja pesquisar apenas por ocorrências do sexo masculino e <code>&#39;F&#39;</code> se deseja pesquisar apenas por ocorrências do sexo feminino.</p>
+<ul>
+<li><strong>localidade:</strong> (Opcional) int</li>
+</ul>
+<p>Código da localidade que se deseja limitar a pesquisa.</p>
+<p>Utilizar a função <code>ibge.localidades()</code> para consultar os códigos das localidades.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, com rows de 1 a 20 representando a posição no ranking.</li>
+</ul>
+<p>Uma column para os nomes e uma para a frequência de nascimentos.</p>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar por nomes masculino com maior frequência de nascimentos no estado de São Paulo (código 35) na década de 1990:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.nomes_ranking(decada=<span class="PyNumber">1990</span>, sexo=<span class="PyString">'M'</span>, localidade=<span class="PyNumber">35</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">ranking</th>
+<th style="text-align:right">frequencia</th>
+<th style="text-align:right">nome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">97066</td>
+<td style="text-align:right">JOSE</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">86175</td>
+<td style="text-align:right">RODRIGO</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">83805</td>
+<td style="text-align:right">RAFAEL</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">64731</td>
+<td style="text-align:right">FABIO</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:right">64642</td>
+<td style="text-align:right">LEANDRO</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Ranking-rankingGet">https://servicodados.ibge.gov.br/api/docs/censos/nomes?versao=2#api-Ranking-rankingGet</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGElocalidades>def DadosAbertosBrasil.ibge.<strong class='verde'>localidades</strong> ()</p>
+<p>Obtém o conjunto de distritos do Brasil.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li>Nenhum</li>
+</ul>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo todos distritos, municípios, microrregiões, mesorregiões, UFs e regiões do Brasil.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisa completa por todos os distritos:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.localidades()
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/localidades?versao=1">https://servicodados.ibge.gov.br/api/docs/localidades?versao=1</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEmalha>def DadosAbertosBrasil.ibge.<strong class='verde'>malha</strong> (<em>localidade=&#39;&#39;</em>)</p>
+<p>Obtém a URL para a malha referente ao identificador da localidade.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>localidade:</strong> (Opcional) int</li>
+</ul>
+<p>Código da localidade que se deseja pesquisar. Caso omitido, assume o valor Brasil.</p>
+<p>Utilizar a função <code>ibge.localidades()</code> para consultar os códigos das localidades.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>url</strong> (string) para um arquivo .svg do mapa da região pesquisada.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pela malha referente a região Sudeste (código 3):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.malha(<span class="PyNumber">3</span>)
+<span class="PyString">'https://servicodados.ibge.gov.br/api/v2/malhas/3'</span>
+</code></pre>
+<p>Pesquisar pela malha referente ao estado do Rio de Janeiro (código 33):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.malha(<span class="PyNumber">33</span>)
+<span class="PyString">'https://servicodados.ibge.gov.br/api/v2/malhas/33'</span>
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/malhas?versao=2">https://servicodados.ibge.gov.br/api/docs/malhas?versao=2</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEpopulacao>def DadosAbertosBrasil.ibge.<strong class='verde'>populacao</strong> (<em>projecao=None, localidade=None</em>)</p>
+<p>Obtém a URL para a malha referente ao identificador da localidade.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>projecao:</strong> (Opcional) <code>&#39;populacao&#39;</code>, <code>&#39;nascimento&#39;</code> ou <code>&#39;obito&#39;</code>.</li>
+</ul>
+<p>Define que variável pesquisar. Se omitido, obtém um dictionary com todos os valores.</p>
+<ul>
+<li><strong>localidade:</strong> (Opcional) int</li>
+</ul>
+<p>Código da localidade que se deseja pesquisar. Caso omitido, assume o valor Brasil.</p>
+<p>Utilizar a função <code>ibge.localidades()</code> para consultar os códigos das localidades.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>dict</strong>, caso o campo &#39;projecao&#39; seja omitido.</li>
+<li><strong>int</strong>, contendo um valor estimado para população, nascimentos ou óbitos, caso o campo &#39;projecao&#39; tenha um valor válido.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pela população total estimada do Brasil:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.populacao(projecao=<span class="PyString">'populacao'</span>)
+<span class="PyNumber">211406467</span>
+</code></pre>
+<p>Pesquisar pela quantidade estimada de óbitos por ano no estado de São Paulo (código 35):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.populacao(projecao=<span class="PyString">'obito'</span>, localidade=<span class="PyNumber">35</span>)
+<span class="PyNumber">45000</span>
+</code></pre>
+<p>Pesquisar pelos dados de nascimento, óbitos e projeção populacional para o estado do Rio de Janeiro:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; ibge.populacao(localidade=<span class="PyNumber">33</span>)
+{<span class="PyString">'localidade'</span>: <span class="PyString">'33'</span>,
+ <span class="PyString">'horario'</span>: <span class="PyString">'19/04/2020 19:18:18'</span>,
+ <span class="PyString">'projecao'</span>: {<span class="PyString">'populacao'</span>: <span class="PyNumber">17342454</span>,
+  <span class="PyString">'periodoMedio'</span>: {<span class="PyString">'incrementoPopulacional'</span>: <span class="PyNumber">317367</span>,
+   <span class="PyString">'nascimento'</span>: <span class="PyNumber">12000</span>,
+   <span class="PyString">'obito'</span>: <span class="PyNumber">45000</span>}}}
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/projecoes?versao=1">https://servicodados.ibge.gov.br/api/docs/projecoes?versao=1</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEcoordenadas>def DadosAbertosBrasil.ibge.<strong class='verde'>coordenadas</strong> ()</h3>
+<p>Obtém as coordenadas de todas as localidades brasileiras.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong> contendo latitude, longitude e altitude de bairros, distritos e povoados brasileiros.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pelas coordenadas de todos os setores de Joinville:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> l = ibge.coordenadas()
+<span class="PyMeta">&gt;&gt;&gt;</span> l[l.NM_MUNICIPIO == <span class="PyString">'JOINVILLE'</span>]
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">GM_PONTO</th>
+<th style="text-align:right">ID</th>
+<th style="text-align:right">CD_GEOCODIGO</th>
+<th style="text-align:right">TIPO</th>
+<th style="text-align:right">CD_GEOCODBA</th>
+<th style="text-align:right">NM_BAIRRO</th>
+<th style="text-align:right">CD_GEOCODSD</th>
+<th style="text-align:right">NM_SUBDISTRITO</th>
+<th style="text-align:right">CD_GEOCODDS</th>
+<th style="text-align:right">NM_DISTRITO</th>
+<th style="text-align:right">...</th>
+<th style="text-align:right">NM_MESO</th>
+<th style="text-align:right">NM_UF</th>
+<th style="text-align:right">CD_NIVEL</th>
+<th style="text-align:right">CD_CATEGORIA</th>
+<th style="text-align:right">NM_CATEGORIA</th>
+<th style="text-align:right">NM_LOCALIDADE</th>
+<th style="text-align:right">LONG</th>
+<th style="text-align:right">LAT</th>
+<th style="text-align:right">ALT</th>
+<th style="text-align:right">GM_PONTO_sk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">18796</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18797</td>
+<td style="text-align:right">420910205000001</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Centro</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">CIDADE</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">-48.849409</td>
+<td style="text-align:right">-26.304518</td>
+<td style="text-align:right">10.296596</td>
+<td style="text-align:right">1J6SeWA.76m-</td>
+</tr>
+<tr>
+<td style="text-align:left">18797</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18798</td>
+<td style="text-align:right">420910205000488</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Espinheiros</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">AUI</td>
+<td style="text-align:right">ESPINHEIROS</td>
+<td style="text-align:right">-48.799454</td>
+<td style="text-align:right">-26.217098</td>
+<td style="text-align:right">4.518122</td>
+<td style="text-align:right">1J6SeU*vQ:X-</td>
+</tr>
+<tr>
+<td style="text-align:left">18798</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18799</td>
+<td style="text-align:right">420910205000490</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Vila Cubatão</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">AUI</td>
+<td style="text-align:right">VILA CUBATÃO</td>
+<td style="text-align:right">-48.770058</td>
+<td style="text-align:right">-26.281902</td>
+<td style="text-align:right">14.757318</td>
+<td style="text-align:right">1J6SeUwSrXDp</td>
+</tr>
+<tr>
+<td style="text-align:left">18799</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18800</td>
+<td style="text-align:right">420910205000498</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Morro do Meio</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">AUI</td>
+<td style="text-align:right">MORRO DO MEIO</td>
+<td style="text-align:right">-48.897157</td>
+<td style="text-align:right">-26.332775</td>
+<td style="text-align:right">17.335947</td>
+<td style="text-align:right">1J6Sevu.:L6f</td>
+</tr>
+<tr>
+<td style="text-align:left">18800</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18801</td>
+<td style="text-align:right">420910205000506</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Jardim Paraíso</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">AUI</td>
+<td style="text-align:right">JARDIM PARAÍSO</td>
+<td style="text-align:right">-48.808627</td>
+<td style="text-align:right">-26.217094</td>
+<td style="text-align:right">5.828033</td>
+<td style="text-align:right">1J6SeU)vR6j&gt;</td>
+</tr>
+<tr>
+<td style="text-align:left">18801</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18802</td>
+<td style="text-align:right">420910205000543</td>
+<td style="text-align:right">RURAL</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">POVOADO</td>
+<td style="text-align:right">MORRO DO AMARAL</td>
+<td style="text-align:right">-48.776351</td>
+<td style="text-align:right">-26.304859</td>
+<td style="text-align:right">3.824058</td>
+<td style="text-align:right">1J6SeYA,]ecp</td>
+</tr>
+<tr>
+<td style="text-align:left">18802</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18803</td>
+<td style="text-align:right">420910205000739</td>
+<td style="text-align:right">RURAL</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">42091020500</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910205</td>
+<td style="text-align:right">JOINVILLE</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">POVOADO</td>
+<td style="text-align:right">VIGORELLI</td>
+<td style="text-align:right">-48.766511</td>
+<td style="text-align:right">-26.224330</td>
+<td style="text-align:right">1.000000</td>
+<td style="text-align:right">1J6SeU4grE+f</td>
+</tr>
+<tr>
+<td style="text-align:left">18803</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18804</td>
+<td style="text-align:right">420910210000001</td>
+<td style="text-align:right">URBANO</td>
+<td style="text-align:right">4.209102e+11</td>
+<td style="text-align:right">Pirabeiraba</td>
+<td style="text-align:right">42091021000</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910210</td>
+<td style="text-align:right">PIRABEIRABA</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">VILA</td>
+<td style="text-align:right">PIRABEIRABA</td>
+<td style="text-align:right">-48.908392</td>
+<td style="text-align:right">-26.206492</td>
+<td style="text-align:right">25.135213</td>
+<td style="text-align:right">1J6SeQXucW^-</td>
+</tr>
+<tr>
+<td style="text-align:left">18804</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18805</td>
+<td style="text-align:right">420910210000034</td>
+<td style="text-align:right">RURAL</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">42091021000</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910210</td>
+<td style="text-align:right">PIRABEIRABA</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">POVOADO</td>
+<td style="text-align:right">ESTRADA DO OESTE 1</td>
+<td style="text-align:right">-48.880583</td>
+<td style="text-align:right">-26.193152</td>
+<td style="text-align:right">20.269465</td>
+<td style="text-align:right">1J6SeRlD;LYf</td>
+</tr>
+<tr>
+<td style="text-align:left">18805</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">18806</td>
+<td style="text-align:right">420910210000036</td>
+<td style="text-align:right">RURAL</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">42091021000</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">420910210</td>
+<td style="text-align:right">PIRABEIRABA</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">NORTE CATARINENSE</td>
+<td style="text-align:right">SANTA CATARINA</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right">POVOADO</td>
+<td style="text-align:right">ESTRADA DO OESTE 2</td>
+<td style="text-align:right">-48.880570</td>
+<td style="text-align:right">-26.195625</td>
+<td style="text-align:right">22.273426</td>
+<td style="text-align:right">1J6SeRlT@jKp</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p>ftp://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/localidades/</p>
+
+<hr>
+
+<p class='Title' id=Sidra><strong>SIDRA</strong></p>
+<p>O SIDRA (Sistema IBGE de Recuperação Automática) permite consultar todo catalogo de dados armazenados no Banco de Tabelas Estatísticas do IBGE.</p>
+<p>Por ser um sistema completo e robusto, foram desenvolvidos os seguintes objetos para facilitar a consulta:</p>
+<ul>
+<li>ibge.<a href="#IBGEAgregados">Agregados</a></li>
+<li>ibge.<a href="#IBGEMetadados">Metadados</a></li>
+<li>ibge.<a href="#IBGEreferencias">referencias</a></li>
+<li>ibge.<a href="#IBGESidra">Sidra</a></li>
+</ul>
+<p>Utilize a seguinte metodologia para encontrar a tabela (agregado) que procura:</p>
+<ol>
+<li>Estude a <a href="https://sidra.ibge.gov.br/home/ipca/brasil">aplicação oficial</a> e/ou o <a href="https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-bq">Query Builder</a> do SIDRA para entender o sistema;</li>
+<li>Crie um objeto<code>ibge.Agregados</code> que contém o catálogo completo de pesquisas e agregados;</li>
+<li>Filtre o objeto <code>.Agregados</code> utilizando o método <code>.filtrar</code> para facilitar a busca pela agregado desejado;</li>
+<li>Com o código do agregado em mãos, crie um objeto <code>ibge.Metadados</code> inserindo o código do agregado como parâmetro;</li>
+<li>Explore os atributos do seu objeto <code>.Metadados</code> para identificar as variáveis, classificações e outros parâmetros necessários para sua pesquisa no SIDRA;</li>
+<li>Crie um objeto <code>ibge.Sidra</code>. Ele funcionará como o <a href="https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-bq">Query Builder</a>.</li>
+<li>Insira os parâmetros identificados pelo <code>.Metadados</code> no seu objeto <code>.Sidra</code> através dos argumentos <code>.__init__</code> ou retroalimentando os atributos do objeto.</li>
+<li>Chame o método <code>.rodar</code> para obter a série de dados.</li>
+</ol>
+
+<hr>
+
+<p class='SubTitle' id=IBGEAgregados>class DadosAbertosBrasil.ibge.<strong class='verde'>Agregados</strong> (<em>index=False</em>)</p>
+<p>Obtém o conjunto de agregados, agrupados pelas respectivas pesquisas.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do agregado como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p><strong><em>Atributos:</em></strong></p>
+<ul>
+<li><strong>.dados</strong></li>
+</ul>
+<p>Exibe um DataFrame dos agregados agrupados por pesquisa.</p>
+<ul>
+<li><strong>.pesquisas</strong></li>
+</ul>
+<p>Exibe um DataFrame das lista de pesquisas realizadas.</p>
+<p><strong><em>Métodos:</em></strong></p>
+<ul>
+<li><strong>.filtrar(pesquisa=None, contendo=None, excluindo=None)</strong></li>
+</ul>
+<p>Filtra o DataFrame de <code>.dados</code>.</p>
+<ul>
+<li><p>Parâmetros:</p>
+<ul>
+<li><p><strong>pesquisa:</strong> (Opcional) string
+Código de duas letras maiúsculas representando a pesquisa realizada.
+Utilize esse campo para retornar apenas os agregados desta pesquisa.
+Utilize o atributo <code>.pesquisas</code> para obter as referências das pesquisas.</p>
+</li>
+<li><p><strong>contendo:</strong> (Opcional) string
+Obtenha apenas agregados que contenham este parâmetro no nome.</p>
+</li>
+<li><p><strong>excluindo:</strong> (Opcional) string
+Filtre agregados que contenham esse parâmetro no nome.</p>
+</li>
+</ul>
+</li>
+<li><p>Retorna:</p>
+<ul>
+<li><strong>DataFrame</strong>, com os filtros aplicados no DataFrame de <code>.dados</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter todos os agregados, com o código do agregado como index do DataFrame:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> agreg = ibge.Agregados(index=True)
+<span class="PyMeta">&gt;&gt;&gt;</span> agreg.dados
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">agregado_id</th>
+<th style="text-align:right">agregado_nome</th>
+<th style="text-align:right">pesquisa_id</th>
+<th style="text-align:right">pesquisa_nome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">Receita operacional líquida e subvenções das e...</td>
+<td style="text-align:right">PY</td>
+<td style="text-align:right">Pesquisa Anual de Serviços</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">População ocupada de 15 anos e mais por setor ...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">População ocupada de 15 anos e mais por posiçã...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">Taxa de desemprego aberto - semana por sexo (s...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:right">Taxa de desemprego aberto - semana por setor d...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter lista de pesquisas realizadas:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> agreg = ibge.Agregados()
+<span class="PyMeta">&gt;&gt;&gt;</span> agreg.pesquisas
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">pesquisa_id</th>
+<th style="text-align:right">pesquisa_nome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">CL</td>
+<td style="text-align:right">Cadastro Central de Empresas</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">CA</td>
+<td style="text-align:right">Censo Agropecuário</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">ME</td>
+<td style="text-align:right">Censo Comum do Mercosul, Bolívia e Chile</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">CD</td>
+<td style="text-align:right">Censo Demográfico</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">CM</td>
+<td style="text-align:right">Contagem da População</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter agregados da Pesquisa Mensal de Empregos (PE) contendo a palavra &#39;desemprego&#39; no título:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> agreg = ibge.Agregados()
+<span class="PyMeta">&gt;&gt;&gt;</span> agreg.filtrar(pesquisa=<span class="PyString">'PE'</span>, contendo=<span class="PyString">'desemprego'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">agregado_id</th>
+<th style="text-align:right">agregado_nome</th>
+<th style="text-align:right">pesquisa_id</th>
+<th style="text-align:right">pesquisa_nome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">Taxa de desemprego aberto - semana por sexo (s...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:right">Taxa de desemprego aberto - semana por setor d...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:right">Taxa de desemprego aberto - semana (série ence...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:right">Taxa de desemprego aberto - 30 dias (série enc...</td>
+<td style="text-align:right">PE</td>
+<td style="text-align:right">Pesquisa Mensal de Emprego</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/agregados?versao=3">https://servicodados.ibge.gov.br/api/docs/agregados?versao=3</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEMetadados>class DadosAbertosBrasil.ibge.<strong class='verde'>Metadados</strong> (<em>agregado</em>)</p>
+<p>Obtém os metadados do agregado pesquisado.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>agregado:</strong> int</li>
+</ul>
+<p>Código do agregado que se deseja consultar.</p>
+<p>Utilize <code>ibge.Agregados</code> para encontrar o código do agregado desejado.</p>
+<p><strong><em>Atributos:</em></strong></p>
+<ul>
+<li><strong>.dados:</strong></li>
+</ul>
+<p>Obtém um dictionary com todos os metadados do agregado pesquisado.</p>
+<ul>
+<li><strong>.id:</strong></li>
+</ul>
+<p>Obtém o id do agregado pesquisado.</p>
+<ul>
+<li><strong>.nome:</strong></li>
+</ul>
+<p>Obtém no nome completo do agregado pesquisado.</p>
+<ul>
+<li><strong>.assunto:</strong></li>
+</ul>
+<p>Obtém o assunto do agregado pesquisado.</p>
+<p>Utilize em conjunto com a função <code>ibge.referencias(cod=&#39;A&#39;)</code> para obter a referência dos assuntos.</p>
+<ul>
+<li><strong>.periodos:</strong></li>
+</ul>
+<p>Obtém um dictionary contendo informações do período do agregado pesquisado, incluindo a frequência, o início e o fim da amostra de dados.</p>
+<p>Utilize em conjunto com a função <code>ibge.referencias(cod=&#39;P&#39;)</code> para obter a referência dos períodos.</p>
+<ul>
+<li><strong>.localidades:</strong></li>
+</ul>
+<p>Obtém um dictionary contendo os parâmetros de localidade do agregado pesquisa.</p>
+<p>Utilize em conjunto com a função <code>ibge.referencias(cod=&#39;N&#39;)</code> para obter a referência dos níveis territoriais.</p>
+<ul>
+<li><strong>.variaveis:</strong></li>
+</ul>
+<p>Obtém uma lista de dictionaries de todas as variáveis do agregado pesquisado, incluindo id, nome e unidade das variáveis.</p>
+<p>Utilize em conjunto com a função <code>ibge.referencias(cod=&#39;V&#39;)</code> para obter a referência das variáveis. </p>
+<ul>
+<li><strong>.classificacoes:</strong></li>
+</ul>
+<p>Obtém uma lista de dictionaries de todas as classificações do agregado pesquisado, incluindo id, nome e uma lista de categorias das classificações.</p>
+<p>Utilize em conjunto com a função <code>ibge.referencias(cod=&#39;C&#39;)</code> para obter a referência das classificações. </p>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Explorar os metadados do agregado número 2991:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> meta = ibge.Metadados(<span class="PyNumber">2991</span>)
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.nome
+<span class="PyString">'Óbitos fetais, ocorridos no ano, por mês do registro, sexo, local de nascimento, número de nascidos por parto, idade da mãe na ocasião do parto e lugar do registro'</span>
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.assunto
+<span class="PyString">'Óbitos fetais'</span>
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.periodos
+{<span class="PyString">'frequencia'</span>: <span class="PyString">'anual'</span>, <span class="PyString">'inicio'</span>: <span class="PyNumber">2003</span>, <span class="PyString">'fim'</span>: <span class="PyNumber">2018</span>}
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.localidades
+{<span class="PyString">'Administrativo'</span>: [<span class="PyString">'N1'</span>, <span class="PyString">'N2'</span>, <span class="PyString">'N8'</span>, <span class="PyString">'N9'</span>, <span class="PyString">'N6'</span>, <span class="PyString">'N14'</span>, <span class="PyString">'N7'</span>, <span class="PyString">'N13'</span>, <span class="PyString">'N3'</span>],
+ <span class="PyString">'Especial'</span>: [],
+ <span class="PyString">'IBGE'</span>: []}
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.variaveis
+[{<span class="PyString">'id'</span>: <span class="PyNumber">225</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Número de óbitos fetais ocorridos e registrados no ano'</span>,
+  <span class="PyString">'unidade'</span>: <span class="PyString">'Unidades'</span>,
+  <span class="PyString">'sumarizacao'</span>: [<span class="PyString">'nivelTerritorial'</span>]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">1000225</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Número de óbitos fetais ocorridos e registrados no ano - percentual do total geral'</span>,
+  <span class="PyString">'unidade'</span>: <span class="PyString">'%'</span>,
+  <span class="PyString">'sumarizacao'</span>: []}]
+
+<span class="PyMeta">&gt;&gt;&gt;</span> meta.classificacoes
+[{<span class="PyString">'id'</span>: <span class="PyNumber">236</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Mês do registro'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5337</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Janeiro'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5338</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Fevereiro'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">2</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Sexo'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">4</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Homens'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Mulheres'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">237</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Local do nascimento'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5349</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Hospital'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5350</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Domicílio'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">238</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Número de nascidos por parto'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5352</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Um'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5353</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Dois'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">240</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Idade da mãe na ocasião do parto'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5370</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Menos de 15 anos'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">5414</span>, <span class="PyString">'nome'</span>: <span class="PyString">'15 a 19 anos'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]},
+ {<span class="PyString">'id'</span>: <span class="PyNumber">261</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Duração da gestação em semanas'</span>,
+  <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: True, <span class="PyString">'excecao'</span>: []},
+  <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">104318</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Menos de 22 semanas'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   {<span class="PyString">'id'</span>: <span class="PyNumber">104319</span>, <span class="PyString">'nome'</span>: <span class="PyString">'22 a 27 semanas'</span>, <span class="PyString">'unidade'</span>: None, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>},
+   ...
+   ]}]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-Metadados-agregadosAgregadoMetadadosGet">https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-Metadados-agregadosAgregadoMetadadosGet</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IBGEreferencias>def DadosAbertosBrasil.ibge.<strong class='verde'>referencias</strong> (<em>cod, index=False</em>)</p>
+<p>Obtém uma base de códigos para utilizar como argumento na busca do SIDRA.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod:</strong> string</li>
+</ul>
+<p>Define qual referência pesquisar. É possível utilizar um dos seguintes valores:</p>
+<ul>
+<li><code>&#39;A&#39;</code> ou <code>&#39;assuntos&#39;</code> para obter a base de referências de assuntos;</li>
+<li><code>&#39;C&#39;</code> ou <code>&#39;classificacoes&#39;</code> para obter a base de referências de classificações;</li>
+<li><code>&#39;P&#39;</code> ou <code>&#39;periodos&#39;</code> para obter a base de referências de períodos;</li>
+<li><code>&#39;E&#39;</code> ou <code>&#39;periodicidades&#39;</code> para obter a base de referências de periodicidades;</li>
+<li><code>&#39;V&#39;</code> ou <code>&#39;variaveis&#39;</code> para obter a base de referências de variáveis;</li>
+<li><code>&#39;N&#39;</code>, <code>&#39;T&#39;</code>, <code>&#39;niveis_geograficos&#39;</code> ou <code>&#39;territorios&#39;</code> para obter a base de referências de níveis geográficos;</li>
+</ul>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da referência como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>DataFrame</strong>, contendo todos as referências e códigos.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pela base de referências de periodicidades (&#39;E&#39;):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.referencias(<span class="PyString">'E'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">id</th>
+<th style="text-align:right">literal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">P1</td>
+<td style="text-align:right">Anual</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">P8</td>
+<td style="text-align:right">Semestral</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">P9</td>
+<td style="text-align:right">Trimestral</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">P5</td>
+<td style="text-align:right">Mensal</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">P13</td>
+<td style="text-align:right">Trimestral móvel</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pesquisar pela base de referências de assuntos (&#39;A&#39;), utilizando o id do assunto como index do DataFrame:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ibge.referencias(<span class="PyString">'A'</span>, index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">literal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">148</td>
+<td style="text-align:right">Abastecimento de água</td>
+</tr>
+<tr>
+<td style="text-align:left">70</td>
+<td style="text-align:right">Abate de animais</td>
+</tr>
+<tr>
+<td style="text-align:left">110</td>
+<td style="text-align:right">Acesso a esgotamento sanitário</td>
+</tr>
+<tr>
+<td style="text-align:left">147</td>
+<td style="text-align:right">Acesso à internet</td>
+</tr>
+<tr>
+<td style="text-align:left">107</td>
+<td style="text-align:right">Acesso a serviço de coleta de lixo doméstico</td>
+</tr>
+<tr>
+<td style="text-align:left">146</td>
+<td style="text-align:right">Acesso a serviços de telefonia</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+
+<hr>
+
+<p class='SubTitle' id=IBGESidra>class DadosAbertosBrasil.ibge.<strong class='verde'>Sidra</strong> (<em>agregado=None, periodos=None, variaveis=None, localidades={&#39;N1&#39;: &#39;all&#39;}, classificacoes=None</em>)</p>
+<p>Classe para obter dados do SIDRA - Sistema IBGE de Recuperação Automática.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>agregado:</strong> (Opcional) int</li>
+</ul>
+<p>Código da tabela (agregado) que será consultada.</p>
+<p>Utilize <code>ibge.Agregados</code> para encontrar o agregado que deseja.</p>
+<ul>
+<li><strong>periodos:</strong> (Opcional) list ou int</li>
+</ul>
+<p>Períodos nos quais se limitará a consulta.</p>
+<p>Utilize <code>ibge.Metadados(agregado).periodos</code> para ver os períodos disponíves para o agregado escolhido.</p>
+<p>Utilize <code>ibge.referencias(&#39;P&#39;)</code> para encontrar o código de referência destes períodos.</p>
+<ul>
+<li><strong>variaveis:</strong> (Opcional) list ou int</li>
+</ul>
+<p>Lista dos códigos das variáveis que se dejesa consultar.</p>
+<p>Utilize <code>ibge.Metadados(agregado).variaveis</code> para ver as variáveis disponíves para o agregado escolhido.</p>
+<p>Utilize <code>ibge.referencias(&#39;V&#39;)</code> para encontrar o código de referência destas variáveis.</p>
+<ul>
+<li><strong>self.localidades:</strong> (Opcional) dict</li>
+</ul>
+<p>Dictionary de níveis territoriais por códigos dos territórios que se deseja limitar a consulta.</p>
+<p>Utilize <code>ibge.Metadados(agregado).localidades</code> para ver os níveis territoriais disponíves para o agregado escolhido.</p>
+<p>Utilize <code>ibge.referencias(&#39;N&#39;)</code> para encontrar o código de referência destes níveis.</p>
+<p>Utilize <code>ibge.localidades()</code> para listar todas as localidades disponíveis.</p>
+<ul>
+<li><strong>self.classificacoes:</strong> (Opcional) dict</li>
+</ul>
+<p>Dictionaty de códigos da classificações por códigos das categorias que se deseja consultar.</p>
+<p>Utilize <code>ibge.Metadados(agregado).classificacoes</code> para ver as classificações e categorias disponíves para o agregado escolhido.</p>
+<p>Utilize <code>ibge.referencias(&#39;C&#39;)</code> para encontrar o código de referência destas classificações.</p>
+
+<p><strong><em>Atributos:</em></strong></p>
+<p>Os atributos são os mesmos que os parâmetros.</p>
+<p>Eles podem ser adicionados tanto pela função <code>__init__</code> quando a class é criada, quanto alimentando os atributos posteriormente.</p>
+<ul>
+	<li><strong>agregado</strong></li>
+	<li><strong>periodos</strong></li>
+	<li><strong>variaveis</strong></li>
+	<li><strong>localidades</strong></li>
+	<li><strong>classificacoes</strong></li>
+</ul>
+<p><strong><em>Métodos:</em></strong></p>
+<ul>
+	<li><strong>.query()</strong></li>
+</ul>
+<p>Obtém uma string contendo a URL da API com os parâmetros alimentados.</p>
+<p>Utilize esta URL para obter o arquivo <code>.json</code> da consulta diretamente.</p>
+<ul>
+<li><p>Parâmetros:</p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+</li>
+<li><p>Retorna:</p>
+<ul>
+<li><strong>str</strong>, contendo a URL da consulta.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>.rodar()</strong></li>
+</ul>
+<p>Obtém o resultado da consulta em função dos parâmetros alimentados no objeto SIDRA.</p>
+<ul>
+<li><p>Parâmetros:</p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+</li>
+<li><p>Retorna:</p>
+<ul>
+<li><strong>nested dict</strong>, contendo os valores das séries separados pelas categorias e variáveis consultados.</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Criar o número de óbitos fetais nos estados de São Paulo e Rio de Janeiro, nos anos de 2017 e 2018, separados por idade da mãe e sexo, por unidades e por porcentagem:</p>
+
+<ol>
+	<li>Pesquisar parâmetros:</li>
+</ol>
+<pre><code class="lang-pycon"><span class='PyComment'># Importar módulo IBGE:</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> from DadosAbertosBrasil import ibge
+
+<span class='PyComment'># Encontrar o agregado desejado:</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> agreg = ibge.Agregados()
+<span class="PyMeta">&gt;&gt;&gt;</span> agreg.filtrar(contendo=<span class="PyString">'Óbitos fetais'</span>)
+</code></pre>
+
+<div class='table-responsive'>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th style="text-align:left">agregado_id</th>
+				<th style="text-align:right">agregado_nome</th>
+				<th style="text-align:right">pesquisa_id</th>
+				<th style="text-align:right">pesquisa_nome</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:left">2990</td>
+				<td style="text-align:left">Óbitos fetais, ocorridos no ano, por mês do re...</td>
+				<td style="text-align:left">RC</td>
+				<td style="text-align:left">Estatísticas do Registro Civil</td>
+			</tr>
+			<tr>
+				<td style="text-align:left">2991</td>
+				<td style="text-align:left">Óbitos fetais, ocorridos no ano, por mês do re...</td>
+				<td style="text-align:left">RC</td>
+				<td style="text-align:left">Estatísticas do Registro Civil</td>
+			</tr>
+			<tr>
+				<td style="text-align:left">2992</td>
+				<td style="text-align:left">Óbitos fetais, ocorridos no ano, por mês do re...</td>
+				<td style="text-align:left">RC</td>
+				<td style="text-align:left">Estatísticas do Registro Civil</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<pre><code class="lang-pycon"><span class='PyComment'># Obter os metadados do agregado para encontrar os parâmetros necessários para o objeto Sidra</span>
+<span class="PyMeta">&gt;&gt;&gt; </span>meta = ibge.Metadados(<span class="PyNumber">2991</span>)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(<span class="PyString">'Períodos:'</span>)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(m.periodos)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(<span class="PyString">'\nVariáveis:'</span>)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(m.variaveis)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(<span class="PyString">'\nLocalidades:'</span>)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(m.localidades)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(<span class="PyString">'\nClassificações:'</span>)
+<span class="PyMeta">&gt;&gt;&gt; </span>print(m.classificacoes)
+
+Períodos:
+{<span class="PyString">'frequencia'</span>: <span class="PyString">'anual'</span>, <span class="PyString">'inicio'</span>: <span class="PyNumber">2003</span>, <span class="PyString">'fim'</span>: <span class="PyNumber">2018</span>}
+
+Variáveis:
+[{<span class="PyString">'id'</span>: <span class="PyNumber">225</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Número de óbitos fetais ocorridos e registrados no ano'</span>, <span class="PyString">'unidade'</span>: <span class="PyString">'Unidades'</span>, <span class="PyString">'sumarizacao'</span>: [<span class="PyString">'nivelTerritorial'</span>]}, {<span class="PyString">'id'</span>: <span class="PyNumber">1000225</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Número de óbitos fetais ocorridos e registrados no ano - percentual do total geral'</span>, <span class="PyString">'unidade'</span>: <span class="PyString">'%'</span>, <span class="PyString">'sumarizacao'</span>: []}]
+
+Localidades:
+{<span class="PyString">'Administrativo'</span>: [<span class="PyString">'N1'</span>, <span class="PyString">'N2'</span>, <span class="PyString">'N8'</span>, <span class="PyString">'N9'</span>, <span class="PyString">'N6'</span>, <span class="PyString">'N14'</span>, <span class="PyString">'N7'</span>, <span class="PyString">'N13'</span>, <span class="PyString">'N3'</span>], <span class="PyString">'Especial'</span>: [], <span class="PyString">'IBGE'</span>: []}
+
+Classificações:
+[{<span class="PyString">'id'</span>: <span class="PyNumber">236</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Mês do registro'</span>, <span class="PyString">'sumarizacao'</span>: {<span class="PyString">'status'</span>: <span class="hljs-keyword">True</span>, <span class="PyString">'excecao'</span>: []}, <span class="PyString">'categorias'</span>: [{<span class="PyString">'id'</span>: <span class="PyNumber">0</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Total'</span>, <span class="PyString">'unidade'</span>: <span class="hljs-keyword">None</span>, <span class="PyString">'nivel'</span>: <span class="PyNumber">0</span>}, {<span class="PyString">'id'</span>: <span class="PyNumber">5337</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Janeiro'</span>, <span class="PyString">'unidade'</span>: <span class="hljs-keyword">None</span>, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>}, {<span class="PyString">'id'</span>: <span class="PyNumber">5338</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Fevereiro'</span>, <span class="PyString">'unidade'</span>: <span class="hljs-keyword">None</span>, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>}, {<span class="PyString">'id'</span>: <span class="PyNumber">5339</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Março'</span>, <span class="PyString">'unidade'</span>: <span class="hljs-keyword">None</span>, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>}, {<span class="PyString">'id'</span>: <span class="PyNumber">5340</span>, <span class="PyString">'nome'</span>: <span class="PyString">'Abril'</span>, <span class="PyString">'unidade'</span>: <span class="hljs-keyword">None</span>, <span class="PyString">'nivel'</span>: <span class="PyNumber">1</span>}, ...
+</code></pre>
+<ol>
+<li>Criar objeto SIDRA, alimentar com parâmetros e rodar query:</li>
+</ol>
+<pre><code class="lang-pycon"><span class='PyComment'># Método 1:</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos = ibge.Sidra()
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos.agregado = <span class="PyNumber">2991</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos.periodos = [<span class="PyNumber">2017</span>, <span class="PyNumber">2018</span>]
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos.variaveis = [<span class="PyNumber">225</span>, <span class="PyNumber">1000225</span>]
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos.localidades = {<span class="PyString">'N3'</span>: [<span class="PyNumber">33</span>, <span class="PyNumber">35</span>]}
+<span class="PyMeta">&gt;&gt;&gt;</span> obitos.classificacoes = {<span class="PyNumber">2</span>: [<span class="PyNumber">4</span>, <span class="PyNumber">5</span>], <span class="PyNumber">240</span>: <span class="PyString">'all'</span>}
+<span class="PyMeta">&gt;&gt;&gt;</span> res = obitos.rodar()
+
+<span class='PyComment'># Método 2:</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> res = ibge.Sidra(agregado=<span class="PyNumber">2991</span>, periodos=[<span class="PyNumber">2017</span>, <span class="PyNumber">2018</span>], variaveis=[<span class="PyNumber">225</span>, <span class="PyNumber">1000225</span>], localidades={<span class="PyString">'N3'</span><span class="hljs-symbol">:</span>[<span class="PyNumber">33</span>, <span class="PyNumber">35</span>]}, classificacoes={<span class="PyNumber">2</span><span class="hljs-symbol">:</span>[<span class="PyNumber">4</span>, <span class="PyNumber">5</span>], <span class="PyNumber">240</span><span class="hljs-symbol">:<span class="PyString">'all'</span></span>}).rodar()
+</code></pre>
+<ol>
+<li>Abrindo o dictionary até chegar em um valor específico:</li>
+</ol>
+<pre><code class="lang-pycon"><span class='PyComment'># Variáveis escolhidas em obitos.variaveis:</span>
+<span class='PyComment'># 0 para 'Unidades' e 1 para 'Percentual'.</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> var_id = <span class="PyNumber">0</span>
+
+<span class='PyComment'># Informações da variável:</span>
+<span class='PyComment'># 'id', 'variavel', 'unidade' ou 'resultados'</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> var_info = <span class="PyString">'resultados'</span>
+
+<span class='PyComment'># Combinação de classificações:</span>
+<span class='PyComment'># Todas as combinações possíveis de 0 a 92:</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> class_id = <span class="PyNumber">0</span>
+
+<span class='PyComment'># Informações da classificação:</span>
+<span class='PyComment'># 'classificacoes' ou 'series'</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> class_info = <span class="PyString">'series'</span>
+
+<span class='PyComment'># Localidades escolhidas em obitos.localidades:</span>
+<span class='PyComment'># 0 para 'Rio de Janeiro' e 1 para 'São Paulo'.</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> loc_id = <span class="PyNumber">0</span>
+
+<span class='PyComment'># Informações da localidade:</span>
+<span class='PyComment'># 'localidade' ou 'serie'</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> loc_info = <span class="PyString">'serie'</span>
+
+<span class='PyComment'># Períodos escolhidos em obitos.periodos:</span>
+<span class='PyComment'># '2017' ou '2018'. Note que é necessário ser tipo 'str', não 'int'.</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> per = <span class="PyString">'2018'</span>
+
+<span class="PyMeta">&gt;&gt;&gt;</span> valor = res[var_id][var_info][class_id][class_info][loc_id][loc_info][per]
+
+<span class='PyComment'># Alternativamente...</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> valor = res[<span class="PyNumber">0</span>][<span class="PyString">'resultados'</span>][<span class="PyNumber">0</span>][<span class="PyString">'series'</span>][<span class="PyNumber">0</span>][<span class="PyString">'serie'</span>][<span class="PyString">'2018'</span>]
+
+<span class='PyComment'># Ver valor</span>
+<span class="PyMeta">&gt;&gt;&gt;</span> valor
+<span class="PyString">'1377'</span>
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-bq">https://servicodados.ibge.gov.br/api/docs/agregados?versao=3#api-bq</a></p>
+		</div>
+		
+		<div class='container Text dark' id=SessaoIPEA style='margin-top: 30px; background-color: white; padding: 30px'>
+
+			<p class='Title'>DadosAbertosBrasil.<strong class='verde'>ipea</strong></p>
+			<p>Módulo para captura dos dados abertos das APIs do Ipeadata.</p>
+			<ul>
+				<li>ipea.<a href="#IPEAseries">series</a></li>
+				<li>ipea.<a href="#IPEAtemas">temas</a></li>
+				<li>ipea.<a href="#IPEApaises">paises</a></li>
+				<li>ipea.<a href="#IPEAterritorios">territorios</a></li>
+				<li>ipea.<a href="#IPEAniveisterritoriais">nivel_territoriais</a></li>
+			</ul>
+			<p>Importe o módulo com <code>from DadosAbertosBrasil import ipea</code></p>
+
+<hr>
+
+<p class='SubTitle' id=IPEAseries>def DadosAbertosBrasil.ipea.<strong class='verde'>series</strong> (<em>cod=None, valores=True</em>)</p>
+<p>Registros de metadados de todas as séries disponíveis para consulta.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod:</strong> (Opcional) str</li>
+</ul>
+<p>Código da série que se deseja pesquisar.</p>
+<p>Caso o valor seja omitido, um DataFrame com todas as séries é retornado.</p>
+<p>O código é o campo <code>SERNOME</code> do DataFrame de séries.</p>
+<ul>
+<li><strong>valores:</strong> (Opcional) <code>True</code> ou <code>False</code></li>
+</ul>
+<p><code>True</code> para obter os valores da série.</p>
+<p><code>False</code> para obter as informações sobre a série.</p>
+<p>Este argumento é ignorado caso não seja fornecido um código de série.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong> contendo a lista completa de séries disponíveis, caso <code>cod == None</code></li>
+<li><strong>pandas.DataFrame</strong> contendo os valores da série, caso <code>valores == True</code></li>
+<li><strong>pandas.DataFrame</strong> contendo as informações da série, caso <code>valores == False</code></li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar por todas as séries contendo o termo &#39;Gini&#39;:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> s = ipea.series()
+<span class="PyMeta">&gt;&gt;&gt;</span> s[s.SERNOME.str.contains(<span class="PyString">'Gini'</span>)]
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">BASNOME</th>
+<th style="text-align:right">FNTNOME</th>
+<th style="text-align:right">FNTSIGLA</th>
+<th style="text-align:right">FNTURL</th>
+<th style="text-align:right">MULNOME</th>
+<th style="text-align:right">PAICODIGO</th>
+<th style="text-align:right">PERNOME</th>
+<th style="text-align:right">SERATUALIZACAO</th>
+<th style="text-align:right">SERCODIGO</th>
+<th style="text-align:right">SERCOMENTARIO</th>
+<th style="text-align:right">SERNOME</th>
+<th style="text-align:right">SERNUMERICA</th>
+<th style="text-align:right">SERSTATUS</th>
+<th style="text-align:right">TEMCODIGO</th>
+<th style="text-align:right">UNINOME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">6967</td>
+<td style="text-align:right">Macroeconômico</td>
+<td style="text-align:right">Instituto de Pesquisa Econômica Aplicada(IPEA)</td>
+<td style="text-align:right">IPEA</td>
+<td style="text-align:right">www.ipea.gov.br</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">BRA</td>
+<td style="text-align:right">Anual</td>
+<td style="text-align:right">2016-01-06T19:33:38-02:00</td>
+<td style="text-align:right">DISOC_RDCG</td>
+<td style="text-align:right">Mede o grau de desigualdade na distribuição da...</td>
+<td style="text-align:right">Renda - desigualdade - coeficiente de Gini</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">I</td>
+<td style="text-align:right">15</td>
+<td style="text-align:right">-</td>
+</tr>
+<tr>
+<td style="text-align:left">7543</td>
+<td style="text-align:right">Social</td>
+<td style="text-align:right">Instituto de Pesquisa Econômica Aplicada(IPEA)</td>
+<td style="text-align:right">IPEA</td>
+<td style="text-align:right">www.ipea.gov.br</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">Decenal</td>
+<td style="text-align:right">2009-04-20T15:58:01.41-03:00</td>
+<td style="text-align:right">GINIC1</td>
+<td style="text-align:right">Mede o grau de desigualdade existente na distr...</td>
+<td style="text-align:right">Renda - desigualdade - índice de Gini - brancos</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">30</td>
+<td style="text-align:right">-</td>
+</tr>
+<tr>
+<td style="text-align:left">7544</td>
+<td style="text-align:right">Social</td>
+<td style="text-align:right">Instituto de Pesquisa Econômica Aplicada(IPEA)</td>
+<td style="text-align:right">IPEA</td>
+<td style="text-align:right">www.ipea.gov.br</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">Decenal</td>
+<td style="text-align:right">2009-04-20T15:58:01.443-03:00</td>
+<td style="text-align:right">GINIC2</td>
+<td style="text-align:right">Mede o grau de desigualdade existente na distr...</td>
+<td style="text-align:right">Renda - desigualdade - índice de Gini - negros</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">30</td>
+<td style="text-align:right">-</td>
+</tr>
+<tr>
+<td style="text-align:left">7589</td>
+<td style="text-align:right">Social</td>
+<td style="text-align:right">Instituto de Pesquisa Econômica Aplicada(IPEA)</td>
+<td style="text-align:right">IPEA</td>
+<td style="text-align:right">www.ipea.gov.br</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">Anual</td>
+<td style="text-align:right">2016-01-07T16:09:04.52-02:00</td>
+<td style="text-align:right">PGINI</td>
+<td style="text-align:right">Mede o grau de desigualdade na distribuição da...</td>
+<td style="text-align:right">Renda - desigualdade - coeficiente de Gini</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">30</td>
+<td style="text-align:right">-</td>
+</tr>
+</tbody>
+</table></div>
+<p>Capturar dados anuais do coeficiente de Gini (código &#39;DISOC_RDCG&#39;):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.series(<span class="PyString">'DISOC_RDCG'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">NIVNOME</th>
+<th style="text-align:right">SERCODIGO</th>
+<th style="text-align:right">TERCODIGO</th>
+<th style="text-align:right">VALDATA</th>
+<th style="text-align:right">VALVALOR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">DISOC_RDCG</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">1976-01-01T00:00:00-02:00</td>
+<td style="text-align:right">0.622740</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">DISOC_RDCG</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">1977-01-01T00:00:00-02:00</td>
+<td style="text-align:right">0.624648</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">DISOC_RDCG</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">1978-01-01T00:00:00-02:00</td>
+<td style="text-align:right">0.603907</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">DISOC_RDCG</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">1979-01-01T00:00:00-02:00</td>
+<td style="text-align:right">0.593121</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IPEAtemas>def DadosAbertosBrasil.ipea.<strong class='verde'>temas</strong> (<em>cod=None</em>)</p>
+<p>Registros de todos os temas cadastrados.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod:</strong> (Opcional) int</li>
+</ul>
+<p>Código do tema.</p>
+<p>Caso o valor seja omitido, um DataFrame com todas os temas é retornado.</p>
+<p>O código é o campo <code>TEMCODIGO</code> do DataFrame de séries.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong> contendo a lista completa de temas disponíveis. Cada row é um tema e as columns são os códigos dos temas, dos temas-pai e os nomes dos temas.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar por todos os temas disponíveis:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.temas()
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">TEMCODIGO</th>
+<th style="text-align:right">TEMCODIGO_PAI</th>
+<th style="text-align:right">TEMNOME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">28</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">Agropecuária</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">23</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">Assistência social</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">10</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">Balanço de pagamentos</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">Câmbio</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">Comércio exterior</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IPEApaises>def DadosAbertosBrasil.ipea.<strong class='verde'>paises</strong> (<em>cod=None</em>)</p>
+<p>Registros de todos os países cadastrados.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod:</strong> (Opcional) str</li>
+</ul>
+<p>Código de três letras maiúsculas do país.</p>
+<p>Caso o valor seja omitido, um DataFrame com todas os países é retornado.</p>
+<p>O código é o campo <code>PAICODIGO</code> do DataFrame de séries.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong> contendo a lista completa de países. Cada row é um país e as columns são os códigos e os nomes completos dos países.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar por todos os países disponíveis:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.paises()
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">PAICODIGO</th>
+<th style="text-align:right">PAINOME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">ZAF</td>
+<td style="text-align:right">África do Sul</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">DEU</td>
+<td style="text-align:right">Alemanha</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">LATI</td>
+<td style="text-align:right">América Latina</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">AGO</td>
+<td style="text-align:right">Angola</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">SAU</td>
+<td style="text-align:right">Arábia Saudita</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IPEAterritorios>def DadosAbertosBrasil.ipea.<strong class='verde'>territorios</strong> (<em>cod=None, nivel=None</em>)</p>
+<p>Registros de todos os territórios brasileiros cadastrados, categorizados por nível territorial.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod:</strong> (Opcional) int ou str</li>
+</ul>
+<p>Código do território pesquisado.</p>
+<p>Deve ser usado em conjunto com o parâmetro <code>nivel</code></p>
+<p>Caso pelo menos um dos dois seja omitido, um DataFrame com todos os territórios brasileiros é retornado.</p>
+<p>O código é o campo <code>TERCODIGO</code> do DataFrame de séries.</p>
+<p>Utilize a função do módulo IBGE <code>ibge.localidades()</code> para auxiliar na busca pelos códigos dos territórios.</p>
+<ul>
+<li><strong>nivel:</strong> (Opcional) str</li>
+</ul>
+<p>Nome do nível geográfico do território pesquisado.</p>
+<p>Deve ser usado em conjunto com o parâmetro <code>cod</code></p>
+<p>Caso pelo menos um dos dois seja omitido, um DataFrame com todos os territórios brasileiros é retornado.</p>
+<p>O código é o campo <code>NIVNOME</code> do DataFrame de séries.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong> contendo a lista completa de territórios brasileiros. Cada row é um território e as columns são o código, o nome, o nível e a área do território.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar por todos os territórios chamados &#39;São Paulo&#39;:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> t = ipea.territorios
+<span class="PyMeta">&gt;&gt;&gt;</span> t[t.TERNOME == <span class="PyString">'São Paulo'</span>]
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">NIVAMC</th>
+<th style="text-align:right">NIVNOME</th>
+<th style="text-align:right">TERAREA</th>
+<th style="text-align:right">TERCAPITAL</th>
+<th style="text-align:right">TERCODIGO</th>
+<th style="text-align:right">TERNOME</th>
+<th style="text-align:right">TERNOMEPADRAO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">Estados</td>
+<td style="text-align:right">248808.8</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">35</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+<tr>
+<td style="text-align:left">12247</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">Microrregiões</td>
+<td style="text-align:right">2355.7</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">35061</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+<tr>
+<td style="text-align:left">14002</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">AMC 91-00</td>
+<td style="text-align:right">1528.5</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">355030</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+<tr>
+<td style="text-align:left">14003</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">AMC 70-00</td>
+<td style="text-align:right">1528.5</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">355030</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+<tr>
+<td style="text-align:left">14004</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">Municípios</td>
+<td style="text-align:right">1528.5</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">3550308</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pesquisar pelo estado de São Paulo (código 35):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.territorios(<span class="PyNumber">35</span>, <span class="PyString">'Estados'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">NIVAMC</th>
+<th style="text-align:right">NIVNOME</th>
+<th style="text-align:right">TERAREA</th>
+<th style="text-align:right">TERCAPITAL</th>
+<th style="text-align:right">TERCODIGO</th>
+<th style="text-align:right">TERNOME</th>
+<th style="text-align:right">TERNOMEPADRAO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">Estados</td>
+<td style="text-align:right">248808.8</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">35</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pesquisar pela cidade de São Paulo (código 3550308):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.territorios(<span class="PyNumber">3550308</span>, <span class="PyString">'Municípios'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">NIVAMC</th>
+<th style="text-align:right">NIVNOME</th>
+<th style="text-align:right">TERAREA</th>
+<th style="text-align:right">TERCAPITAL</th>
+<th style="text-align:right">TERCODIGO</th>
+<th style="text-align:right">TERNOME</th>
+<th style="text-align:right">TERNOMEPADRAO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">False</td>
+<td style="text-align:right">Municípios</td>
+<td style="text-align:right">1528.8</td>
+<td style="text-align:right">True</td>
+<td style="text-align:right">3550308</td>
+<td style="text-align:right">São Paulo</td>
+<td style="text-align:right">SAO PAULO</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
+
+<hr>
+
+<p class='SubTitle' id=IPEAniveisterritoriais>def DadosAbertosBrasil.ipea.<strong class='verde'>niveis_territoriais</strong> ()</p>
+<p>Lista dos possíveis níveis territoriais.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>list de str</strong> contendo as descrições por extenso dos níveis territoriais.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Capturar a lista de descrições de níveis territoriais:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> ipea.niveis_territoriais()
+
+[<span class="PyString">''</span>,
+ <span class="PyString">'Brasil'</span>,
+ <span class="PyString">'Regiões'</span>,
+ <span class="PyString">'Estados'</span>,
+ <span class="PyString">'Municípios'</span>,
+ <span class="PyString">'AMC 91-00'</span>,
+ <span class="PyString">'Microrregiões'</span>,
+ <span class="PyString">'Mesorregiões'</span>,
+ <span class="PyString">'AMC 20-00'</span>,
+ <span class="PyString">'AMC 40-00'</span>,
+ <span class="PyString">'AMC 60-00'</span>,
+ <span class="PyString">'AMC 70-00'</span>,
+ <span class="PyString">'AMC 1872-00'</span>,
+ <span class="PyString">'Área metropolitana'</span>,
+ <span class="PyString">'Estado/RM'</span>]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
+		</div>
+		
+		<div class='container Text dark' id=SessaoCamara style='margin-top: 30px; background-color: white; padding: 30px'>
+
+			<p class='Title'>DadosAbertosBrasil.<strong class='verde'>camara</strong></p>
+			<p>Pacote para captura dos dados abertos da Câmara dos Deputados do Brasil</p>
+<ul>
+<li>camara.<a href="#Camarablocos">blocos</a></li>
+<li>camara.<a href="#Camaradeputados">deputados</a></li>
+<li>camara.<a href="#Camaraeventos">eventos</a></li>
+<li>camara.<a href="#Camarafrentes">frentes</a></li>
+<li>camara.<a href="#Camaralegislaturas">legislaturas</a></li>
+<li>camara.<a href="#Camaraorgaos">orgaos</a></li>
+<li>camara.<a href="#Camarapartidos">partidos</a></li>
+<li>camara.<a href="#Camaraproposicoes">proposicoes</a></li>
+<li>camara.<a href="#Camaravotacoes">votacoes</a></li>
+<li>camara.<a href="#Camarareferencias">referencias</a></li>
+<li>camara.<a href="#CamaraDeputados2">Deputados</a></li>
+</ul>
+<p>Importe o módulo com <code>from DadosAbertosBrasil import camara</code></p>
+
+<hr>
+
+<p class='SubTitle' id=Camarablocos>def DadosAbertosBrasil.camara.<strong class='verde'>blocos</strong> (<em>cod=None, index=False</em>)</p>
+<p>Obtém dados sobre os blocos partidários.</p>
+<p>Nas atividades parlamentares, partidos podem se juntar em blocos partidários. Quando associados, os partidos passam a trabalhar como se fossem um &quot;partidão&quot;, com um só líder e um mesmo conjunto de vice-líderes.</p>
+<p>Os blocos só podem existir até o fim da legislatura em que foram criados: na legislatura seguinte, os mesmos partidos, se associados, formam um novo bloco.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id do bloco partidário para obter mais informações sobre ele.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos os blocos partidários.</p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do bloco partidário como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todos os blocos partidários, caso <code>cod == None</code>.</li>
+<li><strong>dict</strong>, contendo detalhes do bloco partidário, caso <code>cod</code> seja o id do bloco.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter detalhes do bloco 575:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.blocos(<span class="PyNumber">575</span>)
+
+{<span class="PyString">'id'</span>: <span class="PyString">'575'</span>,
+ <span class="PyString">'uri'</span>: <span class="PyString">'https://dadosabertos.camara.leg.br/api/v2/blocos/575'</span>,
+ <span class="PyString">'nome'</span>: <span class="PyString">'PL, PP, PSD, MDB, DEM, SOLIDARIEDADE, PTB, PROS, AVANTE'</span>,
+ <span class="PyString">'idLegislatura'</span>: <span class="PyString">'56'</span>}
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaradeputados>def DadosAbertosBrasil.camara.<strong class='verde'>deputados</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações dos deputados.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id do(a) deputado(a) para obter mais informações sobre ele(a).</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos os deputados da atual legislatura.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre o(a) deputado(a).</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre um deputado específico;</li>
+<li><code>&#39;despesas&#39;</code>: As despesas com exercício parlamentar do deputado;</li>
+<li><code>&#39;discursos&#39;</code>: Os discursos feitos por um deputado em eventos diversos;</li>
+<li><code>&#39;eventos&#39;</code>: Uma lista de eventos com a participação do parlamentar;</li>
+<li><code>&#39;frentes&#39;</code>: As frentes parlamentares das quais um deputado é integrante;</li>
+<li><code>&#39;orgaos&#39;</code>: Os órgãos dos quais um deputado é integrante.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do(a) deputado(a) como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todos os deputados, caso <code>cod == None</code>. Cada row é um deputado e as columns são o nome, partido, estado, e-mail, legislatura atual e a URL da foto no site da câmara.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre o(a) deputado(a), caso <code>cod</code> seja o id do(a) deputado(a).</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista de deputados da atual legislatura:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.deputados(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">email</th>
+<th style="text-align:right">idLegislatura</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">siglaPartido</th>
+<th style="text-align:right">siglaUf</th>
+<th style="text-align:right">urlFoto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">204554</td>
+<td style="text-align:right">dep.abiliosantana@camara.leg.br</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Abílio Santana</td>
+<td style="text-align:right">PL</td>
+<td style="text-align:right">BA</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">204521</td>
+<td style="text-align:right">dep.abouanni@camara.leg.br</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Abou Anni</td>
+<td style="text-align:right">PSL</td>
+<td style="text-align:right">SP</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">204379</td>
+<td style="text-align:right">dep.acaciofavacho@camara.leg.br</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Acácio Favacho</td>
+<td style="text-align:right">PROS</td>
+<td style="text-align:right">AP</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">204560</td>
+<td style="text-align:right">dep.adolfoviana@camara.leg.br</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Adolfo Viana</td>
+<td style="text-align:right">PSDB</td>
+<td style="text-align:right">BA</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">204528</td>
+<td style="text-align:right">dep.adrianaventura@camara.leg.br</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Adriana Ventura</td>
+<td style="text-align:right">NOVO</td>
+<td style="text-align:right">SP</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter a lista de frentes que o deputado Rodrigo Maia (código 74693) participa:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.deputados(cod=<span class="PyNumber">74693</span>, serie=<span class="hljs-symbol">'frentes</span>')
+
+[{<span class="hljs-symbol">'id</span>': <span class="PyNumber">54180</span>,
+  <span class="hljs-symbol">'uri</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/frentes/54180',</span>
+  <span class="hljs-symbol">'titulo</span>': <span class="hljs-symbol">'Frente</span> Parlamentar Mista em Defesa <span class="hljs-keyword">do</span> Cinema e <span class="hljs-keyword">do</span> Audiovisual Brasileiros',
+  <span class="hljs-symbol">'idLegislatura</span>': <span class="PyNumber">56</span>},
+ {<span class="hljs-symbol">'id</span>': <span class="PyNumber">54165</span>,
+  <span class="hljs-symbol">'uri</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/frentes/54165',</span>
+  <span class="hljs-symbol">'titulo</span>': <span class="hljs-symbol">'Frente</span> Parlamentar de Defesa e Valorização da Produção Nacional de Uvas, Vinhos, Espumantes e seus Derivados',
+  <span class="hljs-symbol">'idLegislatura</span>': <span class="PyNumber">56</span>},
+  ...]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaraeventos>def DadosAbertosBrasil.camara.<strong class='verde'>eventos</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações dos eventos ocorridos ou previstos nos diversos órgãos da Câmara.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id do evento para obter mais informações sobre ele.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos os eventos da Câmara.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre o evento.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre um evento específico;</li>
+<li><code>&#39;deputados&#39;</code>: Os deputados participantes de um evento específico;</li>
+<li><code>&#39;orgaos&#39;</code>: Lista de órgãos organizadores do evento;</li>
+<li><code>&#39;pauta&#39;</code>: Lista de proposições que foram ou deverão ser avaliadas em um evento de caráter deliberativo;</li>
+<li><code>&#39;votacoes&#39;</code>: Informações detalhadas de votações sobre um evento específico.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do evento como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todos os eventos da Câmara, caso <code>cod == None</code>. Cada row é um evento e as columns são os horários, descrições, orgãos, locais e a situação do evento.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre o evento, caso <code>cod</code> seja o id do evento.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista de todos os eventos ocorridos ou previstos na Câmara:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.eventos(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">dataHoraFim</th>
+<th style="text-align:right">dataHoraInicio</th>
+<th style="text-align:right">descricao</th>
+<th style="text-align:right">descricaoTipo</th>
+<th style="text-align:right">localCamara</th>
+<th style="text-align:right">...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">59588</td>
+<td style="text-align:right">2020-05-04T23:25</td>
+<td style="text-align:right">2020-05-04T13:55</td>
+<td style="text-align:right">Sessão Deliberativa Extraordinária (VIRTUAL)</td>
+<td style="text-align:right">Sessão Deliberativa</td>
+<td style="text-align:right">{&#39;nome&#39;: &#39;Plenário da Câmara dos Deputados&#39;, &#39;...</td>
+<td style="text-align:right">...</td>
+</tr>
+<tr>
+<td style="text-align:left">59591</td>
+<td style="text-align:right">2020-05-04T13:37</td>
+<td style="text-align:right">2020-05-04T11:30</td>
+<td style="text-align:right">Situação dos Hospitais no Rio de Janeiro...</td>
+<td style="text-align:right">Outro Evento</td>
+<td style="text-align:right">{&#39;nome&#39;: None, &#39;predio&#39;: None, &#39;sala&#39;: None, &#39;...</td>
+<td style="text-align:right">...</td>
+</tr>
+<tr>
+<td style="text-align:left">59592</td>
+<td style="text-align:right">2020-05-05T14:22</td>
+<td style="text-align:right">2020-05-05T11:30</td>
+<td style="text-align:right">Instituições de Longa Permanência para Idosos...</td>
+<td style="text-align:right">Reunião Técnica</td>
+<td style="text-align:right">{&#39;nome&#39;: &#39;Anexo II, Plenário 03&#39;, &#39;predio&#39;: No...</td>
+<td style="text-align:right">...</td>
+</tr>
+<tr>
+<td style="text-align:left">59593</td>
+<td style="text-align:right">2020-05-05T18:06</td>
+<td style="text-align:right">2020-05-05T15:00</td>
+<td style="text-align:right">Requisição Administrativa de Leitos\r\n Reuniã...</td>
+<td style="text-align:right">Reunião Técnica</td>
+<td style="text-align:right">{&#39;nome&#39;: None, &#39;predio&#39;: None, &#39;sala&#39;: None, &#39;...</td>
+<td style="text-align:right">...</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter a lista de deputados presentes no evento 59588:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.eventos(cod=<span class="PyNumber">59588</span>, serie=<span class="hljs-symbol">'deputado</span>s')
+
+[{<span class="hljs-symbol">'i</span>d': <span class="PyNumber">66179</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/66179',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'Norma</span> <span class="hljs-type">Ayub</span>',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'DE</span>M',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/36769',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'E</span>S',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/66179.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-symbol">'dep</span>.normaayub<span class="PyMeta">@camara</span>.leg.br'},
+ {<span class="hljs-symbol">'i</span>d': <span class="PyNumber">66828</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/66828',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'Fausto</span> <span class="hljs-type">Pinato</span>',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'P</span>P',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/37903',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'S</span>P',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/66828.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-symbol">'dep</span>.faustopinato<span class="PyMeta">@camara</span>.leg.br'},
+  ...]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camarafrentes>def DadosAbertosBrasil.camara.<strong class='verde'>frentes</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações das frentes parlamentares, um agrupamento oficial de parlamentares em torno de um determinado tema ou proposta.</p>
+<p>As frentes existem até o fim da legislatura em que foram criadas, e podem ser recriadas a cada legislatura. Algumas delas são compostas por deputados e senadores</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id da frente parlamentar para obter mais informações sobre ela.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos as frentes parlamentares.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre a frente parlamentar.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre uma frente parlamentar;</li>
+<li><code>&#39;membros&#39;</code>: Os deputados que participam de uma frente parlamentar.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da frente como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todas as frentes parlamentares, caso <code>cod == None</code>. Cada row é uma frente parlamentar e as columns são o nome da frente e a legislatura que ela pertence.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre a frente parlamentar, caso <code>cod</code> seja o id do frente.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista de todas frentes parlamentares:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.frentes(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">idLegislatura</th>
+<th style="text-align:right">titulo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">54251</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Frente Parlamentar Mista para Implantação do P...</td>
+</tr>
+<tr>
+<td style="text-align:left">54248</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Frente Parlamentar em Defesa da Democratização...</td>
+</tr>
+<tr>
+<td style="text-align:left">54249</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Frente Parlamentar em Defesa dos Profissionais...</td>
+</tr>
+<tr>
+<td style="text-align:left">54250</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Frente Parlamentar em Apoio ao Ecoturismo - EC...</td>
+</tr>
+<tr>
+<td style="text-align:left">54231</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Frente Parlamentar Mista de Segurança Contra I...</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter os deputados membros da Frente Parlamentar Brasil-Rússia (código 54246):</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.frentes(cod=<span class="PyNumber">54246</span>, serie=<span class="hljs-symbol">'membros</span>')
+
+[{<span class="hljs-symbol">'id</span>': <span class="PyNumber">204511</span>,
+  <span class="hljs-symbol">'uri</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/204511',</span>
+  <span class="hljs-symbol">'nome</span>': <span class="hljs-symbol">'David</span> Soares',
+  <span class="hljs-symbol">'siglaPartido</span>': <span class="hljs-symbol">'DEM</span>',
+  <span class="hljs-symbol">'uriPartido</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/36769',</span>
+  <span class="hljs-symbol">'siglaUf</span>': <span class="hljs-symbol">'SP</span>',
+  <span class="hljs-symbol">'idLegislatura</span>': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFoto</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/204511.jpg',</span>
+  <span class="hljs-symbol">'email</span>': <span class="hljs-literal">None</span>,
+  <span class="hljs-symbol">'titulo</span>': <span class="hljs-symbol">'Coordenador</span>',
+  <span class="hljs-symbol">'codTitulo</span>': <span class="PyNumber">14</span>,
+  <span class="hljs-symbol">'dataInicio</span>': <span class="hljs-literal">None</span>,
+  <span class="hljs-symbol">'dataFim</span>': <span class="hljs-literal">None</span>},
+ {<span class="hljs-symbol">'id</span>': <span class="PyNumber">68720</span>,
+  <span class="hljs-symbol">'uri</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/68720',</span>
+  <span class="hljs-symbol">'nome</span>': <span class="hljs-symbol">'F</span>ábio Henrique',
+  <span class="hljs-symbol">'siglaPartido</span>': <span class="hljs-symbol">'PDT</span>',
+  <span class="hljs-symbol">'uriPartido</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/36786',</span>
+  <span class="hljs-symbol">'siglaUf</span>': <span class="hljs-symbol">'SE</span>',
+  <span class="hljs-symbol">'idLegislatura</span>': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFoto</span>': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/68720.jpg',</span>
+  <span class="hljs-symbol">'email</span>': <span class="hljs-literal">None</span>,
+  <span class="hljs-symbol">'titulo</span>': <span class="hljs-symbol">'Membro</span>',
+  <span class="hljs-symbol">'codTitulo</span>': <span class="PyNumber">1004</span>,
+  <span class="hljs-symbol">'dataInicio</span>': <span class="hljs-literal">None</span>,
+  <span class="hljs-symbol">'dataFim</span>': <span class="hljs-literal">None</span>},
+  ...]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaralegislaturas>def DadosAbertosBrasil.camara.<strong class='verde'>legislaturas</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações das legislaturas.</p>
+<p>Legislatura é o nome dado ao período de trabalhos parlamentares entre uma eleição e outra.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id da legislatura para obter mais informações sobre ela.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com a data de início e fim das legislaturas.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre o evento.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações extras sobre uma determinada legislatura da Câmara;</li>
+<li><code>&#39;membros&#39;</code>: Quais deputados fizeram parte da Mesa Diretora em uma legislatura.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da legislatura como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todas os períodos das legislaturas, caso <code>cod == None</code>. Cada row é uma legislatura e as columns são a data de início e a data de fim.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre a legislatura, caso <code>cod</code> seja o id da legislatura.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista dos períodos das legislaturas:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.legislaturas(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">dataFim</th>
+<th style="text-align:right">dataInicio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">56</td>
+<td style="text-align:right">2023-01-31</td>
+<td style="text-align:right">2019-02-01</td>
+</tr>
+<tr>
+<td style="text-align:left">55</td>
+<td style="text-align:right">2019-01-31</td>
+<td style="text-align:right">2015-02-01</td>
+</tr>
+<tr>
+<td style="text-align:left">54</td>
+<td style="text-align:right">2015-01-31</td>
+<td style="text-align:right">2011-02-01</td>
+</tr>
+<tr>
+<td style="text-align:left">53</td>
+<td style="text-align:right">2011-01-31</td>
+<td style="text-align:right">2007-02-01</td>
+</tr>
+<tr>
+<td style="text-align:left">52</td>
+<td style="text-align:right">2007-01-31</td>
+<td style="text-align:right">2003-02-01</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter os deputados membros da mesa diretora da legislatura 55:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.legislaturas(cod=<span class="PyNumber">55</span>, serie=<span class="hljs-symbol">'mes</span>a')
+
+[{<span class="hljs-symbol">'i</span>d': <span class="PyNumber">141430</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/141430',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'FELIPE</span> <span class="hljs-type">BORNIER</span>',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'PS</span>D',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/36763',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'R</span>J',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">55</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/141430.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-type">None</span>,
+  <span class="hljs-symbol">'dataInici</span>o': <span class="hljs-symbol">'2015</span><span class="PyNumber">-02</span><span class="PyNumber">-01</span>',
+  <span class="hljs-symbol">'dataFi</span>m': <span class="hljs-symbol">'2017</span><span class="PyNumber">-02</span><span class="PyNumber">-02</span>',
+  <span class="hljs-symbol">'titul</span>o': <span class="hljs-symbol">'2</span>º <span class="hljs-type">Secret</span>ário',
+  <span class="hljs-symbol">'codTitul</span>o': '<span class="PyNumber">6</span>'},
+ {<span class="hljs-symbol">'i</span>d': <span class="PyNumber">160633</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/160633',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'MANDETT</span>A',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'DE</span>M',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/36769',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'M</span>S',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">55</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/160633.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-type">None</span>,
+  <span class="hljs-symbol">'dataInici</span>o': <span class="hljs-symbol">'2015</span><span class="PyNumber">-02</span><span class="PyNumber">-01</span>',
+  <span class="hljs-symbol">'dataFi</span>m': <span class="hljs-symbol">'2017</span><span class="PyNumber">-02</span><span class="PyNumber">-02</span>',
+  <span class="hljs-symbol">'titul</span>o': <span class="hljs-symbol">'1</span>º <span class="hljs-type">Suplente</span> de <span class="hljs-type">Secret</span>ário',
+  <span class="hljs-symbol">'codTitul</span>o': '<span class="PyNumber">9</span>'},
+  ...]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaraorgaos>def DadosAbertosBrasil.camara.<strong class='verde'>orgaos</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações das comissões e outros órgãos legislativos da Câmara.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id do órgão legislativo para obter mais informações sobre ele.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos os órgãos.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre o órgão legislativo.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre um órgão da Câmara;</li>
+<li><code>eventos</code>: Os eventos ocorridos ou previstos em um órgão legislativo;</li>
+<li><code>membros</code>: Lista de cargos de um órgão e parlamentares que os ocupam;</li>
+<li><code>votacoes</code>: Informações detalhadas sobre votações de um órgão da Câmara.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do órgão legislativo como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todos os órgãos legislativos, caso <code>cod == None</code>. Cada row é um órgão e as columns são identificadores, tipos e descrições dos órgãos.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre o órgão legislativo, caso <code>cod</code> seja o id do órgão.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista dos órgãos legislativos:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.orgaos(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">apelido</th>
+<th style="text-align:right">codTipoOrgao</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">sigla</th>
+<th style="text-align:right">tipoOrgao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">Mesa Diretora</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">Mesa Diretora da Câmara dos Deputados</td>
+<td style="text-align:right">MESA</td>
+<td style="text-align:right">Comissão Diretora</td>
+</tr>
+<tr>
+<td style="text-align:left">51</td>
+<td style="text-align:right">Judiciário</td>
+<td style="text-align:right">50000</td>
+<td style="text-align:right">Judiciário</td>
+<td style="text-align:right">Judiciário</td>
+<td style="text-align:right">Órgão do Poder Judiciário</td>
+</tr>
+<tr>
+<td style="text-align:left">57</td>
+<td style="text-align:right">MINISTÉRIO PÚBLICO DA UNIÃO</td>
+<td style="text-align:right">81007</td>
+<td style="text-align:right">MINISTÉRIO PÚBLICO DA UNIÃO</td>
+<td style="text-align:right">MPU</td>
+<td style="text-align:right">MPU - Ministério Público da União</td>
+</tr>
+<tr>
+<td style="text-align:left">60</td>
+<td style="text-align:right">PRESIDÊNCIA DA REPÚBLICA</td>
+<td style="text-align:right">30000</td>
+<td style="text-align:right">Presidência da República</td>
+<td style="text-align:right">PR</td>
+<td style="text-align:right">Órgão do Poder Executivo</td>
+</tr>
+<tr>
+<td style="text-align:left">78</td>
+<td style="text-align:right">Senado Federal</td>
+<td style="text-align:right">40000</td>
+<td style="text-align:right">Senado Federal</td>
+<td style="text-align:right">SF</td>
+<td style="text-align:right">Órgão do Poder Legislativo</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter informações do conselho de ministros (código 301):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt; </span>camara.orgaos(cod=<span class="PyNumber">301</span>, serie=<span class="PyString">'informacoes'</span>)
+
+{<span class="PyString">'id'</span>: <span class="PyNumber">301</span>,
+ <span class="PyString">'uri'</span>: <span class="PyString">'https://dadosabertos.camara.leg.br/api/v2/orgaos/301'</span>,
+ <span class="PyString">'sigla'</span>: <span class="PyString">'CM'</span>,
+ <span class="PyString">'nome'</span>: <span class="PyString">'CONSELHO DE MINISTROS'</span>,
+ <span class="PyString">'apelido'</span>: <span class="PyString">'CONSELHO DE MINISTROS'</span>,
+ <span class="PyString">'codTipoOrgao'</span>: <span class="PyNumber">12000</span>,
+ <span class="PyString">'tipoOrgao'</span>: <span class="PyString">'Órgão da Câmara dos Deputados'</span>,
+ <span class="PyString">'dataInicio'</span>: <span class="hljs-keyword">None</span>,
+ <span class="PyString">'dataInstalacao'</span>: <span class="hljs-keyword">None</span>,
+ <span class="PyString">'dataFim'</span>: <span class="hljs-keyword">None</span>,
+ <span class="PyString">'dataFimOriginal'</span>: <span class="hljs-keyword">None</span>,
+ <span class="PyString">'casa'</span>: <span class="PyString">''</span>,
+ <span class="PyString">'sala'</span>: <span class="hljs-keyword">None</span>,
+ <span class="PyString">'urlWebsite'</span>: <span class="hljs-keyword">None</span>}
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camarapartidos>def DadosAbertosBrasil.camara.<strong class='verde'>partidos</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações dos partidos políticos que têm parlamentares em exercício na Câmara.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id do partido político para obter mais informações sobre ele.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com todos os partidos.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre o partido.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre um partido político;</li>
+<li><code>membros</code>: Uma lista dos parlamentares de um partido durante um período.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id do partido como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com todos os partidos políticos, caso <code>cod == None</code>. Cada row é um partido e as columns são o nome e a sigla deles.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre o partido político, caso <code>cod</code> seja o id do partido.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista dos partidos com parlamentares em exercício:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.partidos(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">sigla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">36898</td>
+<td style="text-align:right">Avante</td>
+<td style="text-align:right">AVANTE</td>
+</tr>
+<tr>
+<td style="text-align:left">37905</td>
+<td style="text-align:right">Cidadania</td>
+<td style="text-align:right">CIDADANIA</td>
+</tr>
+<tr>
+<td style="text-align:left">37902</td>
+<td style="text-align:right">Democracia Cristã</td>
+<td style="text-align:right">DC</td>
+</tr>
+<tr>
+<td style="text-align:left">36769</td>
+<td style="text-align:right">Democratas</td>
+<td style="text-align:right">DEM</td>
+</tr>
+<tr>
+<td style="text-align:left">36899</td>
+<td style="text-align:right">Movimento Democrático Brasileiro</td>
+<td style="text-align:right">MDB</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter a lista de parlamentares do partido NOVO (código 37901) em exercício na Câmara:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.orgaos(cod=<span class="PyNumber">301</span>, serie=<span class="hljs-symbol">'informacoe</span>s')
+
+[{<span class="hljs-symbol">'i</span>d': <span class="PyNumber">204528</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/204528',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'Adriana</span> <span class="hljs-type">Ventura</span>',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'NOV</span>O',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/37901',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'S</span>P',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/204528.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-symbol">'dep</span>.adrianaventura<span class="PyMeta">@camara</span>.leg.br'},
+ {<span class="hljs-symbol">'i</span>d': <span class="PyNumber">204516</span>,
+  <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/deputados/204516',</span>
+  <span class="hljs-symbol">'nom</span>e': <span class="hljs-symbol">'Alexis</span> <span class="hljs-type">Fonteyne</span>',
+  <span class="hljs-symbol">'siglaPartid</span>o': <span class="hljs-symbol">'NOV</span>O',
+  <span class="hljs-symbol">'uriPartid</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/partidos/37901',</span>
+  <span class="hljs-symbol">'siglaU</span>f': <span class="hljs-symbol">'S</span>P',
+  <span class="hljs-symbol">'idLegislatur</span>a': <span class="PyNumber">56</span>,
+  <span class="hljs-symbol">'urlFot</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//www.camara.leg.br/internet/deputado/bandep/204516.jpg',</span>
+  <span class="hljs-symbol">'emai</span>l': <span class="hljs-symbol">'dep</span>.alexisfonteyne<span class="PyMeta">@camara</span>.leg.br'},
+  ...]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaraproposicoes>def DadosAbertosBrasil.camara.<strong class='verde'>proposicoes</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações sobre projetos de lei, resoluções, medidas provisórias, emendas, pareceres e todos os outros tipos de proposições na Câmara.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id da proposição para obter mais informações sobre ela.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com as proposições mais recentes.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre a proposição.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre uma proposição específica;</li>
+<li><code>autores</code>: Lista pessoas e/ou entidades autoras de uma proposição;</li>
+<li><code>relacionadas</code>: Uma lista de proposições relacionadas a uma em especial;</li>
+<li><code>temas</code>: Lista de áreas temáticas de uma proposição;</li>
+<li><code>tramitacoes</code>: O histórico de passos na tramitação de uma proposta;</li>
+<li><code>votacoes</code>: Informações detalhadas de votações sobre uma proposição específica.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da proposição como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com as proposições mais recentes, caso <code>cod == None</code>. Cada row é uma proposição e as columns são os identificadores e descrições da proposição.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre a proposição, caso <code>cod</code> seja o id da proposição.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista com as proposições mais recentes:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.proposicoes(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">ano</th>
+<th style="text-align:right">codTipo</th>
+<th style="text-align:right">ementa</th>
+<th style="text-align:right">numero</th>
+<th style="text-align:right">siglaTipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">17915</td>
+<td style="text-align:right">2000</td>
+<td style="text-align:right">139</td>
+<td style="text-align:right">Dispõe sobre a jornada de trabalho dos Enferme...</td>
+<td style="text-align:right">2295</td>
+<td style="text-align:right">PL</td>
+</tr>
+<tr>
+<td style="text-align:left">45377</td>
+<td style="text-align:right">2002</td>
+<td style="text-align:right">139</td>
+<td style="text-align:right">Dispõe sobre a vigilância e o controle da qual...</td>
+<td style="text-align:right">6222</td>
+<td style="text-align:right">PL</td>
+</tr>
+<tr>
+<td style="text-align:left">327888</td>
+<td style="text-align:right">2006</td>
+<td style="text-align:right">139</td>
+<td style="text-align:right">Altera o art. 109 do Decreto-Lei nº 2.848, de ...</td>
+<td style="text-align:right">7220</td>
+<td style="text-align:right">PL</td>
+</tr>
+<tr>
+<td style="text-align:left">345103</td>
+<td style="text-align:right">2007</td>
+<td style="text-align:right">139</td>
+<td style="text-align:right">Dispõe sobre o Estatuto do Nascituro e dá outr...</td>
+<td style="text-align:right">478</td>
+<td style="text-align:right">PL</td>
+</tr>
+<tr>
+<td style="text-align:left">351367</td>
+<td style="text-align:right">2007</td>
+<td style="text-align:right">146</td>
+<td style="text-align:right">Solicita a instauração de procedimento de fisc...</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">REP</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter a lista de autores da PL 478 (código 345103):</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.proposicoes(cod=<span class="PyNumber">345103</span>, serie=<span class="PyString">'autores'</span>)
+
+[{<span class="PyString">'uri'</span>: <span class="PyString">'https://dadosabertos.camara.leg.br/api/v2/deputados/74059'</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Luiz Bassuma'</span>,
+  <span class="PyString">'codTipo'</span>: <span class="PyNumber">10000</span>,
+  <span class="PyString">'tipo'</span>: <span class="PyString">'Deputado'</span>,
+  <span class="PyString">'ordemAssinatura'</span>: <span class="PyNumber">1</span>,
+  <span class="PyString">'proponente'</span>: <span class="PyNumber">1</span>},
+ {<span class="PyString">'uri'</span>: <span class="PyString">'https://dadosabertos.camara.leg.br/api/v2/deputados/141469'</span>,
+  <span class="PyString">'nome'</span>: <span class="PyString">'Miguel Martini'</span>,
+  <span class="PyString">'codTipo'</span>: <span class="PyNumber">10000</span>,
+  <span class="PyString">'tipo'</span>: <span class="PyString">'Deputado'</span>,
+  <span class="PyString">'ordemAssinatura'</span>: <span class="PyNumber">2</span>,
+  <span class="PyString">'proponente'</span>: <span class="PyNumber">1</span>}]
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camaravotacoes>def DadosAbertosBrasil.camara.<strong class='verde'>votacoes</strong> (<em>cod=None, serie=&#39;informacoes&#39;, index=False</em>)</p>
+<p>Obtém a lista ou informações sobre as votações ocorridas em eventos dos diversos órgãos da Câmara.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>cod</strong>: (Opcional) int</li>
+</ul>
+<p>Insira o id da votação para obter mais informações sobre ela.</p>
+<p>Caso esse campo seja omitido, retorna uma lista com as votações mais recentes.</p>
+<ul>
+<li><strong>serie</strong>: string</li>
+</ul>
+<p>Insira um dos campos abaixo para obter mais informações sobre a votação.</p>
+<ul>
+<li><code>&#39;informacoes&#39;</code>: Informações detalhadas sobre uma votação da Câmara;</li>
+<li><code>orientacoes</code>: O voto recomendado pelas lideranças aos seus deputados em uma votação;</li>
+<li><code>votos</code>: Como cada parlamentar votou em uma votação nominal e aberta.</li>
+</ul>
+<p>Esse campo é ignorado caso <code>cod == None</code></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da votação como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p>Esse campo é ignorado caso um id seja fornecido no campo <code>cod</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo uma lista com as votações mais recentes, caso <code>cod == None</code>. Cada row é uma votação e as columns são descrições e horários da votação.</li>
+<li><strong>dict</strong>, contendo detalhes da série escolhida sobre a votação, caso <code>cod</code> seja o id da votação.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista com as votações mais recentes:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.votacoes(index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">id</th>
+<th style="text-align:right">aprovacao</th>
+<th style="text-align:right">data</th>
+<th style="text-align:right">dataHoraRegistro</th>
+<th style="text-align:right">descricao</th>
+<th style="text-align:right">proposicaoObjeto</th>
+<th style="text-align:right">siglaOrgao</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2236213-78</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">2020-05-08</td>
+<td style="text-align:right">2020-05-08T17:39:53</td>
+<td style="text-align:right">Aprovada a Redação Final assinada pelo Relator...</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">PLEN</td>
+</tr>
+<tr>
+<td style="text-align:left">2236213-77</td>
+<td style="text-align:right">0.0</td>
+<td style="text-align:right">2020-05-08</td>
+<td style="text-align:right">2020-05-08T17:37:43</td>
+<td style="text-align:right">Rejeitada a Emenda nº 14.</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">PLEN</td>
+</tr>
+<tr>
+<td style="text-align:left">2236213-74</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">2020-05-08</td>
+<td style="text-align:right">2020-05-08T16:44:41</td>
+<td style="text-align:right">Aprovada a Emenda n° 12.</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">PLEN</td>
+</tr>
+<tr>
+<td style="text-align:left">2236213-70</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">2020-05-08</td>
+<td style="text-align:right">2020-05-08T15:42:07</td>
+<td style="text-align:right">Mantido o texto.</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">PLEN</td>
+</tr>
+<tr>
+<td style="text-align:left">2236213-68</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">2020-05-08</td>
+<td style="text-align:right">2020-05-08T15:41:32</td>
+<td style="text-align:right">Mantido o texto.</td>
+<td style="text-align:right">None</td>
+<td style="text-align:right">PLEN</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter as informações da votação de código &#39;2236213-74&#39;:</p>
+<pre><code class="lang-pycon">&gt;&gt;&gt; camara.votacoes(cod=<span class="hljs-symbol">'2236213</span><span class="PyNumber">-74</span>', serie=<span class="hljs-symbol">'informacoe</span>s')
+
+{<span class="hljs-symbol">'i</span>d': <span class="hljs-symbol">'2236213</span><span class="PyNumber">-74</span>',
+ <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/votacoes/2236213-74',</span>
+ <span class="hljs-symbol">'dat</span>a': <span class="hljs-symbol">'2020</span><span class="PyNumber">-05</span><span class="PyNumber">-08</span>',
+ <span class="hljs-symbol">'dataHoraRegistr</span>o': <span class="hljs-symbol">'2020</span><span class="PyNumber">-05</span><span class="PyNumber">-08</span>T16:<span class="PyNumber">44</span>:<span class="PyNumber">41</span>',
+ <span class="hljs-symbol">'siglaOrga</span>o': <span class="hljs-symbol">'PLE</span>N',
+ <span class="hljs-symbol">'uriOrga</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/orgaos/180',</span>
+ <span class="hljs-symbol">'idOrga</span>o': <span class="PyNumber">180</span>,
+ <span class="hljs-symbol">'uriEvent</span>o': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/eventos/59601',</span>
+ <span class="hljs-symbol">'idEvent</span>o': <span class="PyNumber">59601</span>,
+ <span class="hljs-symbol">'descrica</span>o': <span class="hljs-symbol">'Aprovada</span> a <span class="hljs-type">Emenda</span> n° <span class="PyNumber">12.</span>',
+ <span class="hljs-symbol">'aprovaca</span>o': <span class="PyNumber">1</span>,
+ <span class="hljs-symbol">'descUltimaAberturaVotaca</span>o': <span class="hljs-symbol">'Vota</span>ção do <span class="hljs-type">DTQ</span> <span class="PyNumber">5</span>: <span class="hljs-type">Bloco</span> <span class="hljs-type">PP</span>: destaque da emenda de <span class="hljs-type">Plen</span>ário nº <span class="PyNumber">12</span> apresentada à <span class="hljs-type">MP</span> <span class="PyNumber">915</span>/<span class="PyNumber">2019</span>, com vistas a sua inclusão no texto. (<span class="PyNumber">161</span>, <span class="hljs-type">II</span>)',
+ <span class="hljs-symbol">'dataHoraUltimaAberturaVotaca</span>o': <span class="hljs-symbol">'2020</span><span class="PyNumber">-05</span><span class="PyNumber">-08</span>T15:<span class="PyNumber">47</span>:<span class="PyNumber">05</span>',
+ <span class="hljs-symbol">'ultimaApresentacaoProposica</span>o': {<span class="hljs-symbol">'dataHoraRegistr</span>o': <span class="hljs-symbol">'2020</span><span class="PyNumber">-04</span><span class="PyNumber">-30</span>T13:<span class="PyNumber">14</span>:<span class="PyNumber">53</span>',
+  <span class="hljs-symbol">'descrica</span>o': <span class="hljs-symbol">'Apresenta</span>ção do <span class="hljs-type">Projeto</span> de <span class="hljs-type">Lei</span> de <span class="hljs-type">Convers</span>ão n. <span class="PyNumber">9</span>/<span class="PyNumber">2020</span>, pelo <span class="hljs-type">Deputado</span> <span class="hljs-type">Rodrigo</span> de <span class="hljs-type">Castro</span> (<span class="hljs-type">PSDB</span>-<span class="hljs-type">MG</span>), que: <span class="PyString">"[EMENTA!]"</span>.',
+  <span class="hljs-symbol">'uriProposicaoCitad</span>a': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/proposicoes/2250966'},</span>
+ <span class="hljs-symbol">'efeitosRegistrado</span>s': [],
+ <span class="hljs-symbol">'objetosPossivei</span>s': [{<span class="hljs-symbol">'i</span>d': <span class="PyNumber">2250884</span>,
+   <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/proposicoes/2250884',</span>
+   <span class="hljs-symbol">'siglaTip</span>o': <span class="hljs-symbol">'EM</span>P',
+   <span class="hljs-symbol">'codTip</span>o': <span class="PyNumber">873</span>,
+   <span class="hljs-symbol">'numer</span>o': <span class="PyNumber">1</span>,
+   <span class="hljs-symbol">'an</span>o': <span class="PyNumber">2020</span>,
+   <span class="hljs-symbol">'ement</span>a': ''},
+  {<span class="hljs-symbol">'i</span>d': <span class="PyNumber">2251874</span>,
+   <span class="hljs-symbol">'ur</span>i': <span class="hljs-symbol">'https</span>:<span class='PyComment'>//dadosabertos.camara.leg.br/api/v2/proposicoes/2251874',</span>
+   <span class="hljs-symbol">'siglaTip</span>o': <span class="hljs-symbol">'ER</span>D',
+   <span class="hljs-symbol">'codTip</span>o': <span class="PyNumber">872</span>,
+   <span class="hljs-symbol">'numer</span>o': <span class="PyNumber">1</span>,
+   <span class="hljs-symbol">'an</span>o': <span class="PyNumber">2020</span>,
+   <span class="hljs-symbol">'ement</span>a': <span class="hljs-symbol">'Emenda</span> de redação à <span class="hljs-type">MPV</span> <span class="PyNumber">915</span>/<span class="PyNumber">2019.</span>'},
+   ...
+</code></pre>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Camarareferencias>def DadosAbertosBrasil.camara.<strong class='verde'>referencias</strong> (<em>funcao, index=False</em>)</p>
+<p>Obtém a lista de dados ou parâmetros utilizados no módulo <code>camara</code>.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>funcao</strong>: string</li>
+</ul>
+<p>Lista de referências a ser buscada.</p>
+<p>Pode ser um dos seguintes valores:</p>
+<ul>
+<li><code>codSituacaoDeputados</code>: As possíveis situações de exercício parlamentar de um deputado;</li>
+<li><code>siglaUF</code>: As siglas e nomes dos estados e do Distrito Federal;</li>
+<li><code>codSituacaoEvento</code>: As possíveis situações para eventos;</li>
+<li><code>codTipoEvento</code>: Os tipos de eventos realizados na Câmara;</li>
+<li><code>codSituacaoOrgao</code>: As situações em que órgãos podem se encontrar;</li>
+<li><code>codTipoOrgao</code>: Os tipos de órgãos que existem na Câmara;</li>
+<li><code>codSituacaoProposicao</code>: Os possíveis estados de tramitação de uma proposição;</li>
+<li><code>codTema</code>: Os vários tipos de temas existentes;</li>
+<li><code>codTipoAutor</code>: Entidades que podem ser autoras de proposições;</li>
+<li><code>codTipoTramitacao</code>: Os vários tipos de tramitação existentes;</li>
+<li><code>siglaTipo</code>: Os vários tipos de proposições existentes;</li>
+<li><code>situacoesDeputado</code>: As possíveis situações de exercício parlamentar de um deputado;</li>
+<li><code>situacoesEvento</code>: As possíveis situações para eventos;</li>
+<li><code>situacoesOrgao</code>: As situações em que órgãos podem se encontrar;</li>
+<li><code>situacoesProposicao</code>: Os possíveis estados de tramitação de uma proposição;</li>
+<li><code>tiposAutor</code>: Entidades que podem ser autoras de proposições;</li>
+<li><code>tiposEvento</code>: Os tipos de eventos realizados na Câmara;</li>
+<li><code>tiposOrgao</code>: Os tipos de órgãos que existem na Câmara;</li>
+<li><code>tiposProposicao</code>: Os vários tipos de proposições existentes;</li>
+<li><code>tiposTramitacao</code>: Os vários tipos de tramitação existentes;</li>
+<li><code>uf</code>: As siglas e nomes dos estados e do Distrito Federal.</li>
+</ul>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir o id da referência como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, contendo identificados e descrições da função buscada.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obter a lista de unidades da federação:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.referencias(<span class="PyString">'uf'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">cod</th>
+<th style="text-align:right">descricao</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">sigla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">6</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">ACRE</td>
+<td style="text-align:right">AC</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">14</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">ALAGOAS</td>
+<td style="text-align:right">AL</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">4</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">AMAZONAS</td>
+<td style="text-align:right">AM</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">2</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">AMAPÁ</td>
+<td style="text-align:right">AP</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">16</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">BAHIA</td>
+<td style="text-align:right">BA</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Obter a lista de tipos de autores, colocando o código do tipo como índice do DataFrame:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> camara.referencias(<span class="PyString">'codTipoAutor'</span>, index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">cod</th>
+<th style="text-align:right">descricao</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">sigla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">COMISSÃO DIRETORA</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">COMISSÃO PERMANENTE</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">COMISSÃO ESPECIAL</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">COMISSÃO PARLAMENTAR DE INQUÉRITO</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:right"></td>
+<td style="text-align:right">COMISSÃO EXTERNA</td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+
+<hr>
+
+<p class='SubTitle' id=CamaraDeputados2>class DadosAbertosBrasil.camara.<strong class='verde'>Deputados</strong> (<em>id=None, nome=None, legislatura=None, uf=None, partido=None, sexo=None, pagina=None, itens=None, inicio=None, fim=None, asc=True, ordenar_por='nome'</em>)</p>
+<p>Obtém a lista de deputados em atividade parlamentar, com filtros.</p>
+<p>Essa classe substituirá a função <code>camara.deputados</code> no futuro.</p>
+
+<p><strong><em>Parâmetros:</em></strong></p>
+
+<ul>
+	<li><strong>id</strong>: (Opcional) int ou list</li>
+</ul>
+<p>Número(s) identificador(es) de um deputado.</p>
+
+<ul>
+	<li><strong>nome</strong>: (Opcional) string</li>
+</ul>
+<p>Selecione deputados cujo nome contenha essa string.</p>
+
+<ul>
+	<li><strong>legislatura</strong>: (Opcional) int ou list</li>
+</ul>
+<p>Número(s) identificador(es) de uma ou mais legislatura(s) de que os parlamentares tenham participado.</p>
+
+<ul>
+	<li><strong>uf</strong>: (Opcional) string ou list</li>
+</ul>
+<p>Uma ou mais sigla(s) de unidades federativas (string de duas letras). Uma lista de siglas válidas pode ser obtida em <code>camara.referencias('uf')</code>.</p>
+
+<ul>
+	<li><strong>partido</strong>: (Opcional) string ou list</li>
+</ul>
+<p>Uma ou mais sigla(s) de partidos aos quais sejam filiados os deputados. Para obter as siglas válidas, consulte <code>camara.partidos()</code>. Atenção: partidos diferentes podem usar a mesma sigla em diferentes legislaturas!</p>
+
+<ul>
+	<li><strong>sexo</strong>: (Opcional) <code>'M'</code> ou <code>'F'</code></li>
+</ul>
+<p>Letra que designe o gênero dos parlamentares que se deseja buscar, sendo <code>'M'</code> para masculino e <code>'F'</code> para feminino.</p>
+
+<ul>
+	<li><strong>pagina</strong>: (Opcional) int
+</ul>
+<p>Número da página de resultados, a partir de 1, que se deseja obter com a requisição. Se omitido, assume o valor 1. A quantidade de itens por página é definida no parâmetro <code>itens</code>.</p>
+
+<ul>
+	<li><strong>itens</strong>: (Opcional) int
+</ul>
+<p>Número máximo de itens na página que se deseja obter com esta requisição. A quantidade de páginas é definida no parâmetro <code>pagina</code>.</p>
+
+<ul>
+	<li><strong>inicio</strong>: (Opcional) string no formato <code>'AAAA-MM-DD'</code>
+</ul>
+<p>Data de início de um intervalo de tempo, no formato <code>'AAAA-MM-DD'</code>.</p>
+
+<ul>
+	<li><strong>fim</strong>: (Opcional) string no formato <code>'AAAA-MM-DD'</code>
+</ul>
+<p>Data de término de um intervalo de tempo, no formato <code>'AAAA-MM-DD'</code>.</p>
+
+<ul>
+	<li><strong>asc</strong>: (Opcional) <code>True</code> ou <code>False</code>
+</ul>
+<p>O sentido da ordenação: <code>True</code> para A a Z ou 0 a 9, e <code>False</code> para Z a A ou 9 a 0.</p>
+
+<ul>
+	<li><strong>ordenar_por</strong>: (Opcional) <code>id</code>, <code>idLegislatura</code>, <code>nome</code>, <code>siglaUF</code> ou <code>siglaPartido</code>.
+</ul>
+<p>Nome do campo pelo qual a lista deve ser ordenada.</p>
+
+<p><strong><em>Atributos:</em></strong></p>
+<p>Os atributos são os mesmos que os parâmetros.</p>
+<p>Eles podem ser adicionados tanto pela função <code>__init__</code> quando a class é criada, quanto alimentando os atributos posteriormente.</p>
+
+<ul>
+	<li><strong>id</strong></li>
+	<li><strong>nome</strong></li>
+	<li><strong>legislatura</strong></li>
+	<li><strong>uf</strong></li>
+	<li><strong>partido</strong></li>
+	<li><strong>sexo</strong></li>
+	<li><strong>pagina</strong></li>
+	<li><strong>itens</strong></li>
+	<li><strong>inicio</strong></li>
+	<li><strong>fim</strong></li>
+	<li><strong>asc</strong></li>
+	<li><strong>ordenar_por</strong></li>
+</ul>
+
+<p><strong><em>Métodos:</em></strong></p>
+<ul>
+	<li><strong>.query()</strong></li>
+</ul>
+<p>Obtém uma string contendo a URL da API com os parâmetros alimentados.</p>
+<p>Utilize esta URL para obter o arquivo <code>.json</code> da consulta diretamente.</p>
+
+<ul>
+	<li><p>Parâmetros:</p>
+		<ul>
+			<li><strong>Nenhum</strong></li>
+		</ul>
+	</li>
+	<li><p>Retorna:</p>
+		<ul>
+			<li><strong>str</strong>, contendo a URL da consulta.</li>
+		</ul>
+	</li>
+</ul>
+
+<ul>
+<li><strong>.rodar()</strong></li>
+</ul>
+<p>Obtém o resultado da consulta em função dos parâmetros alimentados no objeto SIDRA.</p>
+<ul>
+	<li><p>Parâmetros:</p>
+		<ul>
+			<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+		</ul>
+		<p><code>True</code> para definir o id do(a) deputado(a) como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+	</li>
+	<li><p>Retorna:</p>
+		<ul>
+			<li><strong>pandas.DataFrame</strong>, contendo uma lista filtrada de deputados. Cada row é um deputado e as columns são o nome, partido, estado, e-mail, legislatura atual e a URL da foto no site da câmara.</li>
+		</ul>
+	</li>
+</ul>
+
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obtém a lista de deputados do partido MDB, de Santa Catarina e sexo masculino:</p>
+
+<pre><code class="lang-pycon"><span class='PyMeta'>&gt;&gt;&gt;</span> camara.Deputados(sexo=<span class='PyString'>'M'</span>, partido=<span class='PyString'>'MDB'</span>, uf=<span class='PyString'>'SC'</span>).rodar()
+
+<span class='PyComment'># Alternativamente...</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep = camara.Deputados()
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.sexo = <span class='PyString'>'M'</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.partido = <span class='PyString'>'MDB'</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.uf = <span class='PyString'>'SC'</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.rodar()</code></pre>
+
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">email</th>
+<th style="text-align:right">id</th>
+<th style="text-align:right">idLegislatura</th>
+<th style="text-align:right">nome</th>
+<th style="text-align:right">siglaPartido</th>
+<th style="text-align:right">siglaUf</th>
+<th style="text-align:right">urlFoto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">dep.carloschiodini@camara.leg.br</td>
+<td style="text-align:right">204361</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Carlos Chiodini</td>
+<td style="text-align:right">MDB</td>
+<td style="text-align:right">SC</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">dep.celsomaldaner@camara.leg.br</td>
+<td style="text-align:right">141405</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Celso Maldaner</td>
+<td style="text-align:right">MDB</td>
+<td style="text-align:right">SC</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">dep.rogeriopeninhamendonca@camara.leg.br</td>
+<td style="text-align:right">160651</td>
+<td style="text-align:right">56</td>
+<td style="text-align:right">Rogério Peninha Mendonça</td>
+<td style="text-align:right">MDB</td>
+<td style="text-align:right">SC</td>
+<td style="text-align:right"><a href="https://www.camara.leg.br/internet/deputado/ba">https://www.camara.leg.br/internet/deputado/ba</a>...</td>
+</tr>
+</tbody>
+</table></div>
+
+<p>Obtem a url para a API original com a lista de deputados contendo <code>Campos</code> no nome das legislaturas 54, 55 e 56, ordenados por UF:</p>
+<pre><code class="lang-pycon"><span class='PyMeta'>&gt;&gt;&gt;</span> camara.Deputados(nome=<span class='PyString'>'Campos'</span>, legislatura=[<span class='PyNumber'>54</span>,<span class='PyNumber'>55</span>,<span class='PyNumber'>56</span>], ordenar_por=<span class='PyString'>'siglaUF'</span>, asc=<span class='PyNumber'>True</span>).query()
+
+<span class='PyComment'>Alternativamente...</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> camara.Deputados().query()
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.nome = <span class='PyString'>'Campos'</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.legislatura = [<span class='PyNumber'>54</span>, <span class='PyNumber'>55</span>, <span class='PyNumber'>56</span>]
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.ordenar_por = <span class='PyString'>'siglaUF'</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.asc = <span class='PyNumber'>True</span>
+<span class='PyMeta'>&gt;&gt;&gt;</span> dep.query()
+
+<span class='PyString'>'https://dadosabertos.camara.leg.br/api/v2/deputados?nome=Campos&idLegislatura=54&idLegislatura=55&idLegislatura=56&ordem=ASC&ordenarPor=siglaUF'
+</code></pre>
+
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a></p>
+		</div>
+		
+		<div class='container Text dark' id=SessaoFavoritos style='margin-top: 30px; background-color: white; padding: 30px'>
+
+			<p class='Title'>DadosAbertosBrasil.<strong class='verde'>favoritos</strong></p>
+			<p>Algumas funções selecionadas que não fazer parte dos módulos principais.</p>
+<ul>
+<li>favoritos.<a href="#Favoritosmoedas">moedas</a></li>
+<li>favoritos.<a href="#Favoritoscambio">cambio</a></li>
+<li>favoritos.<a href="#Favoritosipca">ipca</a></li>
+<li>favoritos.<a href="#Favoritoscatalogo">catalogo</a></li>
+</ul>
+<p>Importe o módulo com <code>from DadosAbertosBrasil import favoritos</code></p>
+
+<hr>
+
+<p class='SubTitle' id=Favoritosmoedas>def DadosAbertosBrasil.favoritos.<strong class='verde'>moedas</strong> ()</p>
+<p>Nomes e símbolos das principais moedas internacionais.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><p><strong>pandas.DataFrame</strong>, onde cada row é uma moeda e as três columns são o nome completo, a sigla de três letras e o tipo da moeda.</p>
+<ul>
+<li>Tipo A: Moeda cuja paridade é expressa em quantidade de moeda por uma unidade de dólar.</li>
+<li>Tipo B: Moeda cuja paridade é expressa em quantidade de dólar, por uma unidade de moeda.</li>
+</ul>
+</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obtém a lista das principais moedas:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> favoritos.moedas()
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">Nome</th>
+<th style="text-align:right">Símbolo</th>
+<th style="text-align:right">Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">Dólar australiano</td>
+<td style="text-align:right">AUD</td>
+<td style="text-align:right">B</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">Dólar canadense</td>
+<td style="text-align:right">CAD</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">Franco suíço</td>
+<td style="text-align:right">CHF</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">Coroa dinamarquesa</td>
+<td style="text-align:right">DKK</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">Euro</td>
+<td style="text-align:right">EUR</td>
+<td style="text-align:right">B</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:right">Libra Esterlina</td>
+<td style="text-align:right">GBP</td>
+<td style="text-align:right">B</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:right">Iene</td>
+<td style="text-align:right">JPY</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:right">Coroa norueguesa</td>
+<td style="text-align:right">NOK</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:right">Coroa sueca</td>
+<td style="text-align:right">SEK</td>
+<td style="text-align:right">A</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:right">Dólar dos Estados Unidos</td>
+<td style="text-align:right">USD</td>
+<td style="text-align:right">A</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.bcb.gov.br/dataset/taxas-de-cambio-todos-os-boletins-diarios/resource/9d07b9dc-c2bc-47ca-af92-10b18bcd0d69?inner_span=True">https://dadosabertos.bcb.gov.br/dataset/taxas-de-cambio-todos-os-boletins-diarios/resource/9d07b9dc-c2bc-47ca-af92-10b18bcd0d69?inner_span=True</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Favoritoscambio>def DadosAbertosBrasil.favoritos.<strong class='verde'>cambio</strong> (<em>moedas=&#39;USD&#39;, data_inicial=&#39;01-01-2000&#39;, data_final=None, index=False</em>)</p>
+<p>Obtém as taxas de câmbio das principais moedas internacionais por período.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>moedas:</strong> (Opcional) string ou lista de strings</li>
+</ul>
+<p>Moeda(s) que se deseja pesquisar.</p>
+<p>Assume <code>&#39;USD&#39;</code> (dólar americano) como valor padrão.</p>
+<p>As siglas das moedas são as mesmas da consulta <code>favoritos.moedas()</code>.</p>
+<ul>
+<li><strong>data_inicial:</strong> (Opcional) string no formato <code>MM-DD-AAAA</code></li>
+</ul>
+<p>Data inicial da consulta.</p>
+<p>Assume <code>01-01-2000</code> como valor padrão.</p>
+<ul>
+<li><strong>data_final:</strong> (Opcional) string no formato <code>MM-DD-AAAA</code></li>
+</ul>
+<p>Data final da consulta.</p>
+<p>Caso valor seja omitido (<code>None</code>), a data final da consulta será <code>datetime.datetime.today()</code> (a data do hoje, segundo o sistema).</p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir a data da cotação como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, onde cada row é um valor da cotação em um datetime específico e cada column é uma moeda consultada.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Pesquisar pela cotação do euro a partir de 01/01/2020 até o dia de hoje:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> favoritos.cambio(<span class="PyString">'EUR'</span>, data_inicial=<span class="PyString">'01-01-2020'</span>)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">Data</th>
+<th style="text-align:right">EUR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">2020-01-02 13:11:10.762</td>
+<td style="text-align:right">4.5051</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">2020-01-03 13:06:22.606</td>
+<td style="text-align:right">4.5247</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">2020-01-06 13:03:22.271</td>
+<td style="text-align:right">4.5384</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">2020-01-07 13:06:14.601</td>
+<td style="text-align:right">4.5513</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">2020-01-08 13:03:56.075</td>
+<td style="text-align:right">4.5235</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pesquisar as cotações do dólar americano e do dólar canadense do dia 15/01/2020 até o dia 20/01/2020, usando a data como index do DataFrame:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> favoritos.cambio([<span class="PyString">'USD'</span>, <span class="PyString">'CAD'</span>], data_inicial=<span class="PyString">'01-15-2020'</span>, data_final=<span class="PyString">'01-20-2020'</span>, index=True)
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left">Data</th>
+<th style="text-align:right">USD</th>
+<th style="text-align:right">CAD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2020-01-15</td>
+<td style="text-align:right">4.1622</td>
+<td style="text-align:right">3.1906</td>
+</tr>
+<tr>
+<td style="text-align:left">2020-01-16</td>
+<td style="text-align:right">4.1726</td>
+<td style="text-align:right">3.1996</td>
+</tr>
+<tr>
+<td style="text-align:left">2020-01-17</td>
+<td style="text-align:right">4.1837</td>
+<td style="text-align:right">3.2044</td>
+</tr>
+<tr>
+<td style="text-align:left">2020-01-20</td>
+<td style="text-align:right">4.1829</td>
+<td style="text-align:right">3.2036</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.bcb.gov.br/dataset/taxas-de-cambio-todos-os-boletins-diarios/resource/b31299d9-7fe6-45ca-ac88-a03273ff280f?inner_span=True">https://dadosabertos.bcb.gov.br/dataset/taxas-de-cambio-todos-os-boletins-diarios/resource/b31299d9-7fe6-45ca-ac88-a03273ff280f?inner_span=True</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Favoritosipca>def DadosAbertosBrasil.favoritos.<strong class='verde'>ipca</strong> (<em>index=False</em>)</p>
+<p>Obtém o valor mensal do índice IPCA, a partir de Janeiro de 1992.</p>
+<p>Apesar do que o índice IPCA também pode ser obtido nos módulos <code>DadosAbertosBrasil.ibge</code> e <code>DadosAbertosBrasil.ipea</code>, esta função obtem o índice através da API do Banco Central do Brasil e permite uma consulta simples sem necessidade de especificar outros parâmetros.</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>index:</strong> (Opcional) <code>True</code> ou <code>False</code>.</li>
+</ul>
+<p><code>True</code> para definir a data como index do DataFrame. Caso omitido, assume o valor <code>False</code>.</p>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, onde cada row é uma data de referência e a column principal é o valor do índice IPCA em relação àquele mês.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Captura o índice IPCA mensal do Banco Central:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> favoritos.ipca()
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">Data</th>
+<th style="text-align:right">IPCA Mensal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">1992-01-01</td>
+<td style="text-align:right">26.18</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">1992-01-02</td>
+<td style="text-align:right">22.40</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">1992-01-03</td>
+<td style="text-align:right">21.25</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">1992-01-04</td>
+<td style="text-align:right">18.96</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">1992-01-05</td>
+<td style="text-align:right">25.52</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://dadosabertos.bcb.gov.br/dataset/4448-indice-de-precos-ao-consumidor-amplo-ipca---nao-comercializaveis">https://dadosabertos.bcb.gov.br/dataset/4448-indice-de-precos-ao-consumidor-amplo-ipca---nao-comercializaveis</a></p>
+
+<hr>
+
+<p class='SubTitle' id=Favoritoscatalogo>def DadosAbertosBrasil.favoritos.<strong class='verde'>catalogo</strong> ()</p>
+<p>Obtém o catálogo de iniciativas oficiais de dados abertos no Brasil</p>
+<p><strong><em>Parâmetros:</em></strong></p>
+<ul>
+<li><strong>Nenhum</strong></li>
+</ul>
+<p><strong><em>Retorna:</em></strong></p>
+<ul>
+<li><strong>pandas.DataFrame</strong>, onde cada row é uma API de dados abertos no Brasil e as columns são o título, a URL, o município, a UF, a esfera (Estadual, Municipal ou Federal), o poder (Executivo ou Legislativo) e a solução (CKAN, Interna ou ArcGIS) da API.</li>
+</ul>
+<p><strong><em>Exemplos:</em></strong></p>
+<p>Obtém o catalogo de iniciativas de dados abertos no Brasil:</p>
+<pre><code class="lang-pycon"><span class="PyMeta">&gt;&gt;&gt;</span> favoritos.catalogo()
+</code></pre>
+<div class='table-responsive'><table class='table'>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">Título</th>
+<th style="text-align:right">URL</th>
+<th style="text-align:right">Município</th>
+<th style="text-align:right">UF</th>
+<th style="text-align:right">Esfera</th>
+<th style="text-align:right">Poder</th>
+<th style="text-align:right">Solução</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:right">Alagoas em dados e informações</td>
+<td style="text-align:right"><a href="http://dados.al.gov.br/">http://dados.al.gov.br/</a></td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">AL</td>
+<td style="text-align:right">Estadual</td>
+<td style="text-align:right">Executivo</td>
+<td style="text-align:right">CKAN</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:right">Fortaleza Dados Abertos</td>
+<td style="text-align:right"><a href="http://dados.fortaleza.ce.gov.br/">http://dados.fortaleza.ce.gov.br/</a></td>
+<td style="text-align:right">Fortaleza</td>
+<td style="text-align:right">CE</td>
+<td style="text-align:right">Municipal</td>
+<td style="text-align:right">Executivo</td>
+<td style="text-align:right">CKAN</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:right">Dados abertos – TCM-CE</td>
+<td style="text-align:right"><a href="http://api.tcm.ce.gov.br/">http://api.tcm.ce.gov.br/</a></td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">CE</td>
+<td style="text-align:right">Estadual</td>
+<td style="text-align:right">Legislativo</td>
+<td style="text-align:right">Interna</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:right">Dados abertos Distrito Federal</td>
+<td style="text-align:right"><a href="http://dados.df.gov.br/">http://dados.df.gov.br/</a></td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">DF</td>
+<td style="text-align:right">Estadual</td>
+<td style="text-align:right">Executivo</td>
+<td style="text-align:right">CKAN</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:right">Dados abertos – Governo do ES</td>
+<td style="text-align:right"><a href="https://transparencia.es.gov.br/DadosAbertos/B">https://transparencia.es.gov.br/DadosAbertos/B</a>...</td>
+<td style="text-align:right">NaN</td>
+<td style="text-align:right">ES</td>
+<td style="text-align:right">Estadual</td>
+<td style="text-align:right">Executivo</td>
+<td style="text-align:right">Interna</td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+<td style="text-align:right">...</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><em>Documentação da API original:</em></strong></p>
+<p><a href="https://github.com/dadosgovbr/catalogos-dados-brasil">https://github.com/dadosgovbr/catalogos-dados-brasil</a></p>
+		</div>
+		
+		<div class='container Text dark' id=SessaoEmBreve style='margin-top: 30px; margin-bottom: 30px; background-color: white; padding: 30px'>
+
+			<p class='Title azul'>Em breve...</p>
+			<p>Nossos próximos passos serão:</p>
+			<ul>
+				<li>Módulo <code>senado</code>, similar ao módulo <code>camara</code>. Será necessário adicionar um package <code>xml</code>;</li>
+				<li>Substituição das funções do módulo <code>camara</code> por classes. Atualmente as funções capturam apenas dados dos últimos seis meses e da última legislatura;</li>
+				<li>Expansão das funções de filtro e busca de séries, para facilitar encontrar a série desejada;</li>
+				<li>Padronização dos nomes das colunas dos DataFrame para melhor interpretação do usuário e integração entre módulos;</li>
+				<li>Adição constante de novas funções no módulo <code>favoritos</code>.</li>
+			</ul>
+
+		</div>
+	</body>
+</html>
