@@ -36,6 +36,11 @@ html {
 	font-weight: 400;	
 }
 
+.Exemplo {
+	border-radius: 8px;
+	max-width: 100%
+}
+
 
 /* Colors */
 .verde {color: #009B3A}
