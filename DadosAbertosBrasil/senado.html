@@ -1,0 +1,2314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>DadosAbertosBrasil.senado API documentation</title>
+<meta name="description" content="Módulo para captura dos dados abertos da Senado Brasileiro …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:100%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Módulo <code>DadosAbertosBrasil.<span style='color:#009B3A'>senado</span></code></h1>
+</header>
+<section id="section-intro">
+<p>Módulo para captura dos dados abertos da Senado Brasileiro.</p>
+<h2 id="mini-tutorial">Mini-Tutorial</h2>
+<ol>
+<li>Importe o módulo <code>senado</code></li>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from DadosAbertosBrasil import senado
+</code></pre>
+<li>Utilize as funções <code>lista</code> para identificar o código do Senado desejado.</li>
+<pre><code class="language-python-repl">&gt;&gt;&gt; senado.lista_atual( ... )
+&gt;&gt;&gt; senado.lista_afastados( ... )
+&gt;&gt;&gt; senado.lista_legislatura( ... )
+</code></pre>
+<li>Utilize a classe <code><a title="DadosAbertosBrasil.senado.Senador" href="#DadosAbertosBrasil.senado.Senador">Senador</a></code> para obter as informações do(a) parlamentar.</li>
+<pre><code class="language-python-repl">&gt;&gt;&gt; sen = senado.Senador(cod)
+</code></pre>
+<li>Após a class Senador ser instanciada, utilize seus métodos para buscas
+outros tipos de informação sobre ele(a).</li>
+<pre><code class="language-python-repl">&gt;&gt;&gt; sen.cargos( ... )
+&gt;&gt;&gt; sen.votacoes( ... )
+&gt;&gt;&gt; ...
+</code></pre></ol>
+<h2 id="documentacao-da-api-original">Documentação original</h2>
+<p><a href="http://legis.senado.gov.br/dadosabertos/docs/">http://legis.senado.gov.br/dadosabertos/docs/</a></p>
+<hr>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Módulo para captura dos dados abertos da Senado Brasileiro.
+
+Mini-Tutorial
+-------------
+1. Importe o módulo `senado`
+&gt;&gt;&gt; from DadosAbertosBrasil import senado
+
+2. Utilize as funções `lista` para identificar o código do Senado desejado.
+&gt;&gt;&gt; senado.lista_atual( ... )
+&gt;&gt;&gt; senado.lista_afastados( ... )
+&gt;&gt;&gt; senado.lista_legislatura( ... )
+
+3. Utilize a classe `Senador` para obter as informações do(a) parlamentar.
+&gt;&gt;&gt; sen = senado.Senador(cod)
+
+4. Após a class Senador ser instanciada, utilize seus métodos para buscas
+outros tipos de informação sobre ele(a).
+&gt;&gt;&gt; sen.cargos( ... )
+&gt;&gt;&gt; sen.votacoes( ... )
+&gt;&gt;&gt; ... 
+
+Documentação original
+----------------------------
+http://legis.senado.gov.br/dadosabertos/docs/
+
+------------------------------------------------------------------------------
+&#39;&#39;&#39;
+
+
+
+import pandas as _pd
+import requests
+
+from . import _utils
+from . import API
+
+
+
+_api = API(&#39;senado&#39;)
+
+
+
+def _get_request(
+        path: str,
+        params: dict = None,
+        keys: list = None
+    ) -&gt; dict:
+
+    data = _api.get(path=path, params=params)
+
+    if keys is not None:
+        for key in keys:
+            if data is not None:
+                if key in data:
+                    data = data[key]
+
+    return data
+
+
+
+def lista_atual(
+        participacao: str = None,
+        uf: str = None
+    ) -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores em exercício.
+
+    Parâmetros
+    ----------
+    participacao: str (default=None)
+        Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - &#39;T&#39;: Busca apenas titulares.
+        - &#39;S&#39;: Busca apenas suplentes.
+    uf: str (default=None)
+        Filtra uma unidade federativa.
+        Se uf=None, lista senadores de todas as UFs.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores em exercício.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if participacao is not None:
+        tags[&#39;participacao&#39;] = participacao.upper()
+    if uf is not None:
+        tags[&#39;uf&#39;] = _utils.parse_uf(uf)
+
+    path = &#39;senador/lista/atual&#39;
+    keys = [&#39;ListaParlamentarEmExercicio&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(path, tags, keys)
+
+
+
+def lista_afastados() -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores atualmente afastados.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores afastados.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    url = f&#39;senador/lista/afastados&#39;
+    keys = [&#39;AfastamentoAtual&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(url, None, keys)
+
+
+
+def lista_legislatura(
+        inicio: int,
+        fim: int = None,
+        exercicio: str = None,
+        participacao: str = None,
+        uf: str = None
+    ) -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores de uma legislatura ou de um intervalo de legislaturas.
+
+    Parâmetros
+    ----------
+    inicio: int
+        Código da primeira legislatura da consulta.
+    fim: int (default=None)
+        Código da última legislatura da consulta.
+        Se fim=None, pesquisa apenas pela legislatura do campo `inicio`.
+        Caso contrário, pesquisa todas os valores de todas as legislaturas
+        entre `inicio` e `fim`. 
+    exercicio: str (default=None)
+        - &#39;S&#39;: Consulta apenas os senadores que entraram em exercício.
+        - &#39;N&#39;: Consulta apenas os senadores que não entratam em exercício.
+    participacao: str (default=None)
+        Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - &#39;T&#39;: Busca apenas titulares.
+        - &#39;S&#39;: Busca apenas suplentes.
+    uf: str (default=None)
+        Filtra uma unidade federativa.
+        Se uf=None, lista senadores de todas as UFs.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores das legislaturas
+        consultadas.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/lista/legislatura/{inicio}&#39;
+    
+    if fim is not None:
+        path += f&#39;/{fim}&#39;
+
+    tags = {}
+    if exercicio is not None:
+        tags[&#39;exercicio&#39;] = exercicio.upper()
+    if participacao is not None:
+        tags[&#39;participacao&#39;] = participacao.upper()
+    if uf is not None:
+        tags[&#39;uf&#39;] = _utils.parse_uf(uf)
+
+    keys = [&#39;ListaParlamentarLegislatura&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(path, tags, keys)
+
+
+
+def partidos(
+        ativos: bool = True,
+        index: bool = False
+    ) -&gt; _pd.DataFrame:
+    &#39;&#39;&#39;
+    Lista os partidos políticos.
+
+    Parâmetros
+    ----------
+    ativos: bool (default=True)
+        - True para listar apenas os partidos ativos.
+        - False para incluir partidos inativos na lista.
+    index: bool (default=False)
+        Se True, define a coluna `Codigo` como index do DataFrame.
+
+    Retorna
+    -------
+    pandas.DataFrame
+        DataFrame contendo a lista de partidos políticos consultados.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    url = &#39;senador/partidos&#39;
+    if not ativos:
+        url += &#39;?indAtivos=N&#39;
+    
+    keys = [&#39;ListaPartidos&#39;, &#39;Partidos&#39;, &#39;Partido&#39;]
+    r = _get_request(url, None, keys)
+    df = _pd.DataFrame(r)
+
+    if index:
+        df.set_index(&#39;Codigo&#39;, inplace=True)
+
+    df.DataCriacao = _pd.to_datetime(df.DataCriacao)
+    if not ativos:
+        df.DataExtincao = _pd.to_datetime(df.DataExtincao)
+
+    return df
+
+
+
+class Senador:
+    &#39;&#39;&#39;
+    Coleta os dados dos senadores.
+
+    Parâmetros
+    ----------
+    cod: int
+        Código de senador que se dejesa consulta.
+        O código pode ser encontrado pelas funções `lista_*` deste módulo.
+
+    Atributos
+    ---------
+    dados: dict
+        Dicionário completo de dados do(a) parlamentar.
+    nome: str
+        Nome do(a) parlamentar.
+    nome_completo: str
+        Nome completo do(a) parlamentar.
+    nascimento: str
+        Data de nascimento do(a) parlamentar no formato &#39;AAAA-MM-DD&#39;.
+    partido: str
+        Atual partido político do(a) parlamentar.
+    sexo: str
+        Sexo (&#39;Masculino&#39; ou &#39;Feminino&#39;) do(a) parlamentar.
+    tratamento: str
+        Pronome de tratamento usado para o(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    def __init__(self, cod:int):
+        self.cod = cod
+        keys = [&#39;DetalheParlamentar&#39;, &#39;Parlamentar&#39;]
+        self.dados = _get_request(f&#39;senador/{cod}&#39;, None, keys)
+        self.nome = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;NomeParlamentar&#39;])
+        self.nome_completo = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;NomeCompletoParlamentar&#39;])
+        self.nascimento = self._get_info(
+            [&#39;DadosBasicosParlamentar&#39;, &#39;DataNascimento&#39;])
+        self.partido = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;SiglaPartidoParlamentar&#39;])
+        self.sexo = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;SexoParlamentar&#39;])
+        self.tratamento = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;FormaTratamento&#39;])
+
+
+    def _get_info(self, keys:list):
+        x = self.dados
+        try:
+            for key in keys:
+                x = x[key]
+            return x
+        except (KeyError, TypeError):
+            return None
+
+
+    def apartes(
+            self,
+            casa: str = None,
+            inicio: int = None,
+            fim: int = None,
+            numero_sessao: int = None,
+            tipo_pronunciamento: str = None,
+            tipo_sessao: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de apartes do senador.
+
+        Parâmetros
+        ----------
+        casa: str (default=None)
+            Sigla da casa aonde ocorre o pronunciamento:
+            - &#39;SF&#39; para Senado;
+            - &#39;CD&#39; para Câmara;
+            - &#39;CN&#39; para Congresso;
+            - &#39;PR&#39; para Presidência;
+            - &#39;CR&#39; para Comissão Representativa do Congresso;
+            - &#39;AC&#39; para Assembléia Constituinte.
+        inicio: int (default=None)
+            Data inicial do período da pesquisa no formato AAAAMMDD
+        fim: int (default=None)
+            Data final do período da pesquisa no formato AAAAMMDD
+        numero_sessao: int (default=None)
+            Número da sessão plenária.
+        tipo_pronunciamento: str (default=None)
+            Sigla do tipo de pronunciamento.
+        tipo_sessao: str (default=None)
+            Tipo da sessão plenária.
+        
+        Retorna
+        -------
+        list of dict
+            Lista de apartes do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if casa is not None:
+            tags[&#39;casa&#39;] = casa
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+        if fim is not None:
+            tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+        if numero_sessao is not None:
+            tags[&#39;numeroSessao&#39;] = numero_sessao
+        if tipo_pronunciamento is not None:
+            tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+        if tipo_sessao is not None:
+            tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+        path = f&#39;senador/{self.cod}/apartes&#39;
+        keys = [&#39;ApartesParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Apartes&#39;, &#39;Aparte&#39;]
+        return _get_request(path, tags, keys)
+
+        
+    def autorias(
+            self,
+            ano: int = None,
+            numero: int = None,
+            primeiro_autor: bool = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as matérias de autoria de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado.
+        primeiro_autor: bool (default=None)
+            - True: Retorna apenas as matérias cujo senador é o primeiro autor;
+            - False: Retorna apenas as que o senador é coautor;
+            - None: Retorna ambas.
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de matérias de autoria do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if primeiro_autor is not None:
+            tags[&#39;primeiro&#39;] = &#39;S&#39; if primeiro_autor else &#39;N&#39;
+        else:
+            tags[&#39;primeiro&#39;] = &#39;T&#39;
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/autorias&#39;
+        keys = [&#39;MateriasAutoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Autorias&#39;, &#39;Autoria&#39;]
+        return _get_request(path, tags, keys)
+
+    
+    def cargos(
+            self,
+            comissao: bool = None,
+            ativos: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de cargos que o senador ja ocupou.
+
+        Parâmetros
+        ----------
+        comissao: str (default=None)
+            Retorna apenas os cargos da sigla de comissão informada.
+        ativos: bool (default=None)
+            - True: Retorna apenas os cargos atuais;
+            - False: Retorna apenas os cargos já finalizadas;
+            - None: Retorna ambos.
+
+        Retorna
+        -------
+        list of dict
+            Lista de comissões que o(a) parlamentar seja membro.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if ativos is not None:
+            tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/cargos&#39;
+        keys = [&#39;CargoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Cargos&#39;, &#39;Cargo&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def comissoes(
+            self,
+            comissao: str = None,
+            ativos: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as comissões de que um senador é membro.
+
+        Parâmetros
+        ----------
+        comissao: str (default=None)
+            Retorna apenas as comissões com a sigla informada.
+        ativos: bool (default=None)
+            - True: Retorna apenas as comissões atuais;
+            - False: Retorna apenas as comissões já finalizadas;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de comissões que o(a) parlamentar seja membro.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if ativos is not None:
+            tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/comissoes&#39;
+        keys = [&#39;MembroComissaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;MembroComissoes&#39;, &#39;Comissao&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def discursos(
+            self,
+            casa: str = None,
+            inicio: int = None,
+            fim: int = None,
+            numero_sessao: int = None,
+            tipo_pronunciamento: str = None,
+            tipo_sessao: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de discursos do senador.
+
+        Parâmetros
+        ----------
+        casa: str (default=None)
+            Sigla da casa aonde ocorre o pronunciamento:
+            - &#39;SF&#39; para Senado;
+            - &#39;CD&#39; para Câmara;
+            - &#39;CN&#39; para Congresso;
+            - &#39;PR&#39; para Presidência;
+            - &#39;CR&#39; para Comissão Representativa do Congresso;
+            - &#39;AC&#39; para Assembléia Constituinte.
+        inicio: int (default=None)
+            Data inicial do período da pesquisa no formato AAAAMMDD
+        fim: int (default=None)
+            Data final do período da pesquisa no formato AAAAMMDD
+        numero_sessao: int (default=None)
+            Número da sessão plenária.
+        tipo_pronunciamento: str (default=None)
+            Sigla do tipo de pronunciamento.
+        tipo_sessao: str (default=None)
+            Tipo da sessão plenária.
+        
+        Retorna
+        -------
+        list of dict
+            Lista de discursos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if casa is not None:
+            tags[&#39;casa&#39;] = casa
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+        if fim is not None:
+            tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+        if numero_sessao is not None:
+            tags[&#39;numeroSessao&#39;] = numero_sessao
+        if tipo_pronunciamento is not None:
+            tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+        if tipo_sessao is not None:
+            tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+        path = f&#39;senador/{self.cod}/discursos&#39;
+        keys = [&#39;DiscursosParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Pronunciamentos&#39;, &#39;Pronunciamento&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def filiacoes(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as filiações partidárias que o senador já teve.
+
+        Retorna
+        -------
+        list of dict
+            Lista de filiações do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/filiacoes&#39;
+        keys = [&#39;FiliacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Filiacoes&#39;, &#39;Filiacao&#39;]
+        return _get_request(path, None, keys)
+
+
+    def historico(self) -&gt; dict:
+        &#39;&#39;&#39;
+        Obtém todos os detalhes de um parlamentar no(s) mandato(s) como
+        senador (mandato atual e anteriores, se houver).
+
+        Retorna
+        -------
+        dict
+            Dados históricos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/historico&#39;
+        keys = [&#39;DetalheParlamentar&#39;, &#39;Parlamentar&#39;]
+        d = _get_request(path, None, keys)
+        d.pop(&#39;OutrasInformacoes&#39;, None)
+        d.pop(&#39;UrlGlossario&#39;, None)
+        return d
+
+    
+    def mandatos(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém os mandatos que o senador já teve.
+
+        Retorna
+        -------
+        list of dict
+            Lista de mandatos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/mandatos&#39;
+        keys = [&#39;MandatoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Mandatos&#39;, &#39;Mandato&#39;]
+        return _get_request(path, None, keys)
+
+
+    def liderancas(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém os cargos de liderança de um senador.
+
+        Retorna
+        -------
+        list of dict
+            Lista de cargos de liderança do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/liderancas&#39;
+        keys = [&#39;LiderancaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Liderancas&#39;, &#39;Lideranca&#39;]
+        return _get_request(path, None, keys)
+
+
+    def licencas(
+            self,
+            inicio: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as licenças de um senador.
+
+        Parâmetros
+        ----------
+        inicio: str (default=None)
+            Retorna as licenças a partir da data especificada.
+
+        Retorna
+        -------
+        list of dict
+            Lista de licenças do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+
+        path = f&#39;senador/{self.cod}/licencas&#39;
+        keys = [&#39;LicencaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Licencas&#39;, &#39;Licenca&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def relatorias(
+            self,
+            ano: int = None,
+            comissao: str = None,
+            numero: int = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as matérias de relatoria de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        comissao: str (default=None)
+            Retorna apenas as relatorias da comissão informada.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado. 
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.       
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de matérias de relatoria de um senador.
+
+        ----------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/relatorias&#39;
+        keys = [&#39;MateriasRelatoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Relatorias&#39;, &#39;Relatoria&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def votacoes(
+            self,
+            ano: int = None,
+            numero: int = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as votações de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado.      
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.       
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de votações do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/votacoes&#39;
+        keys = [&#39;VotacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Votacoes&#39;, &#39;Votacao&#39;]
+        return _get_request(path, tags, keys)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Funções</h2>
+<dl>
+<dt id="DadosAbertosBrasil.senado.lista_afastados"><code class="name flex">
+<span>def <span class="ident">lista_afastados</span></span>(<span>) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lista senadores atualmente afastados.</p>
+<h2 id="retorna">Retorna</h2>
+<pre>dict
+    Dicionário contendo informações dos senadores afastados.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def lista_afastados() -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores atualmente afastados.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores afastados.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    url = f&#39;senador/lista/afastados&#39;
+    keys = [&#39;AfastamentoAtual&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(url, None, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.lista_atual"><code class="name flex">
+<span>def <span class="ident">lista_atual</span></span>(<span>participacao: str = None, uf: str = None) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lista senadores em exercício.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>participacao: str (default=None)
+    Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - 'T': Busca apenas titulares.
+        - 'S': Busca apenas suplentes.
+uf: str (default=None)
+    Filtra uma unidade federativa.
+    Se uf=None, lista senadores de todas as UFs.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>dict
+    Dicionário contendo informações dos senadores em exercício.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def lista_atual(
+        participacao: str = None,
+        uf: str = None
+    ) -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores em exercício.
+
+    Parâmetros
+    ----------
+    participacao: str (default=None)
+        Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - &#39;T&#39;: Busca apenas titulares.
+        - &#39;S&#39;: Busca apenas suplentes.
+    uf: str (default=None)
+        Filtra uma unidade federativa.
+        Se uf=None, lista senadores de todas as UFs.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores em exercício.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if participacao is not None:
+        tags[&#39;participacao&#39;] = participacao.upper()
+    if uf is not None:
+        tags[&#39;uf&#39;] = _utils.parse_uf(uf)
+
+    path = &#39;senador/lista/atual&#39;
+    keys = [&#39;ListaParlamentarEmExercicio&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.lista_legislatura"><code class="name flex">
+<span>def <span class="ident">lista_legislatura</span></span>(<span>inicio: int, fim: int = None, exercicio: str = None, participacao: str = None, uf: str = None) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lista senadores de uma legislatura ou de um intervalo de legislaturas.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>inicio: int
+    Código da primeira legislatura da consulta.
+fim: int (default=None)
+    Código da última legislatura da consulta.
+    Se fim=None, pesquisa apenas pela legislatura do campo `inicio`.
+    Caso contrário, pesquisa todas os valores de todas as legislaturas
+    entre `inicio` e `fim`.
+exercicio: str (default=None)
+    - 'S': Consulta apenas os senadores que entraram em exercício.
+    - 'N': Consulta apenas os senadores que não entratam em exercício.
+participacao: str (default=None)
+    Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - 'T': Busca apenas titulares.
+        - 'S': Busca apenas suplentes.
+uf: str (default=None)
+    Filtra uma unidade federativa.
+    Se uf=None, lista senadores de todas as UFs.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>dict
+    Dicionário contendo informações dos senadores das legislaturas
+    consultadas.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def lista_legislatura(
+        inicio: int,
+        fim: int = None,
+        exercicio: str = None,
+        participacao: str = None,
+        uf: str = None
+    ) -&gt; dict:
+    &#39;&#39;&#39;
+    Lista senadores de uma legislatura ou de um intervalo de legislaturas.
+
+    Parâmetros
+    ----------
+    inicio: int
+        Código da primeira legislatura da consulta.
+    fim: int (default=None)
+        Código da última legislatura da consulta.
+        Se fim=None, pesquisa apenas pela legislatura do campo `inicio`.
+        Caso contrário, pesquisa todas os valores de todas as legislaturas
+        entre `inicio` e `fim`. 
+    exercicio: str (default=None)
+        - &#39;S&#39;: Consulta apenas os senadores que entraram em exercício.
+        - &#39;N&#39;: Consulta apenas os senadores que não entratam em exercício.
+    participacao: str (default=None)
+        Tipo de participação.
+        - None: Busca qualquer tipo de participação.
+        - &#39;T&#39;: Busca apenas titulares.
+        - &#39;S&#39;: Busca apenas suplentes.
+    uf: str (default=None)
+        Filtra uma unidade federativa.
+        Se uf=None, lista senadores de todas as UFs.
+
+    Retorna
+    -------
+    dict
+        Dicionário contendo informações dos senadores das legislaturas
+        consultadas.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/lista/legislatura/{inicio}&#39;
+    
+    if fim is not None:
+        path += f&#39;/{fim}&#39;
+
+    tags = {}
+    if exercicio is not None:
+        tags[&#39;exercicio&#39;] = exercicio.upper()
+    if participacao is not None:
+        tags[&#39;participacao&#39;] = participacao.upper()
+    if uf is not None:
+        tags[&#39;uf&#39;] = _utils.parse_uf(uf)
+
+    keys = [&#39;ListaParlamentarLegislatura&#39;, &#39;Parlamentares&#39;, &#39;Parlamentar&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.partidos"><code class="name flex">
+<span>def <span class="ident">partidos</span></span>(<span>ativos: bool = True, index: bool = False) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Lista os partidos políticos.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>ativos: bool (default=True)
+    - True para listar apenas os partidos ativos.
+    - False para incluir partidos inativos na lista.
+index: bool (default=False)
+    Se True, define a coluna `Codigo` como index do DataFrame.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>pandas.core.frame.DataFrame
+    DataFrame contendo a lista de partidos políticos consultados.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def partidos(
+        ativos: bool = True,
+        index: bool = False
+    ) -&gt; _pd.DataFrame:
+    &#39;&#39;&#39;
+    Lista os partidos políticos.
+
+    Parâmetros
+    ----------
+    ativos: bool (default=True)
+        - True para listar apenas os partidos ativos.
+        - False para incluir partidos inativos na lista.
+    index: bool (default=False)
+        Se True, define a coluna `Codigo` como index do DataFrame.
+
+    Retorna
+    -------
+    pandas.DataFrame
+        DataFrame contendo a lista de partidos políticos consultados.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    url = &#39;senador/partidos&#39;
+    if not ativos:
+        url += &#39;?indAtivos=N&#39;
+    
+    keys = [&#39;ListaPartidos&#39;, &#39;Partidos&#39;, &#39;Partido&#39;]
+    r = _get_request(url, None, keys)
+    df = _pd.DataFrame(r)
+
+    if index:
+        df.set_index(&#39;Codigo&#39;, inplace=True)
+
+    df.DataCriacao = _pd.to_datetime(df.DataCriacao)
+    if not ativos:
+        df.DataExtincao = _pd.to_datetime(df.DataExtincao)
+
+    return df</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="DadosAbertosBrasil.senado.Senador"><code class="flex name class">
+<span>class <span class="ident">Senador</span></span>
+<span>(</span><span>cod: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Coleta os dados dos senadores.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>cod: int
+    Código de senador que se dejesa consulta.
+    O código pode ser encontrado pelas funções `lista` deste módulo.</pre>
+<h2 id="atributos">Atributos</h2>
+<pre>dados: dict
+    Dicionário completo de dados do(a) parlamentar.
+nome: str
+    Nome do(a) parlamentar.
+nome_completo: str
+    Nome completo do(a) parlamentar.
+nascimento: str
+    Data de nascimento do(a) parlamentar no formato 'AAAA-MM-DD'.
+partido: str
+    Atual partido político do(a) parlamentar.
+sexo: str
+    Sexo ('Masculino' ou 'Feminino') do(a) parlamentar.
+tratamento: str
+    Pronome de tratamento usado para o(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">class Senador:
+    &#39;&#39;&#39;
+    Coleta os dados dos senadores.
+
+    Parâmetros
+    ----------
+    cod: int
+        Código de senador que se dejesa consulta.
+        O código pode ser encontrado pelas funções `lista_*` deste módulo.
+
+    Atributos
+    ---------
+    dados: dict
+        Dicionário completo de dados do(a) parlamentar.
+    nome: str
+        Nome do(a) parlamentar.
+    nome_completo: str
+        Nome completo do(a) parlamentar.
+    nascimento: str
+        Data de nascimento do(a) parlamentar no formato &#39;AAAA-MM-DD&#39;.
+    partido: str
+        Atual partido político do(a) parlamentar.
+    sexo: str
+        Sexo (&#39;Masculino&#39; ou &#39;Feminino&#39;) do(a) parlamentar.
+    tratamento: str
+        Pronome de tratamento usado para o(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    def __init__(self, cod:int):
+        self.cod = cod
+        keys = [&#39;DetalheParlamentar&#39;, &#39;Parlamentar&#39;]
+        self.dados = _get_request(f&#39;senador/{cod}&#39;, None, keys)
+        self.nome = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;NomeParlamentar&#39;])
+        self.nome_completo = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;NomeCompletoParlamentar&#39;])
+        self.nascimento = self._get_info(
+            [&#39;DadosBasicosParlamentar&#39;, &#39;DataNascimento&#39;])
+        self.partido = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;SiglaPartidoParlamentar&#39;])
+        self.sexo = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;SexoParlamentar&#39;])
+        self.tratamento = self._get_info(
+            [&#39;IdentificacaoParlamentar&#39;, &#39;FormaTratamento&#39;])
+
+
+    def _get_info(self, keys:list):
+        x = self.dados
+        try:
+            for key in keys:
+                x = x[key]
+            return x
+        except (KeyError, TypeError):
+            return None
+
+
+    def apartes(
+            self,
+            casa: str = None,
+            inicio: int = None,
+            fim: int = None,
+            numero_sessao: int = None,
+            tipo_pronunciamento: str = None,
+            tipo_sessao: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de apartes do senador.
+
+        Parâmetros
+        ----------
+        casa: str (default=None)
+            Sigla da casa aonde ocorre o pronunciamento:
+            - &#39;SF&#39; para Senado;
+            - &#39;CD&#39; para Câmara;
+            - &#39;CN&#39; para Congresso;
+            - &#39;PR&#39; para Presidência;
+            - &#39;CR&#39; para Comissão Representativa do Congresso;
+            - &#39;AC&#39; para Assembléia Constituinte.
+        inicio: int (default=None)
+            Data inicial do período da pesquisa no formato AAAAMMDD
+        fim: int (default=None)
+            Data final do período da pesquisa no formato AAAAMMDD
+        numero_sessao: int (default=None)
+            Número da sessão plenária.
+        tipo_pronunciamento: str (default=None)
+            Sigla do tipo de pronunciamento.
+        tipo_sessao: str (default=None)
+            Tipo da sessão plenária.
+        
+        Retorna
+        -------
+        list of dict
+            Lista de apartes do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if casa is not None:
+            tags[&#39;casa&#39;] = casa
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+        if fim is not None:
+            tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+        if numero_sessao is not None:
+            tags[&#39;numeroSessao&#39;] = numero_sessao
+        if tipo_pronunciamento is not None:
+            tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+        if tipo_sessao is not None:
+            tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+        path = f&#39;senador/{self.cod}/apartes&#39;
+        keys = [&#39;ApartesParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Apartes&#39;, &#39;Aparte&#39;]
+        return _get_request(path, tags, keys)
+
+        
+    def autorias(
+            self,
+            ano: int = None,
+            numero: int = None,
+            primeiro_autor: bool = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as matérias de autoria de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado.
+        primeiro_autor: bool (default=None)
+            - True: Retorna apenas as matérias cujo senador é o primeiro autor;
+            - False: Retorna apenas as que o senador é coautor;
+            - None: Retorna ambas.
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de matérias de autoria do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if primeiro_autor is not None:
+            tags[&#39;primeiro&#39;] = &#39;S&#39; if primeiro_autor else &#39;N&#39;
+        else:
+            tags[&#39;primeiro&#39;] = &#39;T&#39;
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/autorias&#39;
+        keys = [&#39;MateriasAutoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Autorias&#39;, &#39;Autoria&#39;]
+        return _get_request(path, tags, keys)
+
+    
+    def cargos(
+            self,
+            comissao: bool = None,
+            ativos: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de cargos que o senador ja ocupou.
+
+        Parâmetros
+        ----------
+        comissao: str (default=None)
+            Retorna apenas os cargos da sigla de comissão informada.
+        ativos: bool (default=None)
+            - True: Retorna apenas os cargos atuais;
+            - False: Retorna apenas os cargos já finalizadas;
+            - None: Retorna ambos.
+
+        Retorna
+        -------
+        list of dict
+            Lista de comissões que o(a) parlamentar seja membro.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if ativos is not None:
+            tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/cargos&#39;
+        keys = [&#39;CargoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Cargos&#39;, &#39;Cargo&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def comissoes(
+            self,
+            comissao: str = None,
+            ativos: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as comissões de que um senador é membro.
+
+        Parâmetros
+        ----------
+        comissao: str (default=None)
+            Retorna apenas as comissões com a sigla informada.
+        ativos: bool (default=None)
+            - True: Retorna apenas as comissões atuais;
+            - False: Retorna apenas as comissões já finalizadas;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de comissões que o(a) parlamentar seja membro.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if ativos is not None:
+            tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/comissoes&#39;
+        keys = [&#39;MembroComissaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;MembroComissoes&#39;, &#39;Comissao&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def discursos(
+            self,
+            casa: str = None,
+            inicio: int = None,
+            fim: int = None,
+            numero_sessao: int = None,
+            tipo_pronunciamento: str = None,
+            tipo_sessao: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém a relação de discursos do senador.
+
+        Parâmetros
+        ----------
+        casa: str (default=None)
+            Sigla da casa aonde ocorre o pronunciamento:
+            - &#39;SF&#39; para Senado;
+            - &#39;CD&#39; para Câmara;
+            - &#39;CN&#39; para Congresso;
+            - &#39;PR&#39; para Presidência;
+            - &#39;CR&#39; para Comissão Representativa do Congresso;
+            - &#39;AC&#39; para Assembléia Constituinte.
+        inicio: int (default=None)
+            Data inicial do período da pesquisa no formato AAAAMMDD
+        fim: int (default=None)
+            Data final do período da pesquisa no formato AAAAMMDD
+        numero_sessao: int (default=None)
+            Número da sessão plenária.
+        tipo_pronunciamento: str (default=None)
+            Sigla do tipo de pronunciamento.
+        tipo_sessao: str (default=None)
+            Tipo da sessão plenária.
+        
+        Retorna
+        -------
+        list of dict
+            Lista de discursos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if casa is not None:
+            tags[&#39;casa&#39;] = casa
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+        if fim is not None:
+            tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+        if numero_sessao is not None:
+            tags[&#39;numeroSessao&#39;] = numero_sessao
+        if tipo_pronunciamento is not None:
+            tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+        if tipo_sessao is not None:
+            tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+        path = f&#39;senador/{self.cod}/discursos&#39;
+        keys = [&#39;DiscursosParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Pronunciamentos&#39;, &#39;Pronunciamento&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def filiacoes(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as filiações partidárias que o senador já teve.
+
+        Retorna
+        -------
+        list of dict
+            Lista de filiações do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/filiacoes&#39;
+        keys = [&#39;FiliacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Filiacoes&#39;, &#39;Filiacao&#39;]
+        return _get_request(path, None, keys)
+
+
+    def historico(self) -&gt; dict:
+        &#39;&#39;&#39;
+        Obtém todos os detalhes de um parlamentar no(s) mandato(s) como
+        senador (mandato atual e anteriores, se houver).
+
+        Retorna
+        -------
+        dict
+            Dados históricos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/historico&#39;
+        keys = [&#39;DetalheParlamentar&#39;, &#39;Parlamentar&#39;]
+        d = _get_request(path, None, keys)
+        d.pop(&#39;OutrasInformacoes&#39;, None)
+        d.pop(&#39;UrlGlossario&#39;, None)
+        return d
+
+    
+    def mandatos(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém os mandatos que o senador já teve.
+
+        Retorna
+        -------
+        list of dict
+            Lista de mandatos do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/mandatos&#39;
+        keys = [&#39;MandatoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Mandatos&#39;, &#39;Mandato&#39;]
+        return _get_request(path, None, keys)
+
+
+    def liderancas(self) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém os cargos de liderança de um senador.
+
+        Retorna
+        -------
+        list of dict
+            Lista de cargos de liderança do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        path = f&#39;senador/{self.cod}/liderancas&#39;
+        keys = [&#39;LiderancaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Liderancas&#39;, &#39;Lideranca&#39;]
+        return _get_request(path, None, keys)
+
+
+    def licencas(
+            self,
+            inicio: str = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as licenças de um senador.
+
+        Parâmetros
+        ----------
+        inicio: str (default=None)
+            Retorna as licenças a partir da data especificada.
+
+        Retorna
+        -------
+        list of dict
+            Lista de licenças do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if inicio is not None:
+            tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+
+        path = f&#39;senador/{self.cod}/licencas&#39;
+        keys = [&#39;LicencaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Licencas&#39;, &#39;Licenca&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def relatorias(
+            self,
+            ano: int = None,
+            comissao: str = None,
+            numero: int = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as matérias de relatoria de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        comissao: str (default=None)
+            Retorna apenas as relatorias da comissão informada.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado. 
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.       
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de matérias de relatoria de um senador.
+
+        ----------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if comissao is not None:
+            tags[&#39;comissao&#39;] = comissao
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/relatorias&#39;
+        keys = [&#39;MateriasRelatoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Relatorias&#39;, &#39;Relatoria&#39;]
+        return _get_request(path, tags, keys)
+
+
+    def votacoes(
+            self,
+            ano: int = None,
+            numero: int = None,
+            sigla: str = None,
+            tramitando: bool = None
+        ) -&gt; list:
+        &#39;&#39;&#39;
+        Obtém as votações de um senador.
+
+        Parâmetros
+        ----------
+        ano: int (default=None)
+            Retorna apenas as matérias do ano informado.
+        numero: int (default=None)
+            Retorna apenas as matérias do número informado.      
+        sigla: str (default=None)
+            Retorna apenas as matérias da sigla informada.       
+        tramitando: bool (default=None)
+            - True: Retorna apenas as matérias que estão tramitando;
+            - False: Retorna apenas as que não estão tramitando;
+            - None: Retorna ambas.
+
+        Retorna
+        -------
+        list of dict
+            Lista de votações do(a) parlamentar.
+
+        --------------------------------------------------------------------------
+        &#39;&#39;&#39;
+
+        tags = {}
+        if ano is not None:
+            tags[&#39;ano&#39;] = ano
+        if numero is not None:
+            tags[&#39;numero&#39;] = numero
+        if sigla is not None:
+            tags[&#39;sigla&#39;] = sigla
+        if tramitando is not None:
+            tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+        path = f&#39;senador/{self.cod}/votacoes&#39;
+        keys = [&#39;VotacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Votacoes&#39;, &#39;Votacao&#39;]
+        return _get_request(path, tags, keys)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="DadosAbertosBrasil.senado.Senador.apartes"><code class="name flex">
+<span>def <span class="ident">apartes</span></span>(<span>self, casa: str = None, inicio: int = None, fim: int = None, numero_sessao: int = None, tipo_pronunciamento: str = None, tipo_sessao: str = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém a relação de apartes do senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>casa: str (default=None)
+    Sigla da casa aonde ocorre o pronunciamento:
+        - 'SF' para Senado;
+        - 'CD' para Câmara;
+        - 'CN' para Congresso;
+        - 'PR' para Presidência;
+        - 'CR' para Comissão Representativa do Congresso;
+        - 'AC' para Assembléia Constituinte.
+inicio: int (default=None)
+    Data inicial do período da pesquisa no formato AAAAMMDD
+fim: int (default=None)
+    Data final do período da pesquisa no formato AAAAMMDD
+numero_sessao: int (default=None)
+    Número da sessão plenária.
+tipo_pronunciamento: str (default=None)
+    Sigla do tipo de pronunciamento.
+tipo_sessao: str (default=None)
+    Tipo da sessão plenária.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de apartes do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def apartes(
+        self,
+        casa: str = None,
+        inicio: int = None,
+        fim: int = None,
+        numero_sessao: int = None,
+        tipo_pronunciamento: str = None,
+        tipo_sessao: str = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém a relação de apartes do senador.
+
+    Parâmetros
+    ----------
+    casa: str (default=None)
+        Sigla da casa aonde ocorre o pronunciamento:
+        - &#39;SF&#39; para Senado;
+        - &#39;CD&#39; para Câmara;
+        - &#39;CN&#39; para Congresso;
+        - &#39;PR&#39; para Presidência;
+        - &#39;CR&#39; para Comissão Representativa do Congresso;
+        - &#39;AC&#39; para Assembléia Constituinte.
+    inicio: int (default=None)
+        Data inicial do período da pesquisa no formato AAAAMMDD
+    fim: int (default=None)
+        Data final do período da pesquisa no formato AAAAMMDD
+    numero_sessao: int (default=None)
+        Número da sessão plenária.
+    tipo_pronunciamento: str (default=None)
+        Sigla do tipo de pronunciamento.
+    tipo_sessao: str (default=None)
+        Tipo da sessão plenária.
+    
+    Retorna
+    -------
+    list of dict
+        Lista de apartes do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if casa is not None:
+        tags[&#39;casa&#39;] = casa
+    if inicio is not None:
+        tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+    if fim is not None:
+        tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+    if numero_sessao is not None:
+        tags[&#39;numeroSessao&#39;] = numero_sessao
+    if tipo_pronunciamento is not None:
+        tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+    if tipo_sessao is not None:
+        tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+    path = f&#39;senador/{self.cod}/apartes&#39;
+    keys = [&#39;ApartesParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Apartes&#39;, &#39;Aparte&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.autorias"><code class="name flex">
+<span>def <span class="ident">autorias</span></span>(<span>self, ano: int = None, numero: int = None, primeiro_autor: bool = None, sigla: str = None, tramitando: bool = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as matérias de autoria de um senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>ano: int (default=None)
+    Retorna apenas as matérias do ano informado.
+numero: int (default=None)
+    Retorna apenas as matérias do número informado.
+primeiro_autor: bool (default=None)
+    - True: Retorna apenas as matérias cujo senador é o primeiro autor;
+    - False: Retorna apenas as que o senador é coautor;
+    - None: Retorna ambas.
+sigla: str (default=None)
+    Retorna apenas as matérias da sigla informada.
+tramitando: bool (default=None)
+    - True: Retorna apenas as matérias que estão tramitando;
+    - False: Retorna apenas as que não estão tramitando;
+    - None: Retorna ambas.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de matérias de autoria do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def autorias(
+        self,
+        ano: int = None,
+        numero: int = None,
+        primeiro_autor: bool = None,
+        sigla: str = None,
+        tramitando: bool = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as matérias de autoria de um senador.
+
+    Parâmetros
+    ----------
+    ano: int (default=None)
+        Retorna apenas as matérias do ano informado.
+    numero: int (default=None)
+        Retorna apenas as matérias do número informado.
+    primeiro_autor: bool (default=None)
+        - True: Retorna apenas as matérias cujo senador é o primeiro autor;
+        - False: Retorna apenas as que o senador é coautor;
+        - None: Retorna ambas.
+    sigla: str (default=None)
+        Retorna apenas as matérias da sigla informada.
+    tramitando: bool (default=None)
+        - True: Retorna apenas as matérias que estão tramitando;
+        - False: Retorna apenas as que não estão tramitando;
+        - None: Retorna ambas.
+
+    Retorna
+    -------
+    list of dict
+        Lista de matérias de autoria do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if ano is not None:
+        tags[&#39;ano&#39;] = ano
+    if numero is not None:
+        tags[&#39;numero&#39;] = numero
+    if primeiro_autor is not None:
+        tags[&#39;primeiro&#39;] = &#39;S&#39; if primeiro_autor else &#39;N&#39;
+    else:
+        tags[&#39;primeiro&#39;] = &#39;T&#39;
+    if sigla is not None:
+        tags[&#39;sigla&#39;] = sigla
+    if tramitando is not None:
+        tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+    path = f&#39;senador/{self.cod}/autorias&#39;
+    keys = [&#39;MateriasAutoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Autorias&#39;, &#39;Autoria&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.cargos"><code class="name flex">
+<span>def <span class="ident">cargos</span></span>(<span>self, comissao: bool = None, ativos: bool = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém a relação de cargos que o senador ja ocupou.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>comissao: str (default=None)
+    Retorna apenas os cargos da sigla de comissão informada.
+ativos: bool (default=None)
+    - True: Retorna apenas os cargos atuais;
+    - False: Retorna apenas os cargos já finalizadas;
+    - None: Retorna ambos.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de comissões que o(a) parlamentar seja membro.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def cargos(
+        self,
+        comissao: bool = None,
+        ativos: bool = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém a relação de cargos que o senador ja ocupou.
+
+    Parâmetros
+    ----------
+    comissao: str (default=None)
+        Retorna apenas os cargos da sigla de comissão informada.
+    ativos: bool (default=None)
+        - True: Retorna apenas os cargos atuais;
+        - False: Retorna apenas os cargos já finalizadas;
+        - None: Retorna ambos.
+
+    Retorna
+    -------
+    list of dict
+        Lista de comissões que o(a) parlamentar seja membro.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if comissao is not None:
+        tags[&#39;comissao&#39;] = comissao
+    if ativos is not None:
+        tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+    path = f&#39;senador/{self.cod}/cargos&#39;
+    keys = [&#39;CargoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Cargos&#39;, &#39;Cargo&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.comissoes"><code class="name flex">
+<span>def <span class="ident">comissoes</span></span>(<span>self, comissao: str = None, ativos: bool = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as comissões de que um senador é membro.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>comissao: str (default=None)
+    Retorna apenas as comissões com a sigla informada.
+ativos: bool (default=None)
+    - True: Retorna apenas as comissões atuais;
+    - False: Retorna apenas as comissões já finalizadas;
+    - None: Retorna ambas.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de comissões que o(a) parlamentar seja membro.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def comissoes(
+        self,
+        comissao: str = None,
+        ativos: bool = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as comissões de que um senador é membro.
+
+    Parâmetros
+    ----------
+    comissao: str (default=None)
+        Retorna apenas as comissões com a sigla informada.
+    ativos: bool (default=None)
+        - True: Retorna apenas as comissões atuais;
+        - False: Retorna apenas as comissões já finalizadas;
+        - None: Retorna ambas.
+
+    Retorna
+    -------
+    list of dict
+        Lista de comissões que o(a) parlamentar seja membro.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if comissao is not None:
+        tags[&#39;comissao&#39;] = comissao
+    if ativos is not None:
+        tags[&#39;indAtivos&#39;] = &#39;S&#39; if ativos else &#39;N&#39;
+
+    path = f&#39;senador/{self.cod}/comissoes&#39;
+    keys = [&#39;MembroComissaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;MembroComissoes&#39;, &#39;Comissao&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.discursos"><code class="name flex">
+<span>def <span class="ident">discursos</span></span>(<span>self, casa: str = None, inicio: int = None, fim: int = None, numero_sessao: int = None, tipo_pronunciamento: str = None, tipo_sessao: str = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém a relação de discursos do senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>casa: str (default=None)
+    Sigla da casa aonde ocorre o pronunciamento:
+        - 'SF' para Senado;
+        - 'CD' para Câmara;
+        - 'CN' para Congresso;
+        - 'PR' para Presidência;
+        - 'CR' para Comissão Representativa do Congresso;
+        - 'AC' para Assembléia Constituinte.
+inicio: int (default=None)
+    Data inicial do período da pesquisa no formato AAAAMMDD
+fim: int (default=None)
+    Data final do período da pesquisa no formato AAAAMMDD
+numero_sessao: int (default=None)
+    Número da sessão plenária.
+tipo_pronunciamento: str (default=None)
+    Sigla do tipo de pronunciamento.
+tipo_sessao: str (default=None)
+    Tipo da sessão plenária.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de discursos do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def discursos(
+        self,
+        casa: str = None,
+        inicio: int = None,
+        fim: int = None,
+        numero_sessao: int = None,
+        tipo_pronunciamento: str = None,
+        tipo_sessao: str = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém a relação de discursos do senador.
+
+    Parâmetros
+    ----------
+    casa: str (default=None)
+        Sigla da casa aonde ocorre o pronunciamento:
+        - &#39;SF&#39; para Senado;
+        - &#39;CD&#39; para Câmara;
+        - &#39;CN&#39; para Congresso;
+        - &#39;PR&#39; para Presidência;
+        - &#39;CR&#39; para Comissão Representativa do Congresso;
+        - &#39;AC&#39; para Assembléia Constituinte.
+    inicio: int (default=None)
+        Data inicial do período da pesquisa no formato AAAAMMDD
+    fim: int (default=None)
+        Data final do período da pesquisa no formato AAAAMMDD
+    numero_sessao: int (default=None)
+        Número da sessão plenária.
+    tipo_pronunciamento: str (default=None)
+        Sigla do tipo de pronunciamento.
+    tipo_sessao: str (default=None)
+        Tipo da sessão plenária.
+    
+    Retorna
+    -------
+    list of dict
+        Lista de discursos do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if casa is not None:
+        tags[&#39;casa&#39;] = casa
+    if inicio is not None:
+        tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+    if fim is not None:
+        tags[&#39;dataFim&#39;] = _utils.ParseDate(fim).senado
+    if numero_sessao is not None:
+        tags[&#39;numeroSessao&#39;] = numero_sessao
+    if tipo_pronunciamento is not None:
+        tags[&#39;tipoPronunciamento&#39;] = tipo_pronunciamento
+    if tipo_sessao is not None:
+        tags[&#39;tipoSessao&#39;] = tipo_sessao
+
+    path = f&#39;senador/{self.cod}/discursos&#39;
+    keys = [&#39;DiscursosParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Pronunciamentos&#39;, &#39;Pronunciamento&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.filiacoes"><code class="name flex">
+<span>def <span class="ident">filiacoes</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as filiações partidárias que o senador já teve.</p>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de filiações do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def filiacoes(self) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as filiações partidárias que o senador já teve.
+
+    Retorna
+    -------
+    list of dict
+        Lista de filiações do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/{self.cod}/filiacoes&#39;
+    keys = [&#39;FiliacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Filiacoes&#39;, &#39;Filiacao&#39;]
+    return _get_request(path, None, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.historico"><code class="name flex">
+<span>def <span class="ident">historico</span></span>(<span>self) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém todos os detalhes de um parlamentar no(s) mandato(s) como
+senador (mandato atual e anteriores, se houver).</p>
+<h2 id="retorna">Retorna</h2>
+<pre>dict
+    Dados históricos do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def historico(self) -&gt; dict:
+    &#39;&#39;&#39;
+    Obtém todos os detalhes de um parlamentar no(s) mandato(s) como
+    senador (mandato atual e anteriores, se houver).
+
+    Retorna
+    -------
+    dict
+        Dados históricos do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/{self.cod}/historico&#39;
+    keys = [&#39;DetalheParlamentar&#39;, &#39;Parlamentar&#39;]
+    d = _get_request(path, None, keys)
+    d.pop(&#39;OutrasInformacoes&#39;, None)
+    d.pop(&#39;UrlGlossario&#39;, None)
+    return d</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.licencas"><code class="name flex">
+<span>def <span class="ident">licencas</span></span>(<span>self, inicio: str = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as licenças de um senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>inicio: str (default=None)
+    Retorna as licenças a partir da data especificada.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de licenças do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def licencas(
+        self,
+        inicio: str = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as licenças de um senador.
+
+    Parâmetros
+    ----------
+    inicio: str (default=None)
+        Retorna as licenças a partir da data especificada.
+
+    Retorna
+    -------
+    list of dict
+        Lista de licenças do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if inicio is not None:
+        tags[&#39;dataInicio&#39;] = _utils.ParseDate(inicio).senado
+
+    path = f&#39;senador/{self.cod}/licencas&#39;
+    keys = [&#39;LicencaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Licencas&#39;, &#39;Licenca&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.liderancas"><code class="name flex">
+<span>def <span class="ident">liderancas</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém os cargos de liderança de um senador.</p>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de cargos de liderança do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def liderancas(self) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém os cargos de liderança de um senador.
+
+    Retorna
+    -------
+    list of dict
+        Lista de cargos de liderança do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/{self.cod}/liderancas&#39;
+    keys = [&#39;LiderancaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Liderancas&#39;, &#39;Lideranca&#39;]
+    return _get_request(path, None, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.mandatos"><code class="name flex">
+<span>def <span class="ident">mandatos</span></span>(<span>self) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém os mandatos que o senador já teve.</p>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de mandatos do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def mandatos(self) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém os mandatos que o senador já teve.
+
+    Retorna
+    -------
+    list of dict
+        Lista de mandatos do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    path = f&#39;senador/{self.cod}/mandatos&#39;
+    keys = [&#39;MandatoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Mandatos&#39;, &#39;Mandato&#39;]
+    return _get_request(path, None, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.relatorias"><code class="name flex">
+<span>def <span class="ident">relatorias</span></span>(<span>self, ano: int = None, comissao: str = None, numero: int = None, sigla: str = None, tramitando: bool = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as matérias de relatoria de um senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>ano: int (default=None)
+    Retorna apenas as matérias do ano informado.
+comissao: str (default=None)
+    Retorna apenas as relatorias da comissão informada.
+numero: int (default=None)
+    Retorna apenas as matérias do número informado.
+sigla: str (default=None)
+    Retorna apenas as matérias da sigla informada.
+tramitando: bool (default=None)
+    - True: Retorna apenas as matérias que estão tramitando;
+    - False: Retorna apenas as que não estão tramitando;
+    - None: Retorna ambas.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de matérias de relatoria de um senador.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def relatorias(
+        self,
+        ano: int = None,
+        comissao: str = None,
+        numero: int = None,
+        sigla: str = None,
+        tramitando: bool = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as matérias de relatoria de um senador.
+
+    Parâmetros
+    ----------
+    ano: int (default=None)
+        Retorna apenas as matérias do ano informado.
+    comissao: str (default=None)
+        Retorna apenas as relatorias da comissão informada.
+    numero: int (default=None)
+        Retorna apenas as matérias do número informado. 
+    sigla: str (default=None)
+        Retorna apenas as matérias da sigla informada.       
+    tramitando: bool (default=None)
+        - True: Retorna apenas as matérias que estão tramitando;
+        - False: Retorna apenas as que não estão tramitando;
+        - None: Retorna ambas.
+
+    Retorna
+    -------
+    list of dict
+        Lista de matérias de relatoria de um senador.
+
+    ----------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if ano is not None:
+        tags[&#39;ano&#39;] = ano
+    if comissao is not None:
+        tags[&#39;comissao&#39;] = comissao
+    if numero is not None:
+        tags[&#39;numero&#39;] = numero
+    if sigla is not None:
+        tags[&#39;sigla&#39;] = sigla
+    if tramitando is not None:
+        tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+    path = f&#39;senador/{self.cod}/relatorias&#39;
+    keys = [&#39;MateriasRelatoriaParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Relatorias&#39;, &#39;Relatoria&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.senado.Senador.votacoes"><code class="name flex">
+<span>def <span class="ident">votacoes</span></span>(<span>self, ano: int = None, numero: int = None, sigla: str = None, tramitando: bool = None) ‑> list</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obtém as votações de um senador.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>ano: int (default=None)
+    Retorna apenas as matérias do ano informado.
+numero: int (default=None)
+    Retorna apenas as matérias do número informado.
+sigla: str (default=None)
+    Retorna apenas as matérias da sigla informada.
+tramitando: bool (default=None)
+    - True: Retorna apenas as matérias que estão tramitando;
+    - False: Retorna apenas as que não estão tramitando;
+    - None: Retorna ambas.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>list of dict
+    Lista de votações do(a) parlamentar.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expandir código-fonte</span>
+</summary>
+<pre><code class="python">def votacoes(
+        self,
+        ano: int = None,
+        numero: int = None,
+        sigla: str = None,
+        tramitando: bool = None
+    ) -&gt; list:
+    &#39;&#39;&#39;
+    Obtém as votações de um senador.
+
+    Parâmetros
+    ----------
+    ano: int (default=None)
+        Retorna apenas as matérias do ano informado.
+    numero: int (default=None)
+        Retorna apenas as matérias do número informado.      
+    sigla: str (default=None)
+        Retorna apenas as matérias da sigla informada.       
+    tramitando: bool (default=None)
+        - True: Retorna apenas as matérias que estão tramitando;
+        - False: Retorna apenas as que não estão tramitando;
+        - None: Retorna ambas.
+
+    Retorna
+    -------
+    list of dict
+        Lista de votações do(a) parlamentar.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+
+    tags = {}
+    if ano is not None:
+        tags[&#39;ano&#39;] = ano
+    if numero is not None:
+        tags[&#39;numero&#39;] = numero
+    if sigla is not None:
+        tags[&#39;sigla&#39;] = sigla
+    if tramitando is not None:
+        tags[&#39;tramitando&#39;] = &#39;S&#39; if tramitando else &#39;N&#39;
+
+    path = f&#39;senador/{self.cod}/votacoes&#39;
+    keys = [&#39;VotacaoParlamentar&#39;, &#39;Parlamentar&#39;, &#39;Votacoes&#39;, &#39;Votacao&#39;]
+    return _get_request(path, tags, keys)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="DadosAbertosBrasil" href="https://gustavofurtado.com/dab/">
+<img src="https://raw.githubusercontent.com/GusFurtado/DadosAbertosBrasil/master/assets/logo.png" alt="DadosAbertosBrasil">
+</a>
+</header>
+<h1>Sumário</h1>
+<div class="toc">
+<ul>
+<li><a href="#mini-tutorial">Mini-Tutorial</a></li>
+<li><a href="#documentacao-da-api-original">Documentação original</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-módulo</h3>
+<ul>
+<li><code><a title="DadosAbertosBrasil" href="index.html">DadosAbertosBrasil</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Funções</a></h3>
+<ul class="">
+<li><code><a title="DadosAbertosBrasil.senado.lista_afastados" href="#DadosAbertosBrasil.senado.lista_afastados">lista_afastados</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.lista_atual" href="#DadosAbertosBrasil.senado.lista_atual">lista_atual</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.lista_legislatura" href="#DadosAbertosBrasil.senado.lista_legislatura">lista_legislatura</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.partidos" href="#DadosAbertosBrasil.senado.partidos">partidos</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="DadosAbertosBrasil.senado.Senador" href="#DadosAbertosBrasil.senado.Senador">Senador</a></code></h4>
+<ul class="two-column">
+<li><code><a title="DadosAbertosBrasil.senado.Senador.apartes" href="#DadosAbertosBrasil.senado.Senador.apartes">apartes</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.autorias" href="#DadosAbertosBrasil.senado.Senador.autorias">autorias</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.cargos" href="#DadosAbertosBrasil.senado.Senador.cargos">cargos</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.comissoes" href="#DadosAbertosBrasil.senado.Senador.comissoes">comissoes</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.discursos" href="#DadosAbertosBrasil.senado.Senador.discursos">discursos</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.filiacoes" href="#DadosAbertosBrasil.senado.Senador.filiacoes">filiacoes</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.historico" href="#DadosAbertosBrasil.senado.Senador.historico">historico</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.licencas" href="#DadosAbertosBrasil.senado.Senador.licencas">licencas</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.liderancas" href="#DadosAbertosBrasil.senado.Senador.liderancas">liderancas</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.mandatos" href="#DadosAbertosBrasil.senado.Senador.mandatos">mandatos</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.relatorias" href="#DadosAbertosBrasil.senado.Senador.relatorias">relatorias</a></code></li>
+<li><code><a title="DadosAbertosBrasil.senado.Senador.votacoes" href="#DadosAbertosBrasil.senado.Senador.votacoes">votacoes</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
