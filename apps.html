@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	
+		<title>Dados Abertos Brasil</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="styles/dab_styles.css">
+		
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+		<link rel="apple-touch-icon" sizes="180x180" href="assets/dab_icons/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="assets/dab_icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="assets/dab_icons/favicon-16x16.png">
+		<link rel="manifest" href="assets/dab_icons/site.webmanifest">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#ffc40d">
+		<meta name="theme-color" content="#ffffff">
+				
+	</head>
+
+	<body style='background-color: #FFFFFF'>
+
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style='background-color:#002776'>
+			<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+				<a class="navbar-brand" href="dab.html">
+					<img src="assets/dab_nav_brand.png" height="48" alt="">
+				</a>
+			</div>
+
+			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="DadosAbertosBrasil/index.html">Documentação</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="dab.html#Modulos">Módulos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="dab.html#Exemplos">Exemplos</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container">
+		
+			<div style='height:120px'></div>
+			
+			<p style='text-align:center'>
+				<span class='Title azul'>
+					Dados Abertos Brasil
+				</span>
+				<span class='Text' style='font-size:24pt'>
+					está preparado para o desenvolvimento de aplicações, pois possui séries temporais, posições geográficas e dados demográficos.
+				</span>
+			</p>
+			
+			<div style='height:45px'></div>
+			
+			<p style='text-align:center'>
+				<span class='Text' style='font-size:24pt'>Veja os exemplos a seguir para se inspirar ou entre em <a href='...'>contato</a>.</span>
+			</p>
+			
+			<div style='height:60px'></div>
+			
+		</div>
+		
+		<div class=SvgBackground style='padding:30px' id="Modulos">
+
+			<div class='row mb-4'>
+				<div class='col'>
+					<button
+						type="button"
+						class="btn btn-primary btn-lg btn-block"
+						href="javascript:void(0)"
+						onclick="selectApp(event, 'appMapa');">
+							Mapa de Indicadores
+					</button>
+				</div>
+				<div class='col'>
+					<button
+						type="button"
+						class="btn btn-primary btn-lg btn-block"
+						href="javascript:void(0)"
+						onclick="selectApp(event, 'appDeputados');">
+							Painel de Deputados
+					</button>
+				</div>
+				<div class='col'>
+					<button
+						type="button"
+						class="btn btn-primary btn-lg btn-block"
+						href="javascript:void(0)"
+						onclick="selectApp(event, 'appWIP');">
+							Terceira Aplicação (WIP)
+					</button>
+				</div>
+			</div>
+			
+			
+			<div id="appMapa" class="w3-container city w3-animate-right">
+				<iframe
+					src="https://mapa-indicadores-municipais.herokuapp.com/"
+					title="Mapa de Indicadores Municipais"
+					class="app"
+				>
+					Aguarde enquanto as aplicações carregam...
+				</iframe>
+			</div>
+			
+			<div id="appDeputados" class="w3-container city w3-animate-right" style="display:none">
+				<iframe
+					src="https://despesas-deputados.herokuapp.com/"
+					title="Despesas dos Deputados"
+					class="app"
+				>
+					Aguarde enquanto as aplicações carregam...
+				</iframe> 
+			</div>
+			
+			<div id="appWIP" class="w3-container city w3-animate-right" style="display:none">
+				<iframe
+					src="..."
+					title="..."
+					class="app"
+				>
+					Aguarde enquanto as aplicações carregam...
+				</iframe> 
+			</div>
+			
+		</div>		
+	</body>
+
+	<script>
+		function selectApp(evt, app) {
+			var i, x, tablinks;
+			x = document.getElementsByClassName("city");
+			for (i = 0; i < x.length; i++) {
+				x[i].style.display = "none";
+			}
+			document.getElementById(app).style.display = "block";
+		}
+	  </script>
+
+</html>
