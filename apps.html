@@ -6,11 +6,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link rel="stylesheet" href="styles/dab_styles.css">
-		
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
 		<link rel="apple-touch-icon" sizes="180x180" href="assets/dab_icons/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="assets/dab_icons/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="assets/dab_icons/favicon-16x16.png">
@@ -23,14 +24,15 @@
 
 	<body style='background-color: #FFFFFF'>
 
-		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style='background-color:#002776'>
-			<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-				<a class="navbar-brand" href="dab.html">
-					<img src="assets/dab_nav_brand.png" height="48" alt="">
-				</a>
-			</div>
-
-			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+		<nav class="navbar navbar-expand-lg navbar-dark" style='background-color:#002776'>
+			<a class="navbar-brand" href="dab.html">
+				<img src="assets/dab_nav_brand.png" height="48" alt="">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			  	<span class="navbar-toggler-icon"></span>
+			</button>
+		  
+			<div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="DadosAbertosBrasil/index.html">Documentação</a>
@@ -45,9 +47,7 @@
 			</div>
 		</nav>
 		
-		<div class="container">
-		
-			<div style='height:120px'></div>
+		<div class="container bigbox">
 			
 			<p style='text-align:center'>
 				<span class='Title azul'>
@@ -61,10 +61,10 @@
 			<div style='height:45px'></div>
 			
 			<p style='text-align:center'>
-				<span class='Text' style='font-size:24pt'>Veja os exemplos a seguir para se inspirar ou entre em <a href='...'>contato</a>.</span>
+				<span class='Text' style='font-size:24pt'>
+					Veja os exemplos a seguir para se inspirar ou entre em <a href='...'>contato</a>.
+				</span>
 			</p>
-			
-			<div style='height:60px'></div>
 			
 		</div>
 		
@@ -94,8 +94,8 @@
 						type="button"
 						class="btn btn-primary btn-lg btn-block"
 						href="javascript:void(0)"
-						onclick="selectApp(event, 'appWIP');">
-							Terceira Aplicação (WIP)
+						onclick="selectApp(event, 'appIndicadores');">
+							Indicadores Econômicos
 					</button>
 				</div>
 			</div>
@@ -121,10 +121,10 @@
 				</iframe> 
 			</div>
 			
-			<div id="appWIP" class="w3-container city w3-animate-right" style="display:none">
+			<div id="appIndicadores" class="w3-container city w3-animate-right" style="display:none">
 				<iframe
-					src="..."
-					title="..."
+					src="https://indicadores-macroeconomicos.herokuapp.com/"
+					title="Indicadores Econômicos"
 					class="app"
 				>
 					Aguarde enquanto as aplicações carregam...

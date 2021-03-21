@@ -15,14 +15,22 @@ btn {
 }
 
 
+.bigbox {
+	padding-top: 60px;
+	padding-bottom: 60px;
+}
+
+
 .card {
 	width:100%;
 	margin-bottom:15px;
 }
 
+
 .PMargin {
 	margin-bottom: 0px;
 }
+
 
 .Title {
 	font-size: 24pt;
@@ -30,11 +38,13 @@ btn {
 	font-weight: 700;
 }
 
+
 .SubTitle {
 	font-size: 14pt;
 	font-family: Montserrat, sans-serif;
 	font-weight: 600;
 }
+
 
 .Legend {
 	font-size: 9pt;
@@ -43,11 +53,13 @@ btn {
 	color: grey;
 }
 
+
 .Text {
 	font-size: 11pt;
 	font-family: Montserrat, sans-serif;
 	font-weight: 400;	
 }
+
 
 .Exemplo {
 	border-radius: 8px;
