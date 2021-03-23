@@ -40,11 +40,13 @@ html {
 	font-weight: 700;
 }
 
+
 .SubTitle {
 	font-size: 14pt;
 	font-family: Montserrat, sans-serif;
 	font-weight: 600;
 }
+
 
 .Legend {
 	font-size: 9pt;
@@ -52,6 +54,7 @@ html {
 	font-weight: 400;
 	color: grey;
 }
+
 
 .Tag {
 	background-color: #f0f0f0;
@@ -67,11 +70,13 @@ html {
 	border-radius: 16px;
 }
 
+
 .Text {
 	font-size: 11pt;
 	font-family: Montserrat, sans-serif;
 	font-weight: 400;	
 }
+
 
 .project {
 	margin-bottom: 30px;
@@ -83,6 +88,8 @@ html {
 	padding-right: 3px;
 }
 
+
+
 .dots {
   color: orange;
   // height: 8px;
@@ -92,11 +99,13 @@ html {
    width: 216px;
 }
 
+
 /* Colors */
 .dark {color: #0A0A0A}
 .jeans {color: #56B4E9}
 .light {color: #F5F5F5}
 .spanish {color: #0072B2}
+
 
 .SvgBackground {
     background-color: #192d3d;
