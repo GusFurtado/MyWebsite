@@ -49,6 +49,7 @@ as outras funções <code>lista</code>.</li>
 <pre><code class="language-python-repl">&gt;&gt;&gt; serie.metadados
 &gt;&gt;&gt; serie.valores
 </code></pre>
+<li>Alternativamente, utilize a função <code>ipea.serie</code> para coletar apenas os valores da série, sem os metadados. Está é uma forma simplificada e mais rápida de obter os dados de uma série.</li>
 </ol>
 <h2 id="documentacao-da-api-original">Documentação original</h2>
 <p><a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a></p>
@@ -83,7 +84,11 @@ as outras funções `lista`.
 &gt;&gt;&gt; serie.metadados
 &gt;&gt;&gt; serie.valores
 
-Documentação original
+6. Alternativamente, utilize a função `ipea.serie` para coletar apenas os
+valores da série, sem os metadados. Está é uma forma simplificada e mais
+rápida de obter os dados de uma série.
+
+Documentação da API original
 ----------------------------
 http://www.ipeadata.gov.br/api/
 
@@ -91,8 +96,6 @@ http://www.ipeadata.gov.br/api/
 &#39;&#39;&#39;
 
 
-
-import warnings
 
 import pandas as _pd
 
@@ -138,7 +141,9 @@ class Serie:
     cod: str
         Código da série escolhida.
     valores: pandas.core.frame.DataFrame
-        Valores históricos da série escolhida.
+        Dados históricos da série escolhida. Alias de `dados`.
+    dados : pandas.core.frame.DataFrame
+        Dados históricos da série escolhida. Alias de `valores`.
     metadados: pandas.core.frame.DataFrame
         Metadados da série escolhida.
     base: str
@@ -175,6 +180,42 @@ class Serie:
         - True: Série possui valores numéricos (tratados como números);
         - False: Série possui valores são alfanuméricos (string).
 
+    Exemplos
+    --------
+        &gt;&gt;&gt; # Utilize as funções `lista` para encontrar a série desejada
+        &gt;&gt;&gt; ipea.lista_series()
+
+        &gt;&gt;&gt; # Instancie a classe `Serie` utilizando o código encontrado
+        &gt;&gt;&gt; s = ipea.Serie(&#39;PAN4_PIBPMV4&#39;)
+
+        &gt;&gt;&gt; # Utilize o atributo `dados` para ver a série histórica
+        &gt;&gt;&gt; s.dados
+        ...        SERCODIGO                    VALDATA      VALVALOR  \
+        ... 0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \
+        ... 1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \
+        ... 2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \
+        ... 3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05  \
+        ... 4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05  \
+        ... ..           ...                        ...           ...  \
+
+        &gt;&gt;&gt; # Para ver os metadados, basta chamar o atributo correspondente
+        &gt;&gt;&gt; s.nome
+        ... &#39;PIB nominal&#39;
+        &gt;&gt;&gt; s.periodicidade
+        ... &#39;Trimestral&#39;
+
+    Notas
+    -----
+    Os atributos `dados` e `valores` apresentam os mesmos dados. &#34;Valores&#34; é o
+    termo padrão para os dados históricos do Ipeadata, porém o termo &#34;Dados&#34; é
+    o padrão do pacote `DadosAbertosBrasil`.
+
+    Ver também
+    ----------
+    DadosAbertosBrasil.ipea.serie
+        Função que coleta os mesmos dados históricos desta classe, porém é
+        mais simples e não coleta os metadados da série.
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
@@ -186,6 +227,8 @@ class Serie:
 
         self.cod = cod
         self.valores = _get(f&#34;Metadados(SERCODIGO=&#39;{cod}&#39;)/Valores&#34;, index)
+        self.valores.VALDATA = _pd.to_datetime(self.valores.VALDATA)
+        self.dados = self.valores
         self.metadados = _get(f&#34;Metadados(&#39;{cod}&#39;)&#34;)
         self.base = self.metadados.loc[0, &#39;BASNOME&#39;]
         self.fonte_nome = self.metadados.loc[0, &#39;FNTNOME&#39;]
@@ -219,6 +262,29 @@ def lista_series(index=False) -&gt; _pd.DataFrame:
         DataFrame onde cada coluna é um metadado e cada registro é uma série
         do IPEA.
 
+    Exemplo
+    -------
+        &gt;&gt;&gt; ipea.lista_series()
+        ...            SERCODIGO                                SERNOME  \
+        ... 0       ABATE_ABPEAV       Abate - aves - peso das carcaças  \
+        ... 1       ABATE_ABPEBV    Abate - bovinos - peso das carcaças  \
+        ... 2       ABATE_ABPESU     Abate - suínos - peso das carcaças  \
+        ... 3       ABATE_ABQUAV                    Abate - aves - qde.  \
+        ... 4       ABATE_ABQUBV                 Abate - bovinos - qde.  \
+        ... ...              ...                                    ...  \
+
+        &gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+            &#39;SERCODIGO&#39; como index do DataFrame.
+        &gt;&gt;&gt; ipea.lista_series(index=True)
+        ...                                             SERNOME  \
+        ... SERCODIGO                                            \
+        ... ABATE_ABPEAV       Abate - aves - peso das carcaças  \
+        ... ABATE_ABPEBV    Abate - bovinos - peso das carcaças  \
+        ... ABATE_ABPESU     Abate - suínos - peso das carcaças  \
+        ... ABATE_ABQUAV                    Abate - aves - qde.  \
+        ... ABATE_ABQUBV                 Abate - bovinos - qde.  \
+        ... ...                                             ...  \
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
@@ -244,6 +310,29 @@ def lista_temas(
     -------
     pandas.core.frame.DataFrame
         DataFrame contendo um registro de todos os temas das séries do IPEA.
+
+    Exemplos
+    --------
+        &gt;&gt;&gt; ipea.lista_temas()
+        ...     TEMCODIGO  TEMCODIGO_PAI                  TEMNOME
+        ... 0          28            NaN             Agropecuária
+        ... 1          23            NaN       Assistência social
+        ... 2          10            NaN    Balanço de pagamentos
+        ... 3           7            NaN                   Câmbio
+        ... 4           5            NaN        Comércio exterior
+        ... ..        ...            ...                      ...
+
+        &gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+            &#39;TEMCODIGO&#39; como index do DataFrame.
+        &gt;&gt;&gt; ipea.lista_temas(index=True)
+        ...            TEMCODIGO_PAI                  TEMNOME
+        ... TEMCODIGO                                        
+        ... 28                   NaN             Agropecuária
+        ... 23                   NaN       Assistência social
+        ... 10                   NaN    Balanço de pagamentos
+        ... 7                    NaN                   Câmbio
+        ... 5                    NaN        Comércio exterior
+        ... ...                  ...                      ...
 
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
@@ -276,6 +365,29 @@ def lista_paises(
     -------
     pandas.core.frame.DataFrame
         DataFrame contendo um registro de todos os países das séries do IPEA.
+
+    Exemplos
+    --------
+        &gt;&gt;&gt; ipea.lista_paises()
+        ...    PAICODIGO          PAINOME
+        ... 0        AFG      Afeganistão
+        ... 1        ZAF    África do Sul
+        ... 2        DEU         Alemanha
+        ... 3       LATI   América Latina
+        ... 4        AGO           Angola
+        ... ..       ...              ...
+
+        &gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+            &#39;PAICODIGO&#39; como index do DataFrame.
+        &gt;&gt;&gt; ipea.lista_paises(index=True)
+        ...                    PAINOME
+        ... PAICODIGO                             
+        ... AFG            Afeganistão
+        ... ZAF          África do Sul
+        ... DEU               Alemanha
+        ... LATI        América Latina
+        ... AGO                 Angola
+        ... ...                    ...
 
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
@@ -312,6 +424,17 @@ def lista_territorios(
         DataFrame contendo o registro de todos os territórios
         das séries do IPEA.
 
+    Exemplos
+    --------
+        &gt;&gt;&gt; ipea.lista_territorios()
+        ...        NIVNOME  TERCODIGO                TERNOME  \
+        ... 0                                 (não definido)  \
+        ... 1       Brasil          0                 Brasil  \
+        ... 2      Regiões          1           Região Norte  \
+        ... 3      Estados         11               Rondônia  \
+        ... 4   Municípios    1100015  Alta Floresta D&#39;Oeste  \
+        ... ..         ...        ...                    ...  \
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
@@ -331,6 +454,11 @@ def lista_niveis() -&gt; list:
     -------
     list
         Lista de todos os níveis territoriais das séries do IPEA.
+
+    Exemplos
+    --------
+        &gt;&gt;&gt; ipea.lista_niveis()
+        ... [&#39;Brasil&#39;, &#39;Regiões&#39;, ... , &#39;AMC 70-00&#39;, &#39;Outros Países&#39;]
 
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
@@ -352,7 +480,57 @@ def lista_niveis() -&gt; list:
         &#39;AMC 91-00&#39;,
         &#39;AMC 70-00&#39;,
         &#39;Outros Países&#39;
-    ]</code></pre>
+    ]
+
+
+
+def serie(
+        cod: str,
+        index: bool = False
+    ) -&gt; _pd.DataFrame:
+    &#39;&#39;&#39;
+    Valores de uma série IPEA.
+
+    Parâmetros
+    ----------
+    cod : str
+        Código da série que se deseja obter os dados.
+        Utilize a função `ipea.lista_series` para identificar a série desejada.
+        O código desejado estará na coluna &#39;SERCODIGO&#39;.
+    index : bool (default=False)
+        Se True, define a coluna &#39;SERCODIGO&#39; como index do atributo &#39;valores&#39;.
+
+    Retorna
+    -------
+    pandas.core.frame.DataFrame
+        Série temporal do Ipeadata em formato de DataFrame.
+
+    Exemplo
+    -------
+        &gt;&gt;&gt; # Utilize as funções `lista` para encontrar a série desejada
+        &gt;&gt;&gt; ipea.lista_series()
+
+        &gt;&gt;&gt; # Utilize o código encontrado como argumento da função `serie`
+        &gt;&gt;&gt; ipea.serie(&#39;PAN4_PIBPMV4&#39;)
+        ...        SERCODIGO                    VALDATA      VALVALOR  \
+        ... 0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \
+        ... 1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \
+        ... 2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \
+        ... 3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05  \
+        ... 4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05  \
+        ... ..           ...                        ...           ...  \
+
+    Ver também
+    ----------
+    DadosAbertosBrasil.ipea.Serie
+        Class do módulo `ipea` que coleta os mesmos valores desta função,
+        porém também coleta os metadados da série.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+    df = _get(f&#34;Metadados(SERCODIGO=&#39;{cod}&#39;)/Valores&#34;, index)
+    df.VALDATA = _pd.to_datetime(df.VALDATA)
+    return df</code></pre>
 </details>
 </section>
 <section>
@@ -370,6 +548,10 @@ def lista_niveis() -&gt; list:
 <h2 id="retorna">Retorna</h2>
 <pre>list
     Lista de todos os níveis territoriais das séries do IPEA.</pre>
+<h2 id="exemplos">Exemplos</h2>
+<pre><code>&gt;&gt;&gt; ipea.lista_niveis()
+... ['Brasil', 'Regiões', ... , 'AMC 70-00', 'Outros Países']
+</code></pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -421,6 +603,28 @@ index: bool (default=False)
 <h2 id="retorna">Retorna</h2>
 <pre>pandas.core.frame.DataFrame
     DataFrame contendo um registro de todos os países das séries do IPEA.</pre>
+<h2 id="exemplos">Exemplos</h2>
+<pre><code>&gt;&gt;&gt; ipea.lista_paises()
+...    PAICODIGO          PAINOME
+... 0        AFG      Afeganistão
+... 1        ZAF    África do Sul
+... 2        DEU         Alemanha
+... 3       LATI   América Latina
+... 4        AGO           Angola
+... ..       ...              ...
+
+&gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+&gt;&gt;&gt; # 'PAICODIGO' como index do DataFrame.
+&gt;&gt;&gt; ipea.lista_paises(index=True)
+...                    PAINOME
+... PAICODIGO                             
+... AFG            Afeganistão
+... ZAF          África do Sul
+... DEU               Alemanha
+... LATI        América Latina
+... AGO                 Angola
+... ...                    ...
+</code></pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -469,6 +673,28 @@ index: bool (default=False)
 <pre>pandas.core.frame.DataFrame
     DataFrame onde cada coluna é um metadado e cada registro é uma série do
     IPEA.</pre>
+<h2 id="exemplo">Exemplo</h2>
+<pre><code>&gt;&gt;&gt; ipea.lista_series()
+...            SERCODIGO                                SERNOME          
+... 0       ABATE_ABPEAV       Abate - aves - peso das carcaças          
+... 1       ABATE_ABPEBV    Abate - bovinos - peso das carcaças          
+... 2       ABATE_ABPESU     Abate - suínos - peso das carcaças          
+... 3       ABATE_ABQUAV                    Abate - aves - qde.          
+... 4       ABATE_ABQUBV                 Abate - bovinos - qde.          
+... ...              ...                                    ...  
+
+&gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+&gt;&gt;&gt; # 'SERCODIGO' como index do DataFrame.
+&gt;&gt;&gt; ipea.lista_series(index=True)
+...                                             SERNOME          
+... SERCODIGO                                                    
+... ABATE_ABPEAV       Abate - aves - peso das carcaças          
+... ABATE_ABPEBV    Abate - bovinos - peso das carcaças          
+... ABATE_ABPESU     Abate - suínos - peso das carcaças          
+... ABATE_ABQUAV                    Abate - aves - qde.          
+... ABATE_ABQUBV                 Abate - bovinos - qde.          
+... ...                                             ...
+</code></pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -508,6 +734,28 @@ index: bool (default=False)
 <h2 id="retorna">Retorna</h2>
 <pre>pandas.core.frame.DataFrame
     DataFrame contendo um registro de todos os temas das séries do IPEA.</pre>
+<h2 id="exemplos">Exemplos</h2>
+<pre><code>&gt;&gt;&gt; ipea.lista_temas()
+...     TEMCODIGO  TEMCODIGO_PAI                  TEMNOME
+... 0          28            NaN             Agropecuária
+... 1          23            NaN       Assistência social
+... 2          10            NaN    Balanço de pagamentos
+... 3           7            NaN                   Câmbio
+... 4           5            NaN        Comércio exterior
+... ..        ...            ...                      ...
+
+&gt;&gt;&gt; # Utilize o argumento `index=True` para colocar a coluna
+&gt;&gt;&gt; # 'TEMCODIGO' como index do DataFrame.
+&gt;&gt;&gt; ipea.lista_temas(index=True)
+...            TEMCODIGO_PAI                  TEMNOME
+... TEMCODIGO                                        
+... 28                   NaN             Agropecuária
+... 23                   NaN       Assistência social
+... 10                   NaN    Balanço de pagamentos
+... 7                    NaN                   Câmbio
+... 5                    NaN        Comércio exterior
+... ...                  ...                      ...
+</code></pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -559,6 +807,16 @@ nivel: str (default=None)
 <h2 id="retorna">Retorna</h2>
 <pre>pandas.core.frame.DataFrame
     DataFrame contendo o registro de todos os territórios das séries do IPEA.</pre>
+<h2 id="exemplos">Exemplos</h2>
+<pre><code>&gt;&gt;&gt; ipea.lista_territorios()
+...        NIVNOME  TERCODIGO                TERNOME          
+... 0                                 (não definido)          
+... 1       Brasil          0                 Brasil          
+... 2      Regiões          1           Região Norte          
+... 3      Estados         11               Rondônia          
+... 4   Municípios    1100015  Alta Floresta D'Oeste          
+... ..         ...        ...                    ...
+</code></pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -597,8 +855,98 @@ nivel: str (default=None)
         return _get(f&#34;Territorios(TERCODIGO=&#39;{cod}&#39;,NIVNOME=&#39;{n}&#39;)&#34;)</code></pre>
 </details>
 </dd>
+
+<dt id="DadosAbertosBrasil.ipea.serie"><code class="name flex">
+<span>def <span class="ident">serie</span></span>(<span>cod: str, index: bool = False) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Valores de uma série IPEA.</p>
+<h2 id="parametros">Parâmetros</h2>
+<pre>cod : str
+    Código da série que se deseja obter os dados.
+    Utilize a função `ipea.lista_series` para identificar a série desejada.
+    O código desejado estará na coluna 'SERCODIGO'.
+index : bool (default=False)
+    Se True, define a coluna 'SERCODIGO' como index do atributo 'valores'.</pre>
+<h2 id="retorna">Retorna</h2>
+<pre>pandas.core.frame.DataFrame
+    Série temporal do Ipeadata em formato de DataFrame.</pre>
+<h2 id="exemplo">Exemplo</h2>
+<pre><code>&gt;&gt;&gt; # Utilize as funções `ipea.lista` para encontrar a série desejada
+&gt;&gt;&gt; ipea.lista_series()
+
+&gt;&gt;&gt; # Utilize o código encontrado como argumento da função `ipea.serie`
+&gt;&gt;&gt; ipea.serie('PAN4_PIBPMV4')
+...        SERCODIGO                      VALDATA      VALVALOR          
+... 0   PAN4_PIBPMV4  '1996-01-01T00:00:00-02:00'  1.893233e+05          
+... 1   PAN4_PIBPMV4  '1996-04-01T00:00:00-03:00'  2.046107e+05          
+... 2   PAN4_PIBPMV4  '1996-07-01T00:00:00-03:00'  2.215132e+05          
+... 3   PAN4_PIBPMV4  '1996-10-01T00:00:00-03:00'  2.393163e+05          
+... 4   PAN4_PIBPMV4  '1997-01-01T00:00:00-02:00'  2.191170e+05          
+... ..           ...                          ...           ...
+</code></pre>
+<h2 id="ver-tambem">Ver Também</h2>
+<pre>DadosAbertosBrasil.ipea.Serie
+    Class do módulo `ipea` que coleta os mesmos valores desta função, porém
+    também coleta os metadados da série.</pre>
+<hr></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def serie(
+        cod: str,
+        index: bool = False
+    ) -&gt; _pd.DataFrame:
+    &#39;&#39;&#39;
+    Valores de uma série IPEA.
+
+    Parâmetros
+    ----------
+    cod : str
+        Código da série que se deseja obter os dados.
+        Utilize a função `ipea.lista_series` para identificar a série desejada.
+        O código desejado estará na coluna &#39;SERCODIGO&#39;.
+    index : bool (default=False)
+        Se True, define a coluna &#39;SERCODIGO&#39; como index do atributo &#39;valores&#39;.
+
+    Retorna
+    -------
+    pandas.core.frame.DataFrame
+        Série temporal do Ipeadata em formato de DataFrame.
+
+    Exemplo
+    -------
+        &gt;&gt;&gt; # Utilize as funções `lista` para encontrar a série desejada
+        &gt;&gt;&gt; ipea.lista_series()
+
+        &gt;&gt;&gt; # Utilize o código encontrado como argumento da função `serie`
+        &gt;&gt;&gt; ipea.serie(&#39;PAN4_PIBPMV4&#39;)
+        ...        SERCODIGO                    VALDATA      VALVALOR  \
+        ... 0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \
+        ... 1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \
+        ... 2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \
+        ... 3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05  \
+        ... 4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05  \
+        ... ..           ...                        ...           ...  \
+
+    Ver também
+    ----------
+    DadosAbertosBrasil.ipea.Serie
+        Class do módulo `ipea` que coleta os mesmos valores desta função,
+        porém também coleta os metadados da série.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+    df = _get(f&#34;Metadados(SERCODIGO=&#39;{cod}&#39;)/Valores&#34;, index)
+    df.VALDATA = _pd.to_datetime(df.VALDATA)
+    return df</code></pre>
+</details>
+</dd>
+
 </dl>
 </section>
+
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
@@ -619,7 +967,9 @@ index: bool (default=False)
 <pre>cod: str
     Código da série escolhida.
 valores: pandas.core.frame.DataFrame
-    Valores históricos da série escolhida.
+    Dados históricos da série escolhida. Alias de `dados`.
+dados : pandas.core.frame.DataFrame
+    Dados históricos da série escolhida. Alias de `valores`.
 metadados: pandas.core.frame.DataFrame
     Metadados da série escolhida.
 base: str
@@ -655,6 +1005,37 @@ pais: str
 numerica: bool
     - True: Série possui valores numéricos (tratados como números);
     - False: Série possui valores são alfanuméricos (string).</pre>
+<h2 id="exemplos">Exemplos</h2>
+<pre><code>&gt;&gt;&gt; # Utilize as funções `ipea.lista` para encontrar a série desejada
+&gt;&gt;&gt; ipea.lista_series()
+
+&gt;&gt;&gt; # Instancie a classe `ipea.Serie` utilizando o código encontrado
+&gt;&gt;&gt; s = ipea.Serie('PAN4_PIBPMV4')
+
+&gt;&gt;&gt; # Utilize o atributo `dados` para ver a série histórica
+&gt;&gt;&gt; s.dados
+...        SERCODIGO                      VALDATA      VALVALOR          
+... 0   PAN4_PIBPMV4  '1996-01-01T00:00:00-02:00'  1.893233e+05          
+... 1   PAN4_PIBPMV4  '1996-04-01T00:00:00-03:00'  2.046107e+05          
+... 2   PAN4_PIBPMV4  '1996-07-01T00:00:00-03:00'  2.215132e+05          
+... 3   PAN4_PIBPMV4  '1996-10-01T00:00:00-03:00'  2.393163e+05          
+... 4   PAN4_PIBPMV4  '1997-01-01T00:00:00-02:00'  2.191170e+05          
+... ..           ...                          ...           ...
+
+&gt;&gt;&gt; # Para ver os metadados, basta chamar o atributo correspondente
+&gt;&gt;&gt; s.nome
+... 'PIB nominal'
+&gt;&gt;&gt; s.periodicidade
+... 'Trimestral'
+</code></pre>
+<h2 id="notas">Notas</h2>
+<p>Os atributos <code>dados</code> e <code>valores</code> apresentam os mesmos dados. "Valores" é o
+termo padrão para os dados históricos do Ipeadata, porém o termo "Dados" é
+o padrão do pacote <code><a title="DadosAbertosBrasil" href="index.html">DadosAbertosBrasil</a></code>.</p>
+<h2 id="ver-tambem">Ver Também</h2>
+<pre>DadosAbertosBrasil.ipea.serie
+    Função que coleta os mesmos dados históricos desta classe, porém é mais
+    simples e não coleta os metadados da série.</pre>
 <hr></div>
 <details class="source">
 <summary>
@@ -678,7 +1059,9 @@ numerica: bool
     cod: str
         Código da série escolhida.
     valores: pandas.core.frame.DataFrame
-        Valores históricos da série escolhida.
+        Dados históricos da série escolhida. Alias de `dados`.
+    dados : pandas.core.frame.DataFrame
+        Dados históricos da série escolhida. Alias de `valores`.
     metadados: pandas.core.frame.DataFrame
         Metadados da série escolhida.
     base: str
@@ -715,6 +1098,42 @@ numerica: bool
         - True: Série possui valores numéricos (tratados como números);
         - False: Série possui valores são alfanuméricos (string).
 
+    Exemplos
+    --------
+        &gt;&gt;&gt; # Utilize as funções `lista` para encontrar a série desejada
+        &gt;&gt;&gt; ipea.lista_series()
+
+        &gt;&gt;&gt; # Instancie a classe `Serie` utilizando o código encontrado
+        &gt;&gt;&gt; s = ipea.Serie(&#39;PAN4_PIBPMV4&#39;)
+
+        &gt;&gt;&gt; # Utilize o atributo `dados` para ver a série histórica
+        &gt;&gt;&gt; s.dados
+        ...        SERCODIGO                    VALDATA      VALVALOR  \
+        ... 0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \
+        ... 1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \
+        ... 2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \
+        ... 3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05  \
+        ... 4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05  \
+        ... ..           ...                        ...           ...  \
+
+        &gt;&gt;&gt; # Para ver os metadados, basta chamar o atributo correspondente
+        &gt;&gt;&gt; s.nome
+        ... &#39;PIB nominal&#39;
+        &gt;&gt;&gt; s.periodicidade
+        ... &#39;Trimestral&#39;
+
+    Notas
+    -----
+    Os atributos `dados` e `valores` apresentam os mesmos dados. &#34;Valores&#34; é o
+    termo padrão para os dados históricos do Ipeadata, porém o termo &#34;Dados&#34; é
+    o padrão do pacote `DadosAbertosBrasil`.
+
+    Ver também
+    ----------
+    DadosAbertosBrasil.ipea.serie
+        Função que coleta os mesmos dados históricos desta classe, porém é
+        mais simples e não coleta os metadados da série.
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
@@ -726,6 +1145,8 @@ numerica: bool
 
         self.cod = cod
         self.valores = _get(f&#34;Metadados(SERCODIGO=&#39;{cod}&#39;)/Valores&#34;, index)
+        self.valores.VALDATA = _pd.to_datetime(self.valores.VALDATA)
+        self.dados = self.valores
         self.metadados = _get(f&#34;Metadados(&#39;{cod}&#39;)&#34;)
         self.base = self.metadados.loc[0, &#39;BASNOME&#39;]
         self.fonte_nome = self.metadados.loc[0, &#39;FNTNOME&#39;]

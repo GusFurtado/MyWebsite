@@ -42,9 +42,9 @@ e APIs do governo brasileiro.</p>
 <p>É um pacote open-source para Python e Pandas e a forma mais simples de acessar
 dados de instituições como IGBE, IPEA, etc.</p>
 <h2 id="modulos-em-desenvolvimento">Módulos Em Desenvolvimento</h2>
-<pre><code>- DadosAbertosBrasil.API
-- DadosAbertosBrasil.ibge
+<pre><code>- DadosAbertosBrasil.ibge
 - DadosAbertosBrasil.ipea
+- DadosAbertosBrasil.bacen
 - DadosAbertosBrasil.camara
 - DadosAbertosBrasil.senado
 - DadosAbertosBrasil.favoritos
@@ -66,13 +66,13 @@ dados de instituições como IGBE, IPEA, etc.</p>
 </pre>
 <h2 id="proximos-passos">Próximos Passos</h2>
 <pre>- Conclusão do módulo `senado`;
-- Desenvolvimento do módulo `transparencia` para coleta de dados do
+- Desenvolvimento do módulo `transparencia` para coleta de dados do 
   Portal da Transparência do Governo Federal;
-- Desenvolvimento do módulo `_errors` como suporte aos módulos principais;
+- Desenvolvimento do módulo `bacen` para coleta de dados do Banco Central
+  do Brasil;
 - Converter strings em formato de data em objetos `datetime`;
 - Adicionar novos exemplos à documentação;
-- Adição constante de novas funções no módulo `favoritos`.
-</pre>
+- Adição constante de novas funções no módulo `favoritos`.</pre>
 <details class="source">
 <summary>
 <span>Expandir código-fonte</span>
@@ -233,14 +233,17 @@ class API:
 <section>
 <h2 class="section-title" id="header-submodules">Sub-módulos</h2>
 <dl>
+<dt><code class="name"><a title="DadosAbertosBrasil.bacen" href="bacen.html">DadosAbertosBrasil.bacen</a></code></dt>
+<dd>
+<div class="desc"><p>Módulo de captura de dados do Banco Central do Brasil.</p></div>
+</dd>
 <dt><code class="name"><a title="DadosAbertosBrasil.camara" href="camara.html">DadosAbertosBrasil.camara</a></code></dt>
 <dd>
 <div class="desc"><p>Módulo para captura dos dados abertos da Câmara dos Deputados do Brasil.</p></div>
 </dd>
 <dt><code class="name"><a title="DadosAbertosBrasil.favoritos" href="favoritos.html">DadosAbertosBrasil.favoritos</a></code></dt>
 <dd>
-<div class="desc"><p>Módulo para consultas à informações variadas.
-Inclui dados de APIs do Banco Central do Brasil e outras informações úteis.</p></div>
+<div class="desc"><p>Módulo para utilidades e consultas à informações variadas.</p></div>
 </dd>
 <dt><code class="name"><a title="DadosAbertosBrasil.ibge" href="ibge.html">DadosAbertosBrasil.ibge</a></code></dt>
 <dd>
@@ -260,202 +263,7 @@ Inclui dados de APIs do Banco Central do Brasil e outras informações úteis.</
 </section>
 <section>
 </section>
-<section>
-<h2 class="section-title" id="header-classes">Classes</h2>
-<dl>
-<dt id="DadosAbertosBrasil.API"><code class="flex name class">
-<span>class <span class="ident">API</span></span>
-<span>(</span><span>endpoint: str)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Classe para coleta direta dos dados brutos das API REST.</p>
-<h2 id="parametros">Parâmetros</h2>
-<pre>endpoint: str
-    Qual API deseja se conectar:
-        - 'camara': Acessar API da Câmara dos Deputados;
-        - 'ipea': Acessar API do IPEA Data;
-        - 'senado': Acessar API do Senado Federal;
-        - 'sidra': Acessar API do SIDRA - IBGE.</pre>
-<h2 id="exemplos">Exemplos</h2>
-<pre><code class="language-python-repl">&gt;&gt;&gt; from DadosAbertosBrasil import API
-&gt;&gt;&gt; api = API(endpoint='camara')
-&gt;&gt;&gt; api.get(path=['referencias', 'proposicoes', 'codTipoAutor'])
-</code></pre>
-<pre><code class="language-python-repl">&gt;&gt;&gt; api = API(endpoint='senado')
-&gt;&gt;&gt; api.get(path='/autor/lista/atual')
-</code></pre>
-<h2 id="documentacao-original">Documentação Original</h2>
-<pre>- 'camara': <a href="https://dadosabertos.camara.leg.br/swagger/api.html">https://dadosabertos.camara.leg.br/swagger/api.html</a>
-- 'ipea': <a href="http://www.ipeadata.gov.br/api/">http://www.ipeadata.gov.br/api/</a>
-- 'senado': <a href="http://legis.senado.gov.br/dadosabertos/docs/ui/index.html#/">http://legis.senado.gov.br/dadosabertos/docs/ui/index.html#/</a>
-- 'sidra': <a href="http://api.sidra.ibge.gov.br/">http://api.sidra.ibge.gov.br/</a></pre>
-<hr></div>
-<details class="source">
-<summary>
-<span>Expandir código-fonte</span>
-</summary>
-<pre><code class="python">class API:
-    &#39;&#39;&#39;
-    Classe para coleta direta dos dados brutos das API REST.
 
-    Parâmetros
-    ----------
-    endpoint: str
-        Qual API deseja se conectar:
-        - &#39;camara&#39;: Acessar API da Câmara dos Deputados;
-        - &#39;ipea&#39;: Acessar API do IPEA Data;
-        - &#39;senado&#39;: Acessar API do Senado Federal;
-        - &#39;sidra&#39;: Acessar API do SIDRA - IBGE.
-
-    Exemplos
-    --------
-    &gt;&gt;&gt; from DadosAbertosBrasil import API
-    &gt;&gt;&gt; api = API(endpoint=&#39;camara&#39;)
-    &gt;&gt;&gt; api.get(path=[&#39;referencias&#39;, &#39;proposicoes&#39;, &#39;codTipoAutor&#39;])
-
-    &gt;&gt;&gt; api = API(endpoint=&#39;senado&#39;)
-    &gt;&gt;&gt; api.get(path=&#39;/autor/lista/atual&#39;)
-
-    Documentação original
-    ---------------------
-    &#39;camara&#39;
-        https://dadosabertos.camara.leg.br/swagger/api.html
-    &#39;ipea&#39;
-        http://www.ipeadata.gov.br/api/
-    &#39;senado&#39;
-        http://legis.senado.gov.br/dadosabertos/docs/ui/index.html#/
-    &#39;sidra&#39;
-        http://api.sidra.ibge.gov.br/
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    def __init__(self, endpoint:str):
-        self.URL = ENDPOINTS[endpoint]
-
-    def get(
-            self,
-            path: Union[str, list],
-            params: dict = None
-        ) -&gt; dict:
-        &#39;&#39;&#39;
-        Coleta os dados requisitados.
-
-        Parâmetros
-        ----------
-        path: list ou str
-            Caminho de parâmetros para acessar a função desejada.
-            Pode ser uma string de parâmetros unidos por barras &#39;/&#39;.
-            Ou pode ser uma lista de strings na ordem correta.
-            Os dois métodos produzem o mesmo resultado.
-        params: dict (default=None)
-            Dicionário de parâmetros de busca que serão enviados
-            para o request.
-
-        Retorna
-        -------
-        dict
-            Dados brutos coletados da API.
-
-        Exemplos
-        --------
-        Acessando usando uma string
-        &gt;&gt;&gt; api.get(path=&#39;/autor/lista/atual&#39;)
-
-        Acessando usando uma lista de string
-        &gt;&gt;&gt; api.get(path=[&#39;autor&#39;, &#39;lista&#39;, &#39;atual&#39;])
-
-        ----------------------------------------------------------------------      
-        &#39;&#39;&#39;
-        
-        if isinstance(path, list):
-            path = &#39;/&#39;.join(path)
-
-        return requests.get(
-            url = self.URL + path,
-            headers = {&#39;Accept&#39;:&#39;application/json&#39;},
-            params = params
-        ).json()</code></pre>
-</details>
-<h3>Métodos</h3>
-<dl>
-<dt id="DadosAbertosBrasil.API.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>self, path: Union[str, list], params: dict = None) ‑> dict</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Coleta os dados requisitados.</p>
-<h2 id="parametros">Parâmetros</h2>
-<pre>path: list ou str
-    Caminho de parâmetros para acessar a função desejada.
-    Pode ser uma string de parâmetros unidos por barras '/'.
-    Ou pode ser uma lista de strings na ordem correta.
-    Os dois métodos produzem o mesmo resultado.
-params: dict (default=None)
-    Dicionário de parâmetros de busca que serão enviados para o request.</pre>
-<h2 id="retorna">Retorna</h2>
-<pre>dict
-    Dados brutos coletados da API.</pre>
-<h2 id="exemplos">Exemplos</h2>
-<p>Acessando usando uma string</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; api.get(path='/autor/lista/atual')
-</code></pre>
-<p>Acessando usando uma lista de string</p>
-<pre><code class="language-python-repl">&gt;&gt;&gt; api.get(path=['autor', 'lista', 'atual'])
-</code></pre>
-<hr></div>
-<details class="source">
-<summary>
-<span>Expandir código-fonte</span>
-</summary>
-<pre><code class="python">def get(
-        self,
-        path: Union[str, list],
-        params: dict = None
-    ) -&gt; dict:
-    &#39;&#39;&#39;
-    Coleta os dados requisitados.
-
-    Parâmetros
-    ----------
-    path: list ou str
-        Caminho de parâmetros para acessar a função desejada.
-        Pode ser uma string de parâmetros unidos por barras &#39;/&#39;.
-        Ou pode ser uma lista de strings na ordem correta.
-        Os dois métodos produzem o mesmo resultado.
-    params: dict (default=None)
-        Dicionário de parâmetros de busca que serão enviados
-        para o request.
-
-    Retorna
-    -------
-    dict
-        Dados brutos coletados da API.
-
-    Exemplos
-    --------
-    Acessando usando uma string
-    &gt;&gt;&gt; api.get(path=&#39;/autor/lista/atual&#39;)
-
-    Acessando usando uma lista de string
-    &gt;&gt;&gt; api.get(path=[&#39;autor&#39;, &#39;lista&#39;, &#39;atual&#39;])
-
-    ----------------------------------------------------------------------      
-    &#39;&#39;&#39;
-    
-    if isinstance(path, list):
-        path = &#39;/&#39;.join(path)
-
-    return requests.get(
-        url = self.URL + path,
-        headers = {&#39;Accept&#39;:&#39;application/json&#39;},
-        params = params
-    ).json()</code></pre>
-</details>
-</dd>
-</dl>
-</dd>
-</dl>
-</section>
 </article>
 <nav id="sidebar">
 <header>
@@ -477,23 +285,15 @@ params: dict (default=None)
 <ul id="index">
 <li><h3><a href="#header-submodules">Sub-módulos</a></h3>
 <ul>
-<li><code><a title="DadosAbertosBrasil.camara" href="camara.html">DadosAbertosBrasil.camara</a></code></li>
-<li><code><a title="DadosAbertosBrasil.favoritos" href="favoritos.html">DadosAbertosBrasil.favoritos</a></code></li>
-<li><code><a title="DadosAbertosBrasil.ibge" href="ibge.html">DadosAbertosBrasil.ibge</a></code></li>
-<li><code><a title="DadosAbertosBrasil.ipea" href="ipea.html">DadosAbertosBrasil.ipea</a></code></li>
-<li><code><a title="DadosAbertosBrasil.senado" href="senado.html">DadosAbertosBrasil.senado</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.bacen" href="bacen.html">DadosAbertosBrasil.bacen</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.camara" href="camara.html">DadosAbertosBrasil.camara</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.favoritos" href="favoritos.html">DadosAbertosBrasil.favoritos</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.ibge" href="ibge.html">DadosAbertosBrasil.ibge</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.ipea" href="ipea.html">DadosAbertosBrasil.ipea</a></code></li>
+    <li><code><a title="DadosAbertosBrasil.senado" href="senado.html">DadosAbertosBrasil.senado</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="DadosAbertosBrasil.API" href="#DadosAbertosBrasil.API">API</a></code></h4>
-<ul class="">
-<li><code><a title="DadosAbertosBrasil.API.get" href="#DadosAbertosBrasil.API.get">get</a></code></li>
-</ul>
-</li>
-</ul>
-</li>
+
 </ul>
 </nav>
 </main>

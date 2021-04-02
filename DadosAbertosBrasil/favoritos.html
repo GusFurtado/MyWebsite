@@ -26,153 +26,21 @@
 <h1 class="title">Módulo <code>DadosAbertosBrasil.<span style='color:#009B3A'>favoritos</span></code></h1>
 </header>
 <section id="section-intro">
-<p>Módulo para consultas à informações variadas.
-Inclui dados de APIs do Banco Central do Brasil e outras informações úteis.</p>
+<p>Módulo para utilidades e consultas à informações variadas.</p>
 <details class="source">
 <summary>
 <span>Expandir código-fonte</span>
 </summary>
 <pre><code class="python">&#39;&#39;&#39;
-Módulo para consultas à informações variadas.
-Inclue dados de APIs do Banco Central do Brasil e outras informações úteis.
+Módulo para utilidades e consultas à informações variadas.
 &#39;&#39;&#39;
 
 
 
-from datetime import datetime
-
 import pandas as _pd
 import requests
 
-from DadosAbertosBrasil import _utils
-
-
-
-def moedas() -&gt; _pd.DataFrame:
-    &#39;&#39;&#39;
-    Obtém os nomes e símbolos das principais moedas internacionais.
-
-    Retorna
-    -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo os nomes e símbolos das principais
-        moedas internacionais.
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    query = r&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/Moedas?$top=100&amp;$format=json&#34;
-    return _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list()) \
-        .rename(columns = {
-            &#39;nomeFormatado&#39;: &#39;Nome&#39;,
-            &#39;simbolo&#39;: &#39;Símbolo&#39;,
-            &#39;tipoMoeda&#39;: &#39;Tipo&#39;
-        })
-
-
-
-def cambio(
-        moedas = &#39;USD&#39;,
-        data_inicial: str = &#39;01-01-2000&#39;,
-        data_final: str = None,
-        index: bool = False
-    ) -&gt; _pd.DataFrame:
-    &#39;&#39;&#39;
-    Taxa de câmbio das principais moedas internacionais.
-    É possível escolher várias moedas inserindo uma lista no campo &#39;moeda&#39;.
-    Defina o período da consulta pelos campos &#39;data_inicial&#39; e &#39;data_final&#39;.
-
-    Parâmetros
-    ----------
-    moedas: list ou str (default=&#39;USD&#39;)
-        Sigla da moeda ou lista de siglas de moedas que será(ão) pesquisada(s).
-        Utilize a função favoritos.moedas() para obter uma lista de moedas
-        válidas.
-    data_inicial: str (default=&#39;01-01-2000&#39;)
-        String no formato de data &#39;DD-MM-AAAA&#39; que representa o primeiro dia
-        da pesquisa.
-    data_final: str (default=None)
-        String no formato de data &#39;DD-MM-AAAA&#39; que representa o último dia
-        da pesquisa.
-        Caso este campo seja None, será considerada a data de hoje.
-    index: bool (default=False)
-        Define se a coluna &#39;Data&#39; será o index do DataFrame.
-
-    Retorna
-    -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo o valor cambial da(s) moeda(s) selecionada(s)
-        por dia.
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    if data_final == None:
-        data_final = datetime.today().strftime(&#39;%m-%d-%Y&#39;)
-    
-    if isinstance(moedas, str):
-        query = f&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@moeda=&#39;{moedas}&#39;&amp;@dataInicial=&#39;{data_inicial}&#39;&amp;@dataFinalCotacao=&#39;{data_final}&#39;&amp;$top=10000&amp;$filter=contains(tipoBoletim%2C&#39;Fechamento&#39;)&amp;$format=json&amp;$select=cotacaoVenda,dataHoraCotacao&#34;
-        cotacoes = _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list()) \
-            .rename(columns = {
-                &#39;cotacaoVenda&#39;: moedas,
-                &#39;dataHoraCotacao&#39;: &#39;Data&#39;
-            })
-        cotacoes = cotacoes[[&#39;Data&#39;, moedas]]
-    
-    else:
-        try:    
-            cotacao_moedas = []
-            for moeda in moedas:
-                query = f&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@moeda=&#39;{moeda}&#39;&amp;@dataInicial=&#39;{data_inicial}&#39;&amp;@dataFinalCotacao=&#39;{data_final}&#39;&amp;$top=10000&amp;$filter=contains(tipoBoletim%2C&#39;Fechamento&#39;)&amp;$format=json&amp;$select=cotacaoVenda,dataHoraCotacao&#34;
-                cotacao_moeda = _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list())
-                cotacao_moeda.dataHoraCotacao = cotacao_moeda.dataHoraCotacao.apply(
-                    lambda x: datetime.strptime(x[:10], &#39;%Y-%m-%d&#39;)
-                )
-                cotacao_moedas.append(
-                    cotacao_moeda.rename(columns = {
-                        &#39;cotacaoVenda&#39;: moeda,
-                        &#39;dataHoraCotacao&#39;: &#39;Data&#39;
-                    }).groupby(&#39;Data&#39;).last())
-
-            cotacoes = _pd.concat(cotacao_moedas, axis=1).reset_index()
-
-        except:
-            raise TypeError(&#34;O campo &#39;moedas&#39; deve ser o código de três letras maiúsculas da moeda ou um objeto iterável de códigos.&#34;)
-    
-    cotacoes.Data = _pd.to_datetime(cotacoes.Data, format=&#39;%Y-%m-%d %H:%M:%S&#39;)
-    if index:
-        cotacoes.set_index(&#39;Data&#39;, inplace=True)
-    
-    return cotacoes
-
-
-
-def ipca(index:bool=False) -&gt; _pd.DataFrame:
-    &#39;&#39;&#39;
-    Valor mensal do índice IPC-A.
-
-    Parâmetros
-    ----------
-    index: bool (default=False)
-        Define se a coluna &#39;Data&#39; será o index do DataFrame.
-
-    Retorna
-    -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo o valor do índice IPC-A por mês.
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    ipca_query = r&#39;https://api.bcb.gov.br/dados/serie/bcdata.sgs.4448/dados?formato=json&#39;
-    ipca = _pd.read_json(ipca_query)
-    ipca.data = _pd.to_datetime(ipca.data)
-    ipca = ipca.rename(columns={&#39;data&#39;: &#39;Data&#39;, &#39;valor&#39;:&#39;IPCA Mensal&#39;})
-    
-    if index:
-        ipca.set_index(&#39;Data&#39;, inplace=True)
-    
-    return ipca
+from ._utils import parse, errors
 
 
 
@@ -185,14 +53,15 @@ def catalogo() -&gt; _pd.DataFrame:
     pandas.core.frame.DataFrame
         DataFrame contendo um catálogo de iniciativas de dados abertos.
 
+    Créditos
+    --------
+    https://github.com/dadosgovbr
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
-    # URL do repositório no GitHub contendo o catálogo de dados abertos.
-    # Créditos: https://github.com/dadosgovbr
-    url = &#39;https://raw.githubusercontent.com/dadosgovbr/catalogos-dados-brasil/master/dados/catalogos.csv&#39;
-    
-    return _pd.read_csv(url)
+    URL = &#39;https://raw.githubusercontent.com/dadosgovbr/catalogos-dados-brasil/master/dados/catalogos.csv&#39;
+    return _pd.read_csv(URL)
 
 
 
@@ -211,10 +80,14 @@ def geojson(uf:str) -&gt; dict:
     dict
         Coordenadas em formato .GeoJSON da UF pesquisada.
 
+    Créditos
+    --------
+    https://github.com/tbrugz
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
-    uf = _utils.parse_uf(uf)
+    uf = parse.uf(uf)
     
     mapping = {
 
@@ -259,10 +132,7 @@ def geojson(uf:str) -&gt; dict:
 
     }
     
-    # URL do repositório no GitHub contendo os geojsons.
-    # Créditos: https://github.com/tbrugz
     url = f&#39;https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-{mapping[uf]}-mun.json&#39;
-    
     return requests.get(url).json()
 
 
@@ -278,13 +148,15 @@ def codigos_municipios() -&gt; _pd.DataFrame:
         DataFrame contendo os códigos do IBGE e do TSE para todos os
         municípios do Brasil.
 
+    Créditos
+    --------
+    https://github.com/betafcc
+
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
 
-    # URL do repositório no GitHub contendo os códigos.
-    # Créditos: https://github.com/betafcc
-    url = r&#39;https://raw.githubusercontent.com/betafcc/Municipios-Brasileiros-TSE/master/municipios_brasileiros_tse.json&#39;
-    df = _pd.read_json(url)
+    URL = r&#39;https://raw.githubusercontent.com/betafcc/Municipios-Brasileiros-TSE/master/municipios_brasileiros_tse.json&#39;
+    df = _pd.read_json(URL)
     return df[[&#39;codigo_tse&#39;, &#39;codigo_ibge&#39;, &#39;nome_municipio&#39;, &#39;uf&#39;, &#39;capital&#39;]]
 
 
@@ -305,7 +177,64 @@ def perfil_eleitorado() -&gt; _pd.DataFrame:
         r&#39;https://raw.githubusercontent.com/GusFurtado/DadosAbertosBrasil/master/data/Eleitorado.csv&#39;,
         encoding = &#39;latin-1&#39;,
         sep = &#39;;&#39;
-    )</code></pre>
+    )
+
+
+
+def bandeira(uf:str, tamanho:int=100) -&gt; str:
+    &#39;&#39;&#39;
+    Gera a URL da WikiMedia para a bandeira de um estado de um tamanho
+    escolhido.
+
+    Parâmetros
+    ----------
+    uf: str
+        Sigla da Unidade Federativa.
+    tamanho: int (default=100)
+        Tamanho em pixels da bandeira.
+
+    Retorna
+    -------
+    str
+        URL da bandeira do estado no formato PNG.
+
+    --------------------------------------------------------------------------
+    &#39;&#39;&#39;
+    
+    URL = r&#39;https://upload.wikimedia.org/wikipedia/commons/thumb/&#39;
+    
+    bandeira = {
+        &#39;AC&#39;: f&#39;4/4c/Bandeira_do_Acre.svg/{tamanho}px-Bandeira_do_Acre.svg.png&#39;,
+        &#39;AM&#39;: f&#39;6/6b/Bandeira_do_Amazonas.svg/{tamanho}px-Bandeira_do_Amazonas.svg.png&#39;,
+        &#39;AL&#39;: f&#39;8/88/Bandeira_de_Alagoas.svg/{tamanho}px-Bandeira_de_Alagoas.svg.png&#39;,
+        &#39;AP&#39;: f&#39;0/0c/Bandeira_do_Amap%C3%A1.svg/{tamanho}px-Bandeira_do_Amap%C3%A1.svg.png&#39;,
+        &#39;BA&#39;: f&#39;2/28/Bandeira_da_Bahia.svg/{tamanho}px-Bandeira_da_Bahia.svg.png&#39;,
+        &#39;CE&#39;: f&#39;2/2e/Bandeira_do_Cear%C3%A1.svg/{tamanho}px-Bandeira_do_Cear%C3%A1.svg.png&#39;,
+        &#39;DF&#39;: f&#39;3/3c/Bandeira_do_Distrito_Federal_%28Brasil%29.svg/{tamanho}px-Bandeira_do_Distrito_Federal_%28Brasil%29.svg.png&#39;,
+        &#39;ES&#39;: f&#39;4/43/Bandeira_do_Esp%C3%ADrito_Santo.svg/{tamanho}px-Bandeira_do_Esp%C3%ADrito_Santo.svg.png&#39;,
+        &#39;GO&#39;: f&#39;b/be/Flag_of_Goi%C3%A1s.svg/{tamanho}px-Flag_of_Goi%C3%A1s.svg.png&#39;,
+        &#39;MA&#39;: f&#39;4/45/Bandeira_do_Maranh%C3%A3o.svg/{tamanho}px-Bandeira_do_Maranh%C3%A3o.svg.png&#39;,
+        &#39;MG&#39;: f&#39;f/f4/Bandeira_de_Minas_Gerais.svg/{tamanho}px-Bandeira_de_Minas_Gerais.svg.png&#39;,
+        &#39;MT&#39;: f&#39;0/0b/Bandeira_de_Mato_Grosso.svg/{tamanho}px-Bandeira_de_Mato_Grosso.svg.png&#39;,
+        &#39;MS&#39;: f&#39;6/64/Bandeira_de_Mato_Grosso_do_Sul.svg/{tamanho}px-Bandeira_de_Mato_Grosso_do_Sul.svg.png&#39;,
+        &#39;PA&#39;: f&#39;0/02/Bandeira_do_Par%C3%A1.svg/{tamanho}px-Bandeira_do_Par%C3%A1.svg.png&#39;,
+        &#39;PB&#39;: f&#39;b/bb/Bandeira_da_Para%C3%ADba.svg/{tamanho}px-Bandeira_da_Para%C3%ADba.svg.png&#39;,
+        &#39;PE&#39;: f&#39;5/59/Bandeira_de_Pernambuco.svg/{tamanho}px-Bandeira_de_Pernambuco.svg.png&#39;,
+        &#39;PI&#39;: f&#39;3/33/Bandeira_do_Piau%C3%AD.svg/{tamanho}px-Bandeira_do_Piau%C3%AD.svg.png&#39;,
+        &#39;PR&#39;: f&#39;9/93/Bandeira_do_Paran%C3%A1.svg/{tamanho}px-Bandeira_do_Paran%C3%A1.svg.png&#39;,
+        &#39;RJ&#39;: f&#39;7/73/Bandeira_do_estado_do_Rio_de_Janeiro.svg/{tamanho}px-Bandeira_do_estado_do_Rio_de_Janeiro.svg.png&#39;,
+        &#39;RO&#39;: f&#39;f/fa/Bandeira_de_Rond%C3%B4nia.svg/{tamanho}px-Bandeira_de_Rond%C3%B4nia.svg.png&#39;,
+        &#39;RN&#39;: f&#39;3/30/Bandeira_do_Rio_Grande_do_Norte.svg/{tamanho}px-Bandeira_do_Rio_Grande_do_Norte.svg.png&#39;,        
+        &#39;RR&#39;: f&#39;9/98/Bandeira_de_Roraima.svg/{tamanho}px-Bandeira_de_Roraima.svg.png&#39;,
+        &#39;RS&#39;: f&#39;6/63/Bandeira_do_Rio_Grande_do_Sul.svg/{tamanho}px-Bandeira_do_Rio_Grande_do_Sul.svg.png&#39;,
+        &#39;SC&#39;: f&#39;1/1a/Bandeira_de_Santa_Catarina.svg/{tamanho}px-Bandeira_de_Santa_Catarina.svg.png&#39;,
+        &#39;SE&#39;: f&#39;b/be/Bandeira_de_Sergipe.svg/{tamanho}px-Bandeira_de_Sergipe.svg.png&#39;,
+        &#39;SP&#39;: f&#39;2/2b/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg/{tamanho}px-Bandeira_do_estado_de_S%C3%A3o_Paulo.svg.png&#39;,
+        &#39;TO&#39;: f&#39;f/ff/Bandeira_do_Tocantins.svg/{tamanho}px-Bandeira_do_Tocantins.svg.png&#39;,        
+    }
+    
+    return URL + bandeira[parse.uf(uf)]
+</code></pre>
 </details>
 </section>
 <section>
@@ -315,109 +244,78 @@ def perfil_eleitorado() -&gt; _pd.DataFrame:
 <section>
 <h2 class="section-title" id="header-functions">Funções</h2>
 <dl>
-<dt id="DadosAbertosBrasil.favoritos.cambio"><code class="name flex">
-<span>def <span class="ident">cambio</span></span>(<span>moedas='USD', data_inicial: str = '01-01-2000', data_final: str = None, index: bool = False) ‑> pandas.core.frame.DataFrame</span>
+<dt id="DadosAbertosBrasil.favoritos.bandeira"><code class="name flex">
+<span>def <span class="ident">bandeira</span></span>(<span>uf: str, tamanho: int = 100) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Taxa de câmbio das principais moedas internacionais.
-É possível escolher várias moedas inserindo uma lista no campo 'moeda'.
-Defina o período da consulta pelos campos 'data_inicial' e 'data_final'.</p>
+<div class="desc"><p>Gera a URL da WikiMedia para a bandeira de um estado de um tamanho
+escolhido.</p>
 <h2 id="parametros">Parâmetros</h2>
-<pre>moedas: list ou str (default='USD')
-    Sigla da moeda ou lista de siglas de moedas que será(ão) pesquisada(s).
-    Utilize a função favoritos.moedas() para obter uma lista de moedas
-    válidas.
-data_inicial: str (default='01-01-2000')
-    String no formato de data 'DD-MM-AAAA' que representa o primeiro dia
-    da pesquisa.
-data_final: str (default=None)
-    String no formato de data 'DD-MM-AAAA' que representa o último dia
-    da pesquisa.
-    Caso este campo seja None, será considerada a data de hoje.
-index: bool (default=False)
-    Define se a coluna 'Data' será o index do DataFrame.</pre>
+<pre>uf: str
+    Sigla da Unidade Federativa.
+tamanho: int (default=100)
+    Tamanho em pixels da bandeira.</pre>
 <h2 id="retorna">Retorna</h2>
-<pre>pandas.core.frame.DataFrame
-    DataFrame contendo o valor cambial da(s) moeda(s) selecionada(s)
-    por dia.</pre>
+<pre>str
+    URL da bandeira do estado no formato PNG.</pre>
 <hr></div>
 <details class="source">
 <summary>
-<span>Expandir código-fonte</span>
+<span>Expand source code</span>
 </summary>
-<pre><code class="python">def cambio(
-        moedas = &#39;USD&#39;,
-        data_inicial: str = &#39;01-01-2000&#39;,
-        data_final: str = None,
-        index: bool = False
-    ) -&gt; _pd.DataFrame:
+<pre><code class="python">def bandeira(uf:str, tamanho:int=100) -&gt; str:
     &#39;&#39;&#39;
-    Taxa de câmbio das principais moedas internacionais.
-    É possível escolher várias moedas inserindo uma lista no campo &#39;moeda&#39;.
-    Defina o período da consulta pelos campos &#39;data_inicial&#39; e &#39;data_final&#39;.
+    Gera a URL da WikiMedia para a bandeira de um estado de um tamanho
+    escolhido.
 
     Parâmetros
     ----------
-    moedas: list ou str (default=&#39;USD&#39;)
-        Sigla da moeda ou lista de siglas de moedas que será(ão) pesquisada(s).
-        Utilize a função favoritos.moedas() para obter uma lista de moedas
-        válidas.
-    data_inicial: str (default=&#39;01-01-2000&#39;)
-        String no formato de data &#39;DD-MM-AAAA&#39; que representa o primeiro dia
-        da pesquisa.
-    data_final: str (default=None)
-        String no formato de data &#39;DD-MM-AAAA&#39; que representa o último dia
-        da pesquisa.
-        Caso este campo seja None, será considerada a data de hoje.
-    index: bool (default=False)
-        Define se a coluna &#39;Data&#39; será o index do DataFrame.
+    uf: str
+        Sigla da Unidade Federativa.
+    tamanho: int (default=100)
+        Tamanho em pixels da bandeira.
 
     Retorna
     -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo o valor cambial da(s) moeda(s) selecionada(s)
-        por dia.
+    str
+        URL da bandeira do estado no formato PNG.
 
     --------------------------------------------------------------------------
     &#39;&#39;&#39;
-
-    if data_final == None:
-        data_final = datetime.today().strftime(&#39;%m-%d-%Y&#39;)
     
-    if isinstance(moedas, str):
-        query = f&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@moeda=&#39;{moedas}&#39;&amp;@dataInicial=&#39;{data_inicial}&#39;&amp;@dataFinalCotacao=&#39;{data_final}&#39;&amp;$top=10000&amp;$filter=contains(tipoBoletim%2C&#39;Fechamento&#39;)&amp;$format=json&amp;$select=cotacaoVenda,dataHoraCotacao&#34;
-        cotacoes = _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list()) \
-            .rename(columns = {
-                &#39;cotacaoVenda&#39;: moedas,
-                &#39;dataHoraCotacao&#39;: &#39;Data&#39;
-            })
-        cotacoes = cotacoes[[&#39;Data&#39;, moedas]]
+    URL = r&#39;https://upload.wikimedia.org/wikipedia/commons/thumb/&#39;
     
-    else:
-        try:    
-            cotacao_moedas = []
-            for moeda in moedas:
-                query = f&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@moeda,dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@moeda=&#39;{moeda}&#39;&amp;@dataInicial=&#39;{data_inicial}&#39;&amp;@dataFinalCotacao=&#39;{data_final}&#39;&amp;$top=10000&amp;$filter=contains(tipoBoletim%2C&#39;Fechamento&#39;)&amp;$format=json&amp;$select=cotacaoVenda,dataHoraCotacao&#34;
-                cotacao_moeda = _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list())
-                cotacao_moeda.dataHoraCotacao = cotacao_moeda.dataHoraCotacao.apply(
-                    lambda x: datetime.strptime(x[:10], &#39;%Y-%m-%d&#39;)
-                )
-                cotacao_moedas.append(
-                    cotacao_moeda.rename(columns = {
-                        &#39;cotacaoVenda&#39;: moeda,
-                        &#39;dataHoraCotacao&#39;: &#39;Data&#39;
-                    }).groupby(&#39;Data&#39;).last())
-
-            cotacoes = _pd.concat(cotacao_moedas, axis=1).reset_index()
-
-        except:
-            raise TypeError(&#34;O campo &#39;moedas&#39; deve ser o código de três letras maiúsculas da moeda ou um objeto iterável de códigos.&#34;)
+    bandeira = {
+        &#39;AC&#39;: f&#39;4/4c/Bandeira_do_Acre.svg/{tamanho}px-Bandeira_do_Acre.svg.png&#39;,
+        &#39;AM&#39;: f&#39;6/6b/Bandeira_do_Amazonas.svg/{tamanho}px-Bandeira_do_Amazonas.svg.png&#39;,
+        &#39;AL&#39;: f&#39;8/88/Bandeira_de_Alagoas.svg/{tamanho}px-Bandeira_de_Alagoas.svg.png&#39;,
+        &#39;AP&#39;: f&#39;0/0c/Bandeira_do_Amap%C3%A1.svg/{tamanho}px-Bandeira_do_Amap%C3%A1.svg.png&#39;,
+        &#39;BA&#39;: f&#39;2/28/Bandeira_da_Bahia.svg/{tamanho}px-Bandeira_da_Bahia.svg.png&#39;,
+        &#39;CE&#39;: f&#39;2/2e/Bandeira_do_Cear%C3%A1.svg/{tamanho}px-Bandeira_do_Cear%C3%A1.svg.png&#39;,
+        &#39;DF&#39;: f&#39;3/3c/Bandeira_do_Distrito_Federal_%28Brasil%29.svg/{tamanho}px-Bandeira_do_Distrito_Federal_%28Brasil%29.svg.png&#39;,
+        &#39;ES&#39;: f&#39;4/43/Bandeira_do_Esp%C3%ADrito_Santo.svg/{tamanho}px-Bandeira_do_Esp%C3%ADrito_Santo.svg.png&#39;,
+        &#39;GO&#39;: f&#39;b/be/Flag_of_Goi%C3%A1s.svg/{tamanho}px-Flag_of_Goi%C3%A1s.svg.png&#39;,
+        &#39;MA&#39;: f&#39;4/45/Bandeira_do_Maranh%C3%A3o.svg/{tamanho}px-Bandeira_do_Maranh%C3%A3o.svg.png&#39;,
+        &#39;MG&#39;: f&#39;f/f4/Bandeira_de_Minas_Gerais.svg/{tamanho}px-Bandeira_de_Minas_Gerais.svg.png&#39;,
+        &#39;MT&#39;: f&#39;0/0b/Bandeira_de_Mato_Grosso.svg/{tamanho}px-Bandeira_de_Mato_Grosso.svg.png&#39;,
+        &#39;MS&#39;: f&#39;6/64/Bandeira_de_Mato_Grosso_do_Sul.svg/{tamanho}px-Bandeira_de_Mato_Grosso_do_Sul.svg.png&#39;,
+        &#39;PA&#39;: f&#39;0/02/Bandeira_do_Par%C3%A1.svg/{tamanho}px-Bandeira_do_Par%C3%A1.svg.png&#39;,
+        &#39;PB&#39;: f&#39;b/bb/Bandeira_da_Para%C3%ADba.svg/{tamanho}px-Bandeira_da_Para%C3%ADba.svg.png&#39;,
+        &#39;PE&#39;: f&#39;5/59/Bandeira_de_Pernambuco.svg/{tamanho}px-Bandeira_de_Pernambuco.svg.png&#39;,
+        &#39;PI&#39;: f&#39;3/33/Bandeira_do_Piau%C3%AD.svg/{tamanho}px-Bandeira_do_Piau%C3%AD.svg.png&#39;,
+        &#39;PR&#39;: f&#39;9/93/Bandeira_do_Paran%C3%A1.svg/{tamanho}px-Bandeira_do_Paran%C3%A1.svg.png&#39;,
+        &#39;RJ&#39;: f&#39;7/73/Bandeira_do_estado_do_Rio_de_Janeiro.svg/{tamanho}px-Bandeira_do_estado_do_Rio_de_Janeiro.svg.png&#39;,
+        &#39;RO&#39;: f&#39;f/fa/Bandeira_de_Rond%C3%B4nia.svg/{tamanho}px-Bandeira_de_Rond%C3%B4nia.svg.png&#39;,
+        &#39;RN&#39;: f&#39;3/30/Bandeira_do_Rio_Grande_do_Norte.svg/{tamanho}px-Bandeira_do_Rio_Grande_do_Norte.svg.png&#39;,        
+        &#39;RR&#39;: f&#39;9/98/Bandeira_de_Roraima.svg/{tamanho}px-Bandeira_de_Roraima.svg.png&#39;,
+        &#39;RS&#39;: f&#39;6/63/Bandeira_do_Rio_Grande_do_Sul.svg/{tamanho}px-Bandeira_do_Rio_Grande_do_Sul.svg.png&#39;,
+        &#39;SC&#39;: f&#39;1/1a/Bandeira_de_Santa_Catarina.svg/{tamanho}px-Bandeira_de_Santa_Catarina.svg.png&#39;,
+        &#39;SE&#39;: f&#39;b/be/Bandeira_de_Sergipe.svg/{tamanho}px-Bandeira_de_Sergipe.svg.png&#39;,
+        &#39;SP&#39;: f&#39;2/2b/Bandeira_do_estado_de_S%C3%A3o_Paulo.svg/{tamanho}px-Bandeira_do_estado_de_S%C3%A3o_Paulo.svg.png&#39;,
+        &#39;TO&#39;: f&#39;f/ff/Bandeira_do_Tocantins.svg/{tamanho}px-Bandeira_do_Tocantins.svg.png&#39;,        
+    }
     
-    cotacoes.Data = _pd.to_datetime(cotacoes.Data, format=&#39;%Y-%m-%d %H:%M:%S&#39;)
-    if index:
-        cotacoes.set_index(&#39;Data&#39;, inplace=True)
-    
-    return cotacoes</code></pre>
+    return URL + bandeira[parse.uf(uf)]</code></pre>
 </details>
 </dd>
 <dt id="DadosAbertosBrasil.favoritos.catalogo"><code class="name flex">
@@ -428,6 +326,8 @@ index: bool (default=False)
 <h2 id="retorna">Retorna</h2>
 <pre>pandas.core.frame.DataFrame
     DataFrame contendo um catálogo de iniciativas de dados abertos.</pre>
+<h2 id="creditos">Créditos</h2>
+<p><a href="https://github.com/dadosgovbr">https://github.com/dadosgovbr</a></p>
 <hr></div>
 <details class="source">
 <summary>
@@ -462,6 +362,8 @@ Utilizado para correlacionar dados das duas APIs diferentes.</p>
 <pre>pandas.core.frame.DataFrame
     DataFrame contendo os códigos do IBGE e do TSE para todos os
     municípios do Brasil.</pre>
+<h2 id="creditos">Créditos</h2>
+<p><a href="https://github.com/betafcc">https://github.com/betafcc</a></p>
 <hr></div>
 <details class="source">
 <summary>
@@ -500,6 +402,8 @@ Nome ou sigla da Unidade Federativa.</p>
 <h2 id="retorna">Retorna</h2>
 <pre>dict
     Coordenadas em formato .GeoJSON da UF pesquisada.</pre>
+<h2 id="creditos">Créditos</h2>
+<p><a href="https://github.com/tbrugz">https://github.com/tbrugz</a></p>
 <hr></div>
 <details class="source">
 <summary>
@@ -575,86 +479,6 @@ Nome ou sigla da Unidade Federativa.</p>
     return requests.get(url).json()</code></pre>
 </details>
 </dd>
-<dt id="DadosAbertosBrasil.favoritos.ipca"><code class="name flex">
-<span>def <span class="ident">ipca</span></span>(<span>index: bool = False) ‑> pandas.core.frame.DataFrame</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Valor mensal do índice IPC-A.</p>
-<h2 id="parametros">Parâmetros</h2>
-<pre>index: bool (default=False)
-    Define se a coluna 'Data' será o index do DataFrame.</pre>
-<h2 id="retorna">Retorna</h2>
-<pre>pandas.core.frame.DataFrame
-    DataFrame contendo o valor do índice IPC-A por mês.</pre>
-<hr></div>
-<details class="source">
-<summary>
-<span>Expandir código-fonte</span>
-</summary>
-<pre><code class="python">def ipca(index:bool=False) -&gt; _pd.DataFrame:
-    &#39;&#39;&#39;
-    Valor mensal do índice IPC-A.
-
-    Parâmetros
-    ----------
-    index: bool (default=False)
-        Define se a coluna &#39;Data&#39; será o index do DataFrame.
-
-    Retorna
-    -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo o valor do índice IPC-A por mês.
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    ipca_query = r&#39;https://api.bcb.gov.br/dados/serie/bcdata.sgs.4448/dados?formato=json&#39;
-    ipca = _pd.read_json(ipca_query)
-    ipca.data = _pd.to_datetime(ipca.data)
-    ipca = ipca.rename(columns={&#39;data&#39;: &#39;Data&#39;, &#39;valor&#39;:&#39;IPCA Mensal&#39;})
-    
-    if index:
-        ipca.set_index(&#39;Data&#39;, inplace=True)
-    
-    return ipca</code></pre>
-</details>
-</dd>
-<dt id="DadosAbertosBrasil.favoritos.moedas"><code class="name flex">
-<span>def <span class="ident">moedas</span></span>(<span>) ‑> pandas.core.frame.DataFrame</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Obtém os nomes e símbolos das principais moedas internacionais.</p>
-<h2 id="retorna">Retorna</h2>
-<pre>pandas.core.frame.DataFrame
-    DataFrame contendo os nomes e símbolos das principais
-    moedas internacionais.</pre>
-<hr></div>
-<details class="source">
-<summary>
-<span>Expandir código-fonte</span>
-</summary>
-<pre><code class="python">def moedas() -&gt; _pd.DataFrame:
-    &#39;&#39;&#39;
-    Obtém os nomes e símbolos das principais moedas internacionais.
-
-    Retorna
-    -------
-    pandas.core.frame.DataFrame
-        DataFrame contendo os nomes e símbolos das principais
-        moedas internacionais.
-
-    --------------------------------------------------------------------------
-    &#39;&#39;&#39;
-
-    query = r&#34;https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/Moedas?$top=100&amp;$format=json&#34;
-    return _pd.DataFrame(_pd.read_json(query)[&#39;value&#39;].to_list()) \
-        .rename(columns = {
-            &#39;nomeFormatado&#39;: &#39;Nome&#39;,
-            &#39;simbolo&#39;: &#39;Símbolo&#39;,
-            &#39;tipoMoeda&#39;: &#39;Tipo&#39;
-        })</code></pre>
-</details>
-</dd>
 <dt id="DadosAbertosBrasil.favoritos.perfil_eleitorado"><code class="name flex">
 <span>def <span class="ident">perfil_eleitorado</span></span>(<span>) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
@@ -710,12 +534,10 @@ Nome ou sigla da Unidade Federativa.</p>
 </li>
 <li><h3><a href="#header-functions">Funções</a></h3>
 <ul class="two-column">
-<li><code><a title="DadosAbertosBrasil.favoritos.cambio" href="#DadosAbertosBrasil.favoritos.cambio">cambio</a></code></li>
+<li><code><a title="DadosAbertosBrasil.favoritos.bandeira" href="#DadosAbertosBrasil.favoritos.bandeira">bandeira</a></code></li>
 <li><code><a title="DadosAbertosBrasil.favoritos.catalogo" href="#DadosAbertosBrasil.favoritos.catalogo">catalogo</a></code></li>
 <li><code><a title="DadosAbertosBrasil.favoritos.codigos_municipios" href="#DadosAbertosBrasil.favoritos.codigos_municipios">codigos_municipios</a></code></li>
 <li><code><a title="DadosAbertosBrasil.favoritos.geojson" href="#DadosAbertosBrasil.favoritos.geojson">geojson</a></code></li>
-<li><code><a title="DadosAbertosBrasil.favoritos.ipca" href="#DadosAbertosBrasil.favoritos.ipca">ipca</a></code></li>
-<li><code><a title="DadosAbertosBrasil.favoritos.moedas" href="#DadosAbertosBrasil.favoritos.moedas">moedas</a></code></li>
 <li><code><a title="DadosAbertosBrasil.favoritos.perfil_eleitorado" href="#DadosAbertosBrasil.favoritos.perfil_eleitorado">perfil_eleitorado</a></code></li>
 </ul>
 </li>
