@@ -479,6 +479,19 @@ Nome ou sigla da Unidade Federativa.</p>
     return requests.get(url).json()</code></pre>
 </details>
 </dd>
+<dt id="DadosAbertosBrasil.favoritos.ipca"><code class="name flex">
+<span>def <span class="ident">ipca</span></span>(<span>**kwargs) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ipca(**kwargs) -&gt; _pd.DataFrame:
+    return bacen.serie(433, **kwargs)</code></pre>
+</details>
+</dd>
 <dt id="DadosAbertosBrasil.favoritos.perfil_eleitorado"><code class="name flex">
 <span>def <span class="ident">perfil_eleitorado</span></span>(<span>) ‑> pandas.core.frame.DataFrame</span>
 </code></dt>
@@ -490,7 +503,7 @@ Nome ou sigla da Unidade Federativa.</p>
 <hr></div>
 <details class="source">
 <summary>
-<span>Expandir código-fonte</span>
+<span>Expand source code</span>
 </summary>
 <pre><code class="python">def perfil_eleitorado() -&gt; _pd.DataFrame:
     &#39;&#39;&#39;
@@ -509,6 +522,100 @@ Nome ou sigla da Unidade Federativa.</p>
         encoding = &#39;latin-1&#39;,
         sep = &#39;;&#39;
     )</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.rentabilidade_poupanca"><code class="name flex">
+<span>def <span class="ident">rentabilidade_poupanca</span></span>(<span>**kwargs) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rentabilidade_poupanca(**kwargs) -&gt; _pd.DataFrame:
+    return bacen.serie(195, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.reservas_internacionais"><code class="name flex">
+<span>def <span class="ident">reservas_internacionais</span></span>(<span>periodo='mensal', **kwargs) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reservas_internacionais(periodo=&#39;mensal&#39;, **kwargs) -&gt; _pd.DataFrame:
+    if periodo.lower() == &#39;mensal&#39;:
+        return bacen.serie(3546, **kwargs)
+    elif periodo.lower() in [&#39;diaria&#39;, &#39;diario&#39;, &#39;diário&#39;, &#39;diária&#39;]:
+        return bacen.serie(13621, **kwargs)
+    else:
+        raise ValueError(
+            &#34;Período inválido. Escolha um dos seguintes valores: &#39;mensal&#39; ou &#39;diaria&#39;.&#34;
+        )</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.risco_brasil"><code class="name flex">
+<span>def <span class="ident">risco_brasil</span></span>(<span>index=False) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def risco_brasil(index=False) -&gt; _pd.DataFrame:
+    return ipea.serie(cod=&#39;JPM366_EMBI366&#39;, index=index)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.salario_minimo"><code class="name flex">
+<span>def <span class="ident">salario_minimo</span></span>(<span>tipo='nominal', index=False) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def salario_minimo(tipo=&#39;nominal&#39;, index=False) -&gt; _pd.DataFrame:
+    if tipo.lower() == &#39;nominal&#39;:
+        return ipea.serie(cod=&#39;MTE12_SALMIN12&#39;, index=index)
+    elif tipo.lower() == &#39;real&#39;:
+        return ipea.serie(cod=&#39;GAC12_SALMINRE12&#39;, index=index)
+    elif tipo.lower() == &#39;ppc&#39;:
+        return ipea.serie(cod=&#39;GAC12_SALMINDOL12&#39;, index=index)
+    else:
+        raise ValueError(
+            &#34;Tipo inválido. Escolha um dos seguintes valores: &#39;nominal&#39;, &#39;real&#39; ou &#39;ppc&#39;.&#34;
+        )</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.selic"><code class="name flex">
+<span>def <span class="ident">selic</span></span>(<span>**kwargs) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def selic(**kwargs) -&gt; _pd.DataFrame:
+    return bacen.serie(432, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="DadosAbertosBrasil.favoritos.taxa_referencial"><code class="name flex">
+<span>def <span class="ident">taxa_referencial</span></span>(<span>**kwargs) ‑> pandas.core.frame.DataFrame</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def taxa_referencial(**kwargs) -&gt; _pd.DataFrame:
+    return bacen.serie(226, **kwargs)</code></pre>
 </details>
 </dd>
 </dl>
