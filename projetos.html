@@ -16,15 +16,6 @@
 		<meta name="theme-color" content="#ffffff">		
 	</head>
 	
-	<style>
-	
-		.container {
-			margin-top: 72px;
-			margin-bottom: 72px;
-		}
-	
-	</style>
-
 	<body class=SvgBackground>
 		
 		<nav class="navbar navbar-expand-lg">
@@ -39,225 +30,53 @@
 					</button>
 				</div>
 			</div>
-			<div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar7">
-				<ul class="navbar-nav ml-auto flex-nowrap">
-					<li class="nav-item">
-						<a class="nav-link" href="#DadosAbertosBrasil">
-							<span class='Text' style='color: orange'>DadosAbertosBrasil</span>
-						</a>
-					</li>				
-					<li class="nav-item">
-						<a class="nav-link" href="#Simulacoes">
-							<span class='Text' style='color: orange'>Simulações</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#Apps">
-							<span class='Text' style='color: orange'>Aplicações</span>
-						</a>
-					</li>
-				</ul>
-			</div>
 		</nav>	
 	
 		<div class="container">
 			
-			<div class="row justify-content-md-center project">
-				<span class='Title jeans' style='font-size: 42px;'>Projetos</span>
+			<div class="Title jeans project">
+				<span>Projetos</span>
 			</div>
-		
-		</div>
-		
-		<hr class='dots'>
-		
-		<div class='container' id=DadosAbertosBrasil>
-		
-			<div class="row justify-content-md-center project">
-				<a class="navbar-brand" href='dab.html'>
-					<div style='height: 72px; padding-left:30px; padding-right: 15px'>
-						<img src="assets/dab_nav_brand.png" style='max-height: 100%; max-width: 100%' alt='DadosAbertosBrasil'>
-					</div>
-				</a>
-			</div>
-			<div class="row justify-content-md-center project">
-				<div class='col-lg-6 col-md-8 col-sm-10 align-self-center'>
-					<p class='Text light'>
-						<a href="dab.html" class='jeans'>Dados Abertos Brasil</a>
-						é uma iniciativa para facilitar o acesso a dados abertos e APIs do governo brasileiro.
-					</p>
-					
-					<p class='Text light'>
-						É um pacote open-source para
-						<a href="https://www.python.org/" class='jeans'>Python</a> e
-						<a href="https://pandas.pydata.org/" class='jeans'>Pandas</a>
-						e a forma mais simples de acessar dados de instituições como IGBE, IPEA, etc.
-					</p>
-				</div>
-			</div>
-			<div class="row">
-			
-				<div class='col' align='center'>
-					<a href='DadosAbertosBrasil/index.html' target='_blank'>
-						<img src='assets/dab_actions/documentacao.png' style='height: 100px; width: 100px'>
-						<p class='SubTitle light'>Documentação</p>
-					</a>
-				</div>
-				
-				<div class='col' align='center'>
-					<a href='https://github.com/GusFurtado/DadosAbertosBrasil' target='_blank'>				
-						<img src='assets/dab_actions/github.png' style='height: 100px; width: 100px'>
-						<p class='SubTitle light'>GitHub</p>	
+
+			<div class="row justify-content-md-center">
+				<div class="col-md-6 mb-4">
+					<a class="navbar-brand" href='dab.html' target="_blank">
+						<img
+							src = "assets/projects/dab.png"
+							style = 'max-height: 100%; max-width: 100%'
+							alt = 'Dados Abertos Brasil'
+						>
 					</a>	
 				</div>
-
-				<div class='col' align='center'>
-					<a href='dab.html#Exemplos' target='_blank'>	
-						<img src='assets/dab_actions/exemplos.png' style='height: 100px; width: 100px'>
-						<p class='SubTitle light'>Exemplos</p>
-					</a>
+				<div class="col-md-6 mb-4">
+					<a class="navbar-brand" href='https://diversificador.herokuapp.com/' target="_blank">
+						<img
+							src = "assets/projects/diversificador.png"
+							style = 'max-height: 100%; max-width: 100%'
+							alt = 'Diversificador de Portfólio'
+						>
+					</a>	
 				</div>
-				
-			</div>
-		</div>
-		
-		<hr class='dots'>
-
-		<div class="container" id=Simulacoes>
-		
-			<div class="row justify-content-md-center project">
-				<span class='Title jeans'>Simulações</span>
-			</div>
-			<div class="row justify-content-md-center project">
-				<div class='col-lg-6 col-md-8 col-sm-10 align-self-center'>
-					<span class='Text light' style='padding: 15px'>
-						Simulações de eventos discretos em 3D de várias etapas da cadeia produtiva, incluindo preparação de carga, movimentação de caixas e armazenamento.
-					</span>
+				<div class="col-md-6 mb-4">
+					<a class="navbar-brand" href='https://dadosabertosbrasil.herokuapp.com/' target	="_blank">
+						<img
+							src = "assets/projects/dab-apps.png"
+							style = 'max-height: 100%; max-width: 100%'
+							alt = 'DAB Apps'
+						>
+					</a>	
 				</div>
-			</div>
-		
-			<div class="row" style='margin-bottom:30px; margin-top:30px'>
-
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/yCLX4wa7S1I" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Ocupação de Empilhadeiras</span>
-							</p>
-							<p>
-								<span class='Text dark'>Conhecendo os pontos de saída das linhas e os locais de armazenagem, podemos calcular o tempo em que cada empilhadeira esteve ociosa.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/0k9VcTWl9UQ" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Central de Paletização</span>
-							</p>
-							<p>
-								<span class='Text dark'>Em cenários com recursos compartilhados, precisamos simular todo o sistema para encontrar os gargalos das máquinas e esteiras.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/dfR36NQGlT8" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Preparação de Carga</span>
-							</p>
-							<p>
-								<span class='Text dark'>Não é fácil otimizar a programação de uma produção com tantas variáveis e restrições, mas podemos calcular a probabilidade do plano ser atendido.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/VE-R0WvERos" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Balanceamento de Linha</span>
-							</p>
-							<p>
-								<span class='Text dark'>Quando dimensionamos a capacidade produtiva dos equipamentos, temos que levar em consideração tempos de paradas e tamanho de esteiras.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/eTYSoF318vc" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Centro de Distribuição</span>
-							</p>
-							<p>
-								<span class='Text dark'>A simulação é a maneira mais fácil de prever a eficiência de sistemas caóticos, em que cada operador pode tomar sua própria decisão.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6 col-lg-4">
-					<div class="card">
-						<iframe class="card-img-top" src="https://www.youtube.com/embed/77wBy-fKsw4" frameborder="0" height=180
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-						</iframe>
-						<div class="card-body">
-							<p>
-								<span class='SubTitle dark'>Simulações diversas</span>
-							</p>
-							<p>
-								<span class='Text dark'>Como qualquer ramo da matemática, a simulação industrial pode ser aplicada em diversas áreas da cadeia de suprimentos.</span>
-							</p>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-		</div>
-
-		<hr class='dots'>
-
-		<div class="container" id=Apps>
-	
-			<div class="row justify-content-md-center project">
-				<span class='Title jeans'>Python Web Apps</span>
-			</div>
-			<div class="row justify-content-md-center project">
-				<div class='col-lg-6 col-md-8 col-sm-10 align-self-center'>
-					<p class='Text light'>
-						Exemplos de web apps responsivos construidos 100% em Python com os pacotes <a class="jeans" href="https://plotly.com/dash/">Dash by Plotly</a> e <a class="jeans" href="dab.html">DadosAbertosBrasil</a>.
-					</p>
-					<p class='Text light'>
-						Clique <a class='jeans' href='https://dadosabertosbrasil.herokuapp.com/'>aqui</a> para conferi-los.
-					</p>
+				<div class="col-md-6 mb-4">
+					<a class="navbar-brand" href='simulacoes.html'>
+						<img
+							src = "assets/projects/simulacoes.png"
+							style = 'max-height: 100%; max-width: 100%'
+							alt = 'Simulações Industriais'
+						>
+					</a>	
 				</div>
 			</div>
 		
-			<a href='https://dadosabertosbrasil.herokuapp.com/'>
-				<img src="assets/apps.png" style='max-width: 100%; margin-top: 30px;' alt='Aplicações'>
-			</a>
 		</div>
 
 	</body>
