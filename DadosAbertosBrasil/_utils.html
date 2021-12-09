@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="pdoc 8.0.1" />
-    <title>DadosAbertosBrasil.ibge</title>
+    <title>DadosAbertosBrasil._utils</title>
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/GusFurtado/DadosAbertosBrasil/master/assets/favicon.ico">
 
 
@@ -27,16 +27,18 @@
                         <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                                pattern=".+" required>
 
-
-<h2>Submódulos</h2>
-<ul>
-        <li><a href="_ibge/cidades.html">DadosAbertosBrasil._ibge.cidades</a></li>
-        <li><a href="_ibge/misc.html">DadosAbertosBrasil._ibge.misc</a></li>
-        <li><a href="_ibge/nomes.html">DadosAbertosBrasil._ibge.nomes</a></li>
-        <li><a href="_ibge/sidra.html">DadosAbertosBrasil._ibge.sidra</a></li>
+                    <h2>Contents</h2>
+                    <ul>
+  <li><a href="#modulos">Módulos</a></li>
 </ul>
 
 
+                    <h2>Submodules</h2>
+                    <ul>
+                            <li><a href="_utils/errors.html">DadosAbertosBrasil._utils.errors</a></li>
+                            <li><a href="_utils/get_data.html">DadosAbertosBrasil._utils.get_data</a></li>
+                            <li><a href="_utils/parse.html">DadosAbertosBrasil._utils.parse</a></li>
+                    </ul>
 
 
                     <footer>Desenvolvido por Gustavo Furtado</footer>
@@ -51,151 +53,34 @@
     <main class="pdoc">
             <section>
                     <h1 class="modulename">
-<a href="./../DadosAbertosBrasil.html">DadosAbertosBrasil</a><wbr>.ibge    </h1>
+<a href="./../DadosAbertosBrasil.html">DadosAbertosBrasil</a><wbr>._utils    </h1>
 
-                        <div class="docstring"><p>Módulo para captura dos dados abertos das APIs do IBGE.</p>
+                        <div class="docstring"><p>O subpacote <code>_utils</code> contém ferramentas de auxílio às funções do pacote.</p>
 
-<h2>Submódulos</h2>
-<ul>
-        <li><a href="_ibge/cidades.html">DadosAbertosBrasil._ibge.cidades</a></li>
-        <li><a href="_ibge/misc.html">DadosAbertosBrasil._ibge.misc</a></li>
-        <li><a href="_ibge/nomes.html">DadosAbertosBrasil._ibge.nomes</a></li>
-        <li><a href="_ibge/sidra.html">DadosAbertosBrasil._ibge.sidra</a></li>
-</ul>
+<h2 id="modulos">Módulos</h2>
 
-<h2 id="servicos-disponiveis">Serviços Disponíveis</h2>
-
-<ul>
-<li>IBGE Cidades</li>
-<li>Nomes 2.0</li>
-<li>Agregados 3.0 (SIDRA)</li>
-<li>Malhas Geográficas 2.0</li>
-<li>Projeções 1.0</li>
-<li>Localidades 1.0</li>
-</ul>
-
-<h2 id="mini-tutorial-de-sidra">Mini-Tutorial de SIDRA</h2>
-
-<ol>
-
-<li><p>Importe o módulo <code>ibge</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">DadosAbertosBrasil</span> <span class="kn">import</span> <span class="n">ibge</span>
-</code></pre></div></li>
-
-<li><p>Utilize a função <code>lista_tabelas</code> com os filtros necessários para encontrar
-a tabela desejada.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">lista_tabelas</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
-</code></pre></div></li>
-
-<li><p>Utilize as funções <code>lista_pesquisas</code> e <code>referencias</code> para facilitar a busca.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">pesquisas</span> <span class="o">=</span> <span class="n">ibge</span><span class="o">.</span><span class="n">lista_pesquisas</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">referencias</span> <span class="o">=</span> <span class="n">ibge</span><span class="o">.</span><span class="n">referencias</span><span class="p">(</span> <span class="o">...</span> <span class="p">)</span>
-</code></pre></div></li>
-
-<li><p>Após obter o código numérico da tabela, insira-o como argumento de um
-objeto <code>Metadados</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">dados</span> <span class="o">=</span> <span class="n">ibge</span><span class="o">.</span><span class="n">Metadados</span><span class="p">(</span><span class="n">tabela</span><span class="p">)</span>
-</code></pre></div></li>
-
-<li><p>Pelos atributos do objeto <code>Metadados</code>, veja quais são os valores
-disponíveis para consulta desta tabela.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dados</span><span class="o">.</span><span class="n">periodos</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dados</span><span class="o">.</span><span class="n">variaveis</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dados</span><span class="o">.</span><span class="n">localidades</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dados</span><span class="o">.</span><span class="n">classificacoes</span><span class="p">)</span>
-</code></pre></div></li>
-
-<li><p>Utilize os valores encontrados nos metadados da tabela para alimentar a
-função <code>sidra</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge.sidra( ... )</span>
-</code></pre></div></li>
-
-</ol>
-
-<div class="footnotes">
-<hr />
-<ol>
-</ol>
-</div>
+<p>errors
+    Pacote de <code>Exceptions</code> exclusivas para as funções do <code><a href="../DadosAbertosBrasil.html">DadosAbertosBrasil</a></code>
+get_data
+    Pacote contendo a função para captura de dados em formato JSON.
+parse
+    Pacote para padronização de inputs das funções do <code><a href="../DadosAbertosBrasil.html">DadosAbertosBrasil</a></code></p>
 </div>
 
                         <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;Módulo para captura dos dados abertos das APIs do IBGE.</span>
+            <div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;O subpacote `_utils` contém ferramentas de auxílio às funções do pacote.</span>
 
-<span class="sd">Serviços Disponíveis</span>
-<span class="sd">--------------------</span>
-<span class="sd">- IBGE Cidades</span>
-<span class="sd">- Nomes 2.0</span>
-<span class="sd">- Agregados 3.0 (SIDRA)</span>
-<span class="sd">- Malhas Geográficas 2.0</span>
-<span class="sd">- Projeções 1.0</span>
-<span class="sd">- Localidades 1.0</span>
-
-<span class="sd">Mini-Tutorial de SIDRA</span>
-<span class="sd">----------------------</span>
-<span class="sd">1. Importe o módulo `ibge`.</span>
-<span class="sd">&gt;&gt;&gt; from DadosAbertosBrasil import ibge</span>
-
-<span class="sd">2. Utilize a função `lista_tabelas` com os filtros necessários para encontrar</span>
-<span class="sd">a tabela desejada.</span>
-<span class="sd">&gt;&gt;&gt; ibge.lista_tabelas( ... )</span>
-
-<span class="sd">3. Utilize as funções `lista_pesquisas` e `referencias` para facilitar a busca.</span>
-<span class="sd">&gt;&gt;&gt; pesquisas = ibge.lista_pesquisas( ... )</span>
-<span class="sd">&gt;&gt;&gt; referencias = ibge.referencias( ... )</span>
-
-<span class="sd">4. Após obter o código numérico da tabela, insira-o como argumento de um</span>
-<span class="sd">objeto `Metadados`.</span>
-<span class="sd">&gt;&gt;&gt; dados = ibge.Metadados(tabela)</span>
-
-<span class="sd">5. Pelos atributos do objeto `Metadados`, veja quais são os valores</span>
-<span class="sd">disponíveis para consulta desta tabela.</span>
-<span class="sd">&gt;&gt;&gt; print(dados.periodos)</span>
-<span class="sd">&gt;&gt;&gt; print(dados.variaveis)</span>
-<span class="sd">&gt;&gt;&gt; print(dados.localidades)</span>
-<span class="sd">&gt;&gt;&gt; print(dados.classificacoes)</span>
-
-<span class="sd">6. Utilize os valores encontrados nos metadados da tabela para alimentar a</span>
-<span class="sd">função `sidra`.</span>
-<span class="sd">&gt;&gt;&gt; ibge.sidra( ... )</span>
-
-<span class="sd">References</span>
-<span class="sd">----------</span>
-<span class="sd">.. [1] IBGE Cidades</span>
-<span class="sd">    https://cidades.ibge.gov.br/</span>
-<span class="sd">.. [2] Serviços</span>
-<span class="sd">    https://servicodados.ibge.gov.br/api/docs</span>
-<span class="sd">.. [3] SIDRA</span>
-<span class="sd">    http://api.sidra.ibge.gov.br/</span>
+<span class="sd">Módulos</span>
+<span class="sd">-------</span>
+<span class="sd">errors</span>
+<span class="sd">    Pacote de `Exceptions` exclusivas para as funções do `DadosAbertosBrasil`</span>
+<span class="sd">get_data</span>
+<span class="sd">    Pacote contendo a função para captura de dados em formato JSON.</span>
+<span class="sd">parse</span>
+<span class="sd">    Pacote para padronização de inputs das funções do `DadosAbertosBrasil`</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">._ibge.cidades</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Galeria</span><span class="p">,</span>
-    <span class="n">Historia</span>
-<span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">._ibge.misc</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">coordenadas</span><span class="p">,</span>
-    <span class="n">localidades</span><span class="p">,</span>
-    <span class="n">malha</span><span class="p">,</span>
-    <span class="n">populacao</span>
-<span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">._ibge.nomes</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">nomes</span><span class="p">,</span>
-    <span class="n">nomes_ranking</span><span class="p">,</span>
-    <span class="n">nomes_uf</span>
-<span class="p">)</span>
-
-<span class="kn">from</span> <span class="nn">._ibge.sidra</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Metadados</span><span class="p">,</span>
-    <span class="n">lista_pesquisas</span><span class="p">,</span>
-    <span class="n">lista_tabelas</span><span class="p">,</span>
-    <span class="n">referencias</span><span class="p">,</span>
-    <span class="n">sidra</span>
-<span class="p">)</span>
 </pre></div>
 
         </details>
