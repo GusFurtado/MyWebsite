@@ -436,17 +436,24 @@ Código IBGE da localidade.</li>
 
 <h6 id="examples">Examples</h6>
 
-<ul><li>
-Capturar a primeira fotografia da galeria de Fortaleza.    
-</li></ul>
+<ul><li>Instanciar a galeria de fotos de Fortaleza.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">fortaleza</span> <span class="o">=</span> <span class="n">ibge</span><span class="o">.</span><span class="n">Galeria</span><span class="p">(</span><span class="mi">2304400</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">foto</span> <span class="o">=</span> <span class="n">fortaleza</span><span class="o">.</span><span class="n">fotografias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </code></pre></div>
 
-<ul><li>
-Gerar uma URL da fotografia com altura máxima de 500 pixels.
-</li></ul>
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">foto</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="n">altura</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<ul><li>Visualizar lista de fotografias dentro da galeria.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">fortaleza</span><span class="o">.</span><span class="n">fotografias</span>
+</code></pre></div>
+
+<ul><li>Selecionar primeira fotografia da galeria.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">foto</span> <span class="o">=</span> <span class="n">fortaleza</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+
+<ul><li>Gerar uma URL da fotografia com altura máxima de 500 pixels.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">foto</span><span class="p">(</span><span class="n">altura</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
 <span class="go">&#39;https://servicodados.ibge.gov.br/api/v1/resize/image?maxwidth=600&amp;max...&#39;</span>
 </code></pre></div>
 

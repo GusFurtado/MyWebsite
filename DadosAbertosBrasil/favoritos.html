@@ -859,18 +859,28 @@ interesse público.</p>
 
 
 
-<span class="k">def</span> <span class="nf">selic</span><span class="p">(</span>
-        <span class="n">ultimos</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">inicio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">fim</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Taxa de juros - Meta Selic definida pelo COPOM.</span>
+    <span class="k">def</span> <span class="nf">selic</span><span class="p">(</span>
+    <span class="n">periodo</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;meta&#39;</span><span class="p">,</span>
+    <span class="n">anualizado</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">ultimos</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">inicio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fim</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Taxa de juros - Meta Selic definida pelo COPOM.</span>
 
 <span class="sd">    Esta é uma função de fácil acesso à série temporal 432 do módulo `bacen`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    periodo : {&#39;meta&#39;, &#39;diario&#39;, &#39;dia&#39;, &#39;mensal&#39;, &#39;mes&#39;}, default=&#39;meta&#39;</span>
+<span class="sd">        Tipo da série que será retornada.</span>
+<span class="sd">        - &#39;meta&#39;: Meta anual do COPOM;</span>
+<span class="sd">        - &#39;diario&#39; ou &#39;dia&#39;: Intervalo de dados por dia.</span>
+<span class="sd">        - &#39;mensal&#39; ou &#39;mes&#39;: Intervalo de dados por mês.</span>
+<span class="sd">    anualizado : bool, default=True</span>
+<span class="sd">        Se True, anualiza a série mantendo o período.</span>
+<span class="sd">        Esse argumento é ignorado quando `periodo == &#39;meta&#39;`.</span>
 <span class="sd">    ultimos : int, optional</span>
 <span class="sd">        Retorna os últimos N valores da série numérica.</span>
 <span class="sd">    inicio : datetime or str, optional</span>
@@ -892,6 +902,8 @@ interesse público.</p>
 <span class="sd">    ------</span>
 <span class="sd">    JSONDecodeError</span>
 <span class="sd">        Em caso de parâmetros inválidos.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Caso seja passado um período inválido.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -900,36 +912,67 @@ interesse público.</p>
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Os quatro valores mais recentes.</span>
+<span class="sd">    Busca a taxa mensal anualizada dos quatro meses mais recentes.</span>
 
-<span class="sd">    &gt;&gt;&gt; favoritos.selic(ultimos=4)</span>
-<span class="sd">            data valor</span>
-<span class="sd">    0 2021-08-01  4.25</span>
-<span class="sd">    1 2021-08-02  4.25</span>
-<span class="sd">    2 2021-08-03  4.25</span>
-<span class="sd">    3 2021-08-04  4.25</span>
+<span class="sd">    &gt;&gt;&gt; import DadosAbertosBrasil as dab</span>
+<span class="sd">    &gt;&gt;&gt; dab.selic(</span>
+<span class="sd">    ...     periodo = &#39;mensal&#39;,</span>
+<span class="sd">    ...     anualizado = True,</span>
+<span class="sd">    ...     ultimos = 4</span>
+<span class="sd">    ... )</span>
+<span class="sd">            data  valor</span>
+<span class="sd">    0 2021-11-01   7.65</span>
+<span class="sd">    1 2021-12-01   8.76</span>
+<span class="sd">    2 2022-01-01   9.15</span>
+<span class="sd">    3 2022-02-01  10.47</span>
 
-<span class="sd">    Os valores entre Janeiro e Abril de 2021 usando a data como índice.</span>
+<span class="sd">    Captura a meta SELIC corrente.</span>
 
-<span class="sd">    &gt;&gt;&gt; favoritos.selic(inicio=&#39;2021-01-01&#39;, fim=&#39;2021-04-01&#39;, index=True)</span>
-<span class="sd">               valor</span>
-<span class="sd">    data            </span>
-<span class="sd">    2021-01-01  2.00</span>
-<span class="sd">    2021-01-02  2.00</span>
-<span class="sd">    2021-01-03  2.00</span>
-<span class="sd">    2021-01-04  2.00</span>
-<span class="sd">    2021-01-05  2.00</span>
-<span class="sd">    ...          ...</span>
+<span class="sd">    &gt;&gt;&gt; dab.selic(periodo=&#39;meta&#39;, ultimos=1)</span>
+<span class="sd">            data  valor</span>
+<span class="sd">    0 2022-03-16  10.75</span>
+
+<span class="sd">    Captura os valores não anualizados da primeira semada de Janeiro/2022,</span>
+<span class="sd">    utilizando a data como índice.</span>
+
+<span class="sd">    &gt;&gt;&gt; dab.selic(</span>
+<span class="sd">    ...     periodo = &#39;diario&#39;,</span>
+<span class="sd">    ...     anualizado = False,</span>
+<span class="sd">    ...     inicio = &#39;2022-01-03&#39;,</span>
+<span class="sd">    ...     fim = &#39;2022-01-07&#39;,</span>
+<span class="sd">    ...     index = True</span>
+<span class="sd">    ... )</span>
+<span class="sd">                   valor</span>
+<span class="sd">    data                </span>
+<span class="sd">    2022-01-03  0.034749</span>
+<span class="sd">    2022-01-04  0.034749</span>
+<span class="sd">    2022-01-05  0.034749</span>
+<span class="sd">    2022-01-06  0.034749</span>
+<span class="sd">    2022-01-07  0.034749</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">bacen</span><span class="o">.</span><span class="n">serie</span><span class="p">(</span>
-        <span class="n">cod</span> <span class="o">=</span> <span class="mi">432</span><span class="p">,</span>
-        <span class="n">ultimos</span> <span class="o">=</span> <span class="n">ultimos</span><span class="p">,</span>
-        <span class="n">inicio</span> <span class="o">=</span> <span class="n">inicio</span><span class="p">,</span>
-        <span class="n">fim</span> <span class="o">=</span> <span class="n">fim</span><span class="p">,</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
-    <span class="p">)</span>
+<span class="n">periodo</span> <span class="o">=</span> <span class="n">periodo</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">periodo</span> <span class="o">==</span> <span class="s1">&#39;meta&#39;</span><span class="p">:</span>
+    <span class="n">cod</span> <span class="o">=</span> <span class="mi">432</span>
+
+<span class="k">elif</span> <span class="n">periodo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;dia&#39;</span><span class="p">):</span>
+    <span class="n">cod</span> <span class="o">=</span> <span class="mi">1178</span> <span class="k">if</span> <span class="n">anualizado</span> <span class="k">else</span> <span class="mi">11</span>
+
+<span class="k">elif</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;mensal&#39;</span><span class="p">,</span> <span class="s1">&#39;mes&#39;</span><span class="p">):</span>
+    <span class="n">cod</span> <span class="o">=</span> <span class="mi">4189</span> <span class="k">if</span> <span class="n">anualizado</span> <span class="k">else</span> <span class="mi">4390</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Período inválido.</span><span class="se">\n</span><span class="s2">Escolha entre &#39;meta&#39;, &#39;diario&#39; ou &#39;mensal&#39;.&quot;</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">bacen</span><span class="o">.</span><span class="n">serie</span><span class="p">(</span>
+    <span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span><span class="p">,</span>
+    <span class="n">ultimos</span> <span class="o">=</span> <span class="n">ultimos</span><span class="p">,</span>
+    <span class="n">inicio</span> <span class="o">=</span> <span class="n">inicio</span><span class="p">,</span>
+    <span class="n">fim</span> <span class="o">=</span> <span class="n">fim</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+<span class="p">)</span>
 
 
 
@@ -2462,32 +2505,44 @@ Salário-mínimo real usando a data como índice da tabela.
 
                 </section>
                 <section id="selic">
-                            <div class="attr function"><a class="headerlink" href="#selic">#&nbsp;&nbsp</a>
+                    <div class="attr function"><a class="headerlink" href="#selic">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">selic</span><span class="signature">(
+
+    <span class="def">def</span>
+    <span class="name">selic</span><span class="signature">(
+    periodo: str = &#39;meta&#39;,
+    anualizado: bool = True,
     ultimos: Union[int, NoneType] = None,
     inicio: Union[datetime.datetime, str] = None,
     fim: Union[datetime.datetime, str] = None,
     index: bool = False
 ) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+</div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">selic</span><span class="p">(</span>
-        <span class="n">ultimos</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">inicio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">fim</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Taxa de juros - Meta Selic definida pelo COPOM.</span>
+        <details>
+    <summary>View Source</summary>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">selic</span><span class="p">(</span>
+<span class="n">periodo</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;meta&#39;</span><span class="p">,</span>
+<span class="n">anualizado</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="n">ultimos</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">inicio</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">fim</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Taxa de juros - Meta Selic definida pelo COPOM.</span>
 
 <span class="sd">    Esta é uma função de fácil acesso à série temporal 432 do módulo `bacen`.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    periodo : {&#39;meta&#39;, &#39;diario&#39;, &#39;dia&#39;, &#39;mensal&#39;, &#39;mes&#39;}, default=&#39;meta&#39;</span>
+<span class="sd">        Tipo da série que será retornada.</span>
+<span class="sd">        - &#39;meta&#39;: Meta anual do COPOM;</span>
+<span class="sd">        - &#39;diario&#39; ou &#39;dia&#39;: Intervalo de dados por dia.</span>
+<span class="sd">        - &#39;mensal&#39; ou &#39;mes&#39;: Intervalo de dados por mês.</span>
+<span class="sd">    anualizado : bool, default=True</span>
+<span class="sd">        Se True, anualiza a série mantendo o período.</span>
+<span class="sd">        Esse argumento é ignorado quando `periodo == &#39;meta&#39;`.</span>
 <span class="sd">    ultimos : int, optional</span>
 <span class="sd">        Retorna os últimos N valores da série numérica.</span>
 <span class="sd">    inicio : datetime or str, optional</span>
@@ -2509,6 +2564,8 @@ Salário-mínimo real usando a data como índice da tabela.
 <span class="sd">    ------</span>
 <span class="sd">    JSONDecodeError</span>
 <span class="sd">        Em caso de parâmetros inválidos.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Caso seja passado um período inválido.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -2517,47 +2574,88 @@ Salário-mínimo real usando a data como índice da tabela.
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Os quatro valores mais recentes.</span>
+<span class="sd">    Busca a taxa mensal anualizada dos quatro meses mais recentes.</span>
 
-<span class="sd">    &gt;&gt;&gt; favoritos.selic(ultimos=4)</span>
-<span class="sd">            data valor</span>
-<span class="sd">    0 2021-08-01  4.25</span>
-<span class="sd">    1 2021-08-02  4.25</span>
-<span class="sd">    2 2021-08-03  4.25</span>
-<span class="sd">    3 2021-08-04  4.25</span>
+<span class="sd">    &gt;&gt;&gt; import DadosAbertosBrasil as dab</span>
+<span class="sd">    &gt;&gt;&gt; dab.selic(</span>
+<span class="sd">    ...     periodo = &#39;mensal&#39;,</span>
+<span class="sd">    ...     anualizado = True,</span>
+<span class="sd">    ...     ultimos = 4</span>
+<span class="sd">    ... )</span>
+<span class="sd">            data  valor</span>
+<span class="sd">    0 2021-11-01   7.65</span>
+<span class="sd">    1 2021-12-01   8.76</span>
+<span class="sd">    2 2022-01-01   9.15</span>
+<span class="sd">    3 2022-02-01  10.47</span>
 
-<span class="sd">    Os valores entre Janeiro e Abril de 2021 usando a data como índice.</span>
+<span class="sd">    Captura a meta SELIC corrente.</span>
 
-<span class="sd">    &gt;&gt;&gt; favoritos.selic(inicio=&#39;2021-01-01&#39;, fim=&#39;2021-04-01&#39;, index=True)</span>
-<span class="sd">               valor</span>
-<span class="sd">    data            </span>
-<span class="sd">    2021-01-01  2.00</span>
-<span class="sd">    2021-01-02  2.00</span>
-<span class="sd">    2021-01-03  2.00</span>
-<span class="sd">    2021-01-04  2.00</span>
-<span class="sd">    2021-01-05  2.00</span>
-<span class="sd">    ...          ...</span>
+<span class="sd">    &gt;&gt;&gt; dab.selic(periodo=&#39;meta&#39;, ultimos=1)</span>
+<span class="sd">            data  valor</span>
+<span class="sd">    0 2022-03-16  10.75</span>
+
+<span class="sd">    Captura os valores não anualizados da primeira semada de Janeiro/2022,</span>
+<span class="sd">    utilizando a data como índice.</span>
+
+<span class="sd">    &gt;&gt;&gt; dab.selic(</span>
+<span class="sd">    ...     periodo = &#39;diario&#39;,</span>
+<span class="sd">    ...     anualizado = False,</span>
+<span class="sd">    ...     inicio = &#39;2022-01-03&#39;,</span>
+<span class="sd">    ...     fim = &#39;2022-01-07&#39;,</span>
+<span class="sd">    ...     index = True</span>
+<span class="sd">    ... )</span>
+<span class="sd">                   valor</span>
+<span class="sd">    data                </span>
+<span class="sd">    2022-01-03  0.034749</span>
+<span class="sd">    2022-01-04  0.034749</span>
+<span class="sd">    2022-01-05  0.034749</span>
+<span class="sd">    2022-01-06  0.034749</span>
+<span class="sd">    2022-01-07  0.034749</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">bacen</span><span class="o">.</span><span class="n">serie</span><span class="p">(</span>
-        <span class="n">cod</span> <span class="o">=</span> <span class="mi">432</span><span class="p">,</span>
-        <span class="n">ultimos</span> <span class="o">=</span> <span class="n">ultimos</span><span class="p">,</span>
-        <span class="n">inicio</span> <span class="o">=</span> <span class="n">inicio</span><span class="p">,</span>
-        <span class="n">fim</span> <span class="o">=</span> <span class="n">fim</span><span class="p">,</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
-    <span class="p">)</span>
+<span class="n">periodo</span> <span class="o">=</span> <span class="n">periodo</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">periodo</span> <span class="o">==</span> <span class="s1">&#39;meta&#39;</span><span class="p">:</span>
+<span class="n">cod</span> <span class="o">=</span> <span class="mi">432</span>
+
+<span class="k">elif</span> <span class="n">periodo</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;dia&#39;</span><span class="p">):</span>
+<span class="n">cod</span> <span class="o">=</span> <span class="mi">1178</span> <span class="k">if</span> <span class="n">anualizado</span> <span class="k">else</span> <span class="mi">11</span>
+
+<span class="k">elif</span> <span class="n">periodo</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;mensal&#39;</span><span class="p">,</span> <span class="s1">&#39;mes&#39;</span><span class="p">):</span>
+<span class="n">cod</span> <span class="o">=</span> <span class="mi">4189</span> <span class="k">if</span> <span class="n">anualizado</span> <span class="k">else</span> <span class="mi">4390</span>
+
+<span class="k">else</span><span class="p">:</span>
+<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Período inválido.</span><span class="se">\n</span><span class="s2">Escolha entre &#39;meta&#39;, &#39;diario&#39; ou &#39;mensal&#39;.&quot;</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">bacen</span><span class="o">.</span><span class="n">serie</span><span class="p">(</span>
+<span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span><span class="p">,</span>
+<span class="n">ultimos</span> <span class="o">=</span> <span class="n">ultimos</span><span class="p">,</span>
+<span class="n">inicio</span> <span class="o">=</span> <span class="n">inicio</span><span class="p">,</span>
+<span class="n">fim</span> <span class="o">=</span> <span class="n">fim</span><span class="p">,</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+<span class="p">)</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Taxa de juros - Meta Selic definida pelo COPOM.</p>
+    <div class="docstring"><p>Taxa de juros - Meta Selic definida pelo COPOM.</p>
 
 <p>Esta é uma função de fácil acesso à série temporal 432 do módulo <code>bacen</code>.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
+<li><strong>periodo</strong> ({'meta', 'diario', 'dia', 'mensal', 'mes'}, default='meta'):
+Tipo da série que será retornada.
+<ul>
+<li>'meta': Meta anual do COPOM;</li>
+<li>'diario' ou 'dia': Intervalo de dados por dia.</li>
+<li>'mensal' ou 'mes': Intervalo de dados por mês.</li>
+</ul></li>
+<li><strong>anualizado</strong> (bool, default=True):
+Se True, anualiza a série mantendo o período.
+Esse argumento é ignorado quando <code>periodo == 'meta'</code>.</li>
 <li><strong>ultimos</strong> (int, optional):
 Retorna os últimos N valores da série numérica.</li>
 <li><strong>inicio</strong> (datetime or str, optional):
@@ -2581,44 +2679,58 @@ Define se a coluna 'data' será o index do DataFrame.</li>
 
 <ul>
 <li><strong>JSONDecodeError</strong>: Em caso de parâmetros inválidos.</li>
+<li><strong>ValueError</strong>: Caso seja passado um período inválido.</li>
 </ul>
 
 <h6 id="notes">Notes</h6>
-<ul><li>
-Os argumentos <code>inicio</code> e <code>fim</code> devem ser usados em conjunto para
-funcionar.    
-</li></ul>
+
+<ul><li>Os argumentos <code>inicio</code> e <code>fim</code> devem ser usados em conjunto para funcionar.</li></ul>
 
 <h6 id="examples">Examples</h6>
-<ul><li>
-Os quatro valores mais recentes.    
-</li></ul>
 
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">favoritos</span><span class="o">.</span><span class="n">selic</span><span class="p">(</span><span class="n">ultimos</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="go">        data valor</span>
-<span class="go">0 2021-08-01  4.25</span>
-<span class="go">1 2021-08-02  4.25</span>
-<span class="go">2 2021-08-03  4.25</span>
-<span class="go">3 2021-08-04  4.25</span>
+<ul><li>Busca a taxa mensal anualizada dos quatro meses mais recentes.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">DadosAbertosBrasil</span> <span class="k">as</span> <span class="nn">dab</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dab</span><span class="o">.</span><span class="n">selic</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">periodo</span> <span class="o">=</span> <span class="s1">&#39;mensal&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">anualizado</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">ultimos</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">        data  valor</span>
+<span class="go">0 2021-11-01   7.65</span>
+<span class="go">1 2021-12-01   8.76</span>
+<span class="go">2 2022-01-01   9.15</span>
+<span class="go">3 2022-02-01  10.47</span>
 </code></pre></div>
-<ul><li>
-Os valores entre Janeiro e Abril de 2021 usando a data como índice.    
-</li></ul>
 
-<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">favoritos</span><span class="o">.</span><span class="n">selic</span><span class="p">(</span><span class="n">inicio</span><span class="o">=</span><span class="s1">&#39;2021-01-01&#39;</span><span class="p">,</span> <span class="n">fim</span><span class="o">=</span><span class="s1">&#39;2021-04-01&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">           valor</span>
-<span class="go">data            </span>
-<span class="go">2021-01-01  2.00</span>
-<span class="go">2021-01-02  2.00</span>
-<span class="go">2021-01-03  2.00</span>
-<span class="go">2021-01-04  2.00</span>
-<span class="go">2021-01-05  2.00</span>
-<span class="gp">... </span>         <span class="o">...</span>
+<ul><li>Captura a meta SELIC corrente.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">dab</span><span class="o">.</span><span class="n">selic</span><span class="p">(</span><span class="n">periodo</span><span class="o">=</span><span class="s1">&#39;meta&#39;</span><span class="p">,</span> <span class="n">ultimos</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">        data  valor</span>
+<span class="go">0 2022-03-16  10.75</span>
+</code></pre></div>
+
+<ul><li>Captura os valores não anualizados da primeira semada de Janeiro/2022, utilizando a data como índice.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">dab</span><span class="o">.</span><span class="n">selic</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">periodo</span> <span class="o">=</span> <span class="s1">&#39;diario&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">anualizado</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">inicio</span> <span class="o">=</span> <span class="s1">&#39;2022-01-03&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">fim</span> <span class="o">=</span> <span class="s1">&#39;2022-01-07&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">               valor</span>
+<span class="go">data                </span>
+<span class="go">2022-01-03  0.034749</span>
+<span class="go">2022-01-04  0.034749</span>
+<span class="go">2022-01-05  0.034749</span>
+<span class="go">2022-01-06  0.034749</span>
+<span class="go">2022-01-07  0.034749</span>
 </code></pre></div>
 </div>
 
 
-                </section>
+        </section>
                 <section id="taxa_referencial">
                             <div class="attr function"><a class="headerlink" href="#taxa_referencial">#&nbsp;&nbsp</a>
 

@@ -541,38 +541,84 @@
         </details>
 
             </section>
-                <section id="lista_tabelas">
-                            <div class="attr function"><a class="headerlink" href="#lista_tabelas">#&nbsp;&nbsp</a>
+<section id="lista_tabelas">
+    <div class="attr function"><a class="headerlink" href="#lista_tabelas">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_tabelas</span><span class="signature">(
-    pesquisa: Union[str, NoneType] = None,
+
+    <span class="def">def</span>
+    <span class="name">lista_tabelas</span><span class="signature">(
     contendo: Union[str, NoneType] = None,
     excluindo: Union[str, NoneType] = None,
+    assunto: Union[str, int, NoneType] = None,
+    classificacao: Union[str, int, NoneType] = None,
+    periodo: Union[dict, str, NoneType] = None,
+    periodicidade: Union[str, int, NoneType] = None,
+    nivel: Union[str, int, NoneType] = None,
+    pesquisa: Union[str, NoneType] = None,
     index: bool = False
 ) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+</div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_tabelas</span><span class="p">(</span>
-        <span class="n">pesquisa</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">contendo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">excluindo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Lista de tabelas disponíveis no SIDRA.</span>
+        <details>
+    <summary>View Source</summary>
+    <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_tabelas</span><span class="p">(</span>
+<span class="n">contendo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">excluindo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">assunto</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">classificacao</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">periodo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">periodicidade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">nivel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">pesquisa</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Lista de tabelas disponíveis no SIDRA.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    contendo : str, optional</span>
+<span class="sd">        Termo que deve estar contido no nome ou no comentário da série.</span>
+<span class="sd">    excluindo : str | list[str], optional</span>
+<span class="sd">        Termo ou lista de termos que não pode aparecer no nome da série.</span>
+<span class="sd">        Sobrepõe o argumento `contendo`.</span>
+<span class="sd">    assunto : str | int, optional</span>
+<span class="sd">        Busque apenas as tabelas referentes ao assunto desejado.</span>
+<span class="sd">        Os assuntos são identificados por um código numérico e podem ser</span>
+<span class="sd">        obtidos com auxílio da função `ibge.referencias(&#39;a&#39;)`.</span>
+<span class="sd">        Exemplo: O assunto &quot;Abate de Animais&quot; possui o código 70, portanto</span>
+<span class="sd">        pesquise por tabelas deste assunto pelo argumento `assunto=70`.</span>
+<span class="sd">    classificacao : str | int, optional</span>
+<span class="sd">        Busque apenas as tabelas referentes à classificação desejada.</span>
+<span class="sd">        As classificações são identificadas por um código numérico e podem ser</span>
+<span class="sd">        obtidas com auxílio da função `ibge.referencias(&#39;c&#39;)`.</span>
+<span class="sd">        Exemplo: A classificação &quot;Agricultura familiar&quot; possui o código 12896,</span>
+<span class="sd">        portanto pesquise por tabelas contendo essa classificação através do</span>
+<span class="sd">        argumento `classificacao=12896`. </span>
+<span class="sd">    periodo : dict | str, optional</span>
+<span class="sd">        Busque apenas as tabelas referentes ao período desejado.</span>
+<span class="sd">        Os períodos devem ser um dicionário no formato `{periodicidade:periodo}`</span>
+<span class="sd">        ou um string no formato `&#39;Px[xxxxxx]&#39;`.</span>
+<span class="sd">        Exemplo: `{5: 202001}` ou `&#39;P5[202001]&#39;`. Obtém as pesquisas cujos</span>
+<span class="sd">        agregados disponibilizam resultados para o mês (P5) de janeiro de</span>
+<span class="sd">        2020 (202001). Observe que é necessário informar a periodicidade (P5),</span>
+<span class="sd">        devido a períodos que compartilham o mesmo identificador - 202001 pode</span>
+<span class="sd">        significar o mês de Janeiro de 2020, o primeiro trimestre de 2020 ou</span>
+<span class="sd">        ainda o primeiro semestre de 2020.</span>
+<span class="sd">        A função `ibge.referencias(&#39;p&#39;)` retorna todos os períodos disponíveis.</span>
+<span class="sd">    periodicidade : str | int, optional</span>
+<span class="sd">        Busque apenas as tabelas que contém essa periodicidade de divulgação.</span>
+<span class="sd">        Utilize a função `ibge.referencias(&#39;e&#39;)` para encontrar o código.</span>
+<span class="sd">        Exemplo: A periodicidade &quot;mensal&quot; possui o código 5, portanto pesquise</span>
+<span class="sd">        por tabelas de periodicidade mensal através do argumento</span>
+<span class="sd">        `periodicidade=5`.</span>
+<span class="sd">    nivel : str | int, optional</span>
+<span class="sd">        Busque apenas as tabelas disponíveis neste nível geográfico.</span>
+<span class="sd">        Utilize a função `ibge.referencias(&#39;n&#39;)` para encontrar o código.</span>
+<span class="sd">        Exemplo: O nível &quot;Município&quot; possui o código 6, portanto pesquise por</span>
+<span class="sd">        tabelas contendo esse nível geográfico através do argumento `nivel=6`.</span>
 <span class="sd">    pesquisa : str, optional</span>
 <span class="sd">        Código de duas letras da pesquisa que será buscada.</span>
 <span class="sd">        Utilize a função `ibge.lista_pesquisas` para encontrar o código.</span>
-<span class="sd">    contendo : str, optional</span>
-<span class="sd">        Buscar apenas tabelas que contenham essa sequência de caracteres.</span>
-<span class="sd">    excluindo : str, optional</span>
-<span class="sd">        Buscar tabelas que não contenham essa sequência de caracteres.</span>
 <span class="sd">    index : bool, default=False</span>
 <span class="sd">        Se True, define a coluna &#39;tabela_id&#39; como index do DataFrame.</span>
 
@@ -583,15 +629,20 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Forma mais simples da função.</span>
+<span class="sd">    Forma mais simples da função. Retorna todas as tabelas.</span>
 
 <span class="sd">    &gt;&gt;&gt; ibge.lista_tabelas()    </span>
-<span class="sd">        tabela_id                                        tabela_nome  ...</span>
-<span class="sd">    0        1732  Dados gerais das empresas por faixas de pessoa...  ...</span>
-<span class="sd">    1        1735  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="sd">    2        1734  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="sd">    3        1733  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="sd">    4        2869  Empresas e outras organizações e suas unidades...  ...</span>
+
+<span class="sd">    Listas tabelas cujo assunto é &quot;Trabalho&quot; (17), com periodicidade</span>
+<span class="sd">    trimestral (9) a um nível geográfico municipal (6) contendo classificação</span>
+<span class="sd">    por grupo de idade (58).</span>
+
+<span class="sd">    &gt;&gt;&gt; ibge.lista_tabelas(</span>
+<span class="sd">    ...     assunto = 17,</span>
+<span class="sd">    ...     periodicidade = 9,</span>
+<span class="sd">    ...     nivel = 6,</span>
+<span class="sd">    ...     classificacao = 58</span>
+<span class="sd">    ... )</span>
 
 <span class="sd">    Listar tabelas do Censo Demográfico (pesquisa &#39;CD&#39;), contendo o termo</span>
 <span class="sd">    &#39;rendimento&#39; no título, porém não contendo &#39;Distribuição&#39;, definindo a</span>
@@ -600,73 +651,128 @@
 <span class="sd">    &gt;&gt;&gt; ibge.lista_tabelas(</span>
 <span class="sd">    ...     pesquisa = &#39;CD&#39;,</span>
 <span class="sd">    ...     contendo = &#39;rendimento&#39;,</span>
-<span class="sd">    ...     excluindo = &#39;Distribuição&#39;,</span>
+<span class="sd">    ...     excluindo = &#39;distribuição&#39;,</span>
 <span class="sd">    ...     index = True</span>
 <span class="sd">    ... )</span>
-<span class="sd">                                                     tabela_nome pesquisa_id  ...</span>
-<span class="sd">    tabela_id                                                               </span>
-<span class="sd">    171        Chefes de domicílios particulares permanentes ...          CD  ...</span>
-<span class="sd">    3534       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="sd">    3525       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="sd">    2428       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="sd">    2427       Domicílios particulares permanentes com rendim...          CD  ...</span>
+
+<span class="sd">    Buscar por tabelas que contenham o IPCA de Dezembro de 2019 (P5[201912]).</span>
+
+<span class="sd">    &gt;&gt;&gt; ibge.lista_tabelas(</span>
+<span class="sd">    ...     contendo = &#39;ipca&#39;,</span>
+<span class="sd">    ...     periodo = {5: 201912}</span>
+<span class="sd">    ... )</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span>
-        <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;https://servicodados.ibge.gov.br/api/v3/agregados/&#39;</span><span class="p">,</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span>
-        <span class="s1">&#39;agregados&#39;</span><span class="p">,</span>
-        <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;nome&#39;</span><span class="p">],</span>
-        <span class="n">record_prefix</span> <span class="o">=</span> <span class="s1">&#39;tabela_&#39;</span><span class="p">,</span>
-        <span class="n">meta_prefix</span> <span class="o">=</span> <span class="s1">&#39;pesquisa_&#39;</span>
-    <span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">tabela_id</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tabela_id</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pesquisa</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">pesquisa_id</span> <span class="o">==</span> <span class="n">pesquisa</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
-    <span class="k">elif</span> <span class="n">pesquisa</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;O argumento &#39;pesquisa&#39; deve ser tipo string com duas letras.&quot;</span><span class="p">)</span>
-        
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contendo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">tabela_nome</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">contendo</span><span class="p">)]</span>
-    <span class="k">elif</span> <span class="n">contendo</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;O texto procurado deve ser tipo string.&#39;</span><span class="p">)</span>
-        
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">excluindo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">tabela_nome</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">excluindo</span><span class="p">)]</span>
-    <span class="k">elif</span> <span class="n">excluindo</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;O texto procurado deve ser tipo string.&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">parse_periodicidade</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;P</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
-    <span class="k">if</span> <span class="n">index</span><span class="p">:</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;tabela_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">assunto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;assunto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">assunto</span>
 
-    <span class="k">return</span> <span class="n">df</span>
+<span class="k">if</span> <span class="n">classificacao</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;classificacao&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">classificacao</span>
+
+<span class="k">if</span> <span class="n">periodo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">periodo</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">periodo</span><span class="p">:</span>
+        <span class="n">periodo</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">parse_periodicidade</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">}</span><span class="s1">[</span><span class="si">{</span><span class="p">[</span><span class="n">periodo</span><span class="p">[</span><span class="n">p</span><span class="p">]]</span><span class="si">}</span><span class="s1">]&#39;</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;periodo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">periodo</span>
+
+<span class="k">if</span> <span class="n">periodicidade</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;periodicidade&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_periodicidade</span><span class="p">(</span><span class="n">periodicidade</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">nivel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nivel</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="n">nivel</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;N</span><span class="si">{</span><span class="n">nivel</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;nivel&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nivel</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;https://servicodados.ibge.gov.br/api/v3/&#39;</span><span class="p">,</span>
+<span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;agregados&#39;</span><span class="p">],</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+<span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span>
+<span class="n">data</span><span class="p">,</span>
+<span class="s1">&#39;agregados&#39;</span><span class="p">,</span>
+<span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;nome&#39;</span><span class="p">],</span>
+<span class="n">record_prefix</span> <span class="o">=</span> <span class="s1">&#39;tabela_&#39;</span><span class="p">,</span>
+<span class="n">meta_prefix</span> <span class="o">=</span> <span class="s1">&#39;pesquisa_&#39;</span>
+<span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tabela_id</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tabela_id</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contendo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">tabela_nome</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">contendo</span><span class="o">.</span><span class="n">upper</span><span class="p">())]</span>
+
+<span class="k">if</span> <span class="n">excluindo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">excluindo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">excluindo</span> <span class="o">=</span> <span class="p">[</span><span class="n">excluindo</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">termo</span> <span class="ow">in</span> <span class="n">excluindo</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">SERNOME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">termo</span><span class="o">.</span><span class="n">upper</span><span class="p">())]</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pesquisa</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">pesquisa_id</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="n">pesquisa</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;tabela_id&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Lista de tabelas disponíveis no SIDRA.</p>
+    <div class="docstring"><p>Lista de tabelas disponíveis no SIDRA.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
+<li><strong>contendo</strong> (str, optional):
+Termo que deve estar contido no nome ou no comentário da série.</li>
+<li><strong>excluindo</strong> (str | list[str], optional):
+Termo ou lista de termos que não pode aparecer no nome da série.
+Sobrepõe o argumento <code>contendo</code>.</li>
+<li><strong>assunto</strong> (str | int, optional):
+Busque apenas as tabelas referentes ao assunto desejado.
+Os assuntos são identificados por um código numérico e podem ser
+obtidos com auxílio da função <code>ibge.referencias('a')</code>.
+Exemplo: O assunto "Abate de Animais" possui o código 70, portanto
+pesquise por tabelas deste assunto pelo argumento <code>assunto=70</code>.</li>
+<li><strong>classificacao</strong> (str | int, optional):
+Busque apenas as tabelas referentes à classificação desejada.
+As classificações são identificadas por um código numérico e podem ser
+obtidas com auxílio da função <code>ibge.referencias('c')</code>.
+Exemplo: A classificação "Agricultura familiar" possui o código 12896,
+portanto pesquise por tabelas contendo essa classificação através do
+argumento <code>classificacao=12896</code>.</li>
+<li><strong>periodo</strong> (dict | str, optional):
+Busque apenas as tabelas referentes ao período desejado.
+Os períodos devem ser um dicionário no formato <code>{periodicidade:periodo}</code>
+ou um string no formato <code>'Px[xxxxxx]'</code>.
+Exemplo: <code>{5: 202001}</code> ou <code>'P5[202001]'</code>. Obtém as pesquisas cujos
+agregados disponibilizam resultados para o mês (P5) de janeiro de
+2020 (202001). Observe que é necessário informar a periodicidade (P5),
+devido a períodos que compartilham o mesmo identificador - 202001 pode
+significar o mês de Janeiro de 2020, o primeiro trimestre de 2020 ou
+ainda o primeiro semestre de 2020.
+A função <code>ibge.referencias('p')</code> retorna todos os períodos disponíveis.</li>
+<li><strong>periodicidade</strong> (str | int, optional):
+Busque apenas as tabelas que contém essa periodicidade de divulgação.
+Utilize a função <code>ibge.referencias('e')</code> para encontrar o código.
+Exemplo: A periodicidade "mensal" possui o código 5, portanto pesquise
+por tabelas de periodicidade mensal através do argumento
+<code>periodicidade=5</code>.</li>
+<li><strong>nivel</strong> (str | int, optional):
+Busque apenas as tabelas disponíveis neste nível geográfico.
+Utilize a função <code>ibge.referencias('n')</code> para encontrar o código.
+Exemplo: O nível "Município" possui o código 6, portanto pesquise por
+tabelas contendo esse nível geográfico através do argumento <code>nivel=6</code>.</li>
 <li><strong>pesquisa</strong> (str, optional):
 Código de duas letras da pesquisa que será buscada.
 Utilize a função <code>ibge.lista_pesquisas</code> para encontrar o código.</li>
-<li><strong>contendo</strong> (str, optional):
-Buscar apenas tabelas que contenham essa sequência de caracteres.</li>
-<li><strong>excluindo</strong> (str, optional):
-Buscar tabelas que não contenham essa sequência de caracteres.</li>
 <li><strong>index</strong> (bool, default=False):
 Se True, define a coluna 'tabela_id' como index do DataFrame.</li>
 </ul>
@@ -679,41 +785,42 @@ Se True, define a coluna 'tabela_id' como index do DataFrame.</li>
 
 <h6 id="examples">Examples</h6>
 
-<ul><li>
-Forma mais simples da função.
-</li></ul>
+<p>Forma mais simples da função. Retorna todas as tabelas.</p>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">lista_tabelas</span><span class="p">()</span>    
-<span class="go">    tabela_id                                        tabela_nome  ...</span>
-<span class="go">0        1732  Dados gerais das empresas por faixas de pessoa...  ...</span>
-<span class="go">1        1735  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="go">2        1734  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="go">3        1733  Dados gerais das unidades locais por faixas de...  ...</span>
-<span class="go">4        2869  Empresas e outras organizações e suas unidades...  ...</span>
 </code></pre></div>
 
-<ul><li>
-Listar tabelas do Censo Demográfico (pesquisa 'CD'), contendo o termo
-'rendimento' no título, porém não contendo 'Distribuição', definindo a
-coluna <code>tabela_id</code> como index do DataFrame.
-</li></ul>
+<ul><li>Listas tabelas cujo assunto é "Trabalho" (17), com periodicidade trimestral (9) a um nível geográfico municipal (6) contendo classificação por grupo de idade (58).</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">lista_tabelas</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">assunto</span> <span class="o">=</span> <span class="mi">17</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">periodicidade</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">nivel</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">classificacao</span> <span class="o">=</span> <span class="mi">58</span>
+<span class="gp">... </span><span class="p">)</span>
+</code></pre></div>
+
+<ul><li>Listar tabelas do Censo Demográfico (pesquisa 'CD'), contendo o termo <code>'rendimento'</code> no título, porém não contendo 'Distribuição', definindo a coluna <code>tabela_id</code> como index do DataFrame.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">lista_tabelas</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">pesquisa</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">contendo</span> <span class="o">=</span> <span class="s1">&#39;rendimento&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">excluindo</span> <span class="o">=</span> <span class="s1">&#39;Distribuição&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">excluindo</span> <span class="o">=</span> <span class="s1">&#39;distribuição&#39;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">index</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="go">                                                 tabela_nome pesquisa_id  ...</span>
-<span class="go">tabela_id                                                               </span>
-<span class="go">171        Chefes de domicílios particulares permanentes ...          CD  ...</span>
-<span class="go">3534       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="go">3525       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="go">2428       Domicílios particulares permanentes com rendim...          CD  ...</span>
-<span class="go">2427       Domicílios particulares permanentes com rendim...          CD  ...</span>
+</code></pre></div>
+
+<ul><li>Buscar por tabelas que contenham o IPCA de Dezembro de 2019 (P5[201912]).</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">lista_tabelas</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">contendo</span> <span class="o">=</span> <span class="s1">&#39;ipca&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">periodo</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mi">201912</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
 </code></pre></div>
 </div>
 
 
-                </section>
+</section>
                 <section id="lista_pesquisas">
                             <div class="attr function"><a class="headerlink" href="#lista_pesquisas">#&nbsp;&nbsp</a>
 
@@ -1319,7 +1426,7 @@ Formato do dado retornado:
 <li>'V': Variáveis.</li>
 </ul></li>
 <li><strong>index</strong> (bool, default=False):
-Defina True caso o campo 'id' deva ser o index do DataFrame.</li>
+Defina True caso o campo <code>cod</code> deva ser o index do DataFrame.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -1340,7 +1447,7 @@ Defina True caso o campo 'id' deva ser o index do DataFrame.</li>
 Lista assuntos.
 </li></ul>
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">referencias</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="go">      id                                       literal</span>
+<span class="go">     cod                                    referencia</span>
 <span class="go">0    148                         Abastecimento de água</span>
 <span class="go">1     70                              Abate de animais</span>
 <span class="go">2    110                Acesso a esgotamento sanitário</span>
@@ -1350,12 +1457,11 @@ Lista assuntos.
 </code></pre></div>
 
 <ul><li>
-Lista classificações usando o <code>id</code> da classificação como index
-do DataFrame.
+Lista classificações usando o <code>cod</code> da classificação como index do DataFrame.
 </li></ul>
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ibge</span><span class="o">.</span><span class="n">referencias</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">                                                 literal</span>
-<span class="go">id                                                      </span>
+<span class="go">                                              referencia</span>
+<span class="go">cod                                                     </span>
 <span class="go">588    Acessibilidade possível na maior parte das via...</span>
 <span class="go">957    Acesso à Internet por telefone móvel celular p...</span>
 <span class="go">681                    Acesso a televisão por assinatura</span>

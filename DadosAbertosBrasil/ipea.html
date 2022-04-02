@@ -619,28 +619,28 @@ rápida de obter os dados de uma série.</p></li>
         </details>
 
             </section>
-                <section id="Serie">
-                                <div class="attr class">
-        <a class="headerlink" href="#Serie">#&nbsp;&nbsp</a>
+            <section id="Serie">
+                <div class="attr class">
+<a class="headerlink" href="#Serie">#&nbsp;&nbsp</a>
 
-        
-        <span class="def">class</span>
-        <span class="name">Serie</span>:
-    </div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Serie</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Dados de uma série IPEA.</span>
+<span class="def">class</span>
+<span class="name">Serie</span>:
+</div>
+
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Serie</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Dados de uma série IPEA.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cod : str</span>
 <span class="sd">        Código da série que se deseja obter os dados.</span>
 <span class="sd">        Utilize a função `ipea.lista_series` para identificar a série desejada.</span>
-<span class="sd">        O código desejado estará na coluna &#39;SERCODIGO&#39;.</span>
+<span class="sd">        O código desejado estará na coluna &#39;codigo&#39;.</span>
 <span class="sd">    index : bool, default=False</span>
-<span class="sd">        Se True, define a coluna &#39;SERCODIGO&#39; como index do atributo &#39;valores&#39;.</span>
+<span class="sd">        Se True, define a coluna &#39;codigo&#39; como index do atributo &#39;valores&#39;.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ---------</span>
@@ -712,12 +712,12 @@ rápida de obter os dados de uma série.</p></li>
 
 <span class="sd">    &gt;&gt;&gt; s.dados</span>
 <span class="sd">           SERCODIGO                    VALDATA      VALVALOR  \</span>
-<span class="sd">    0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \</span>
-<span class="sd">    1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \</span>
-<span class="sd">    2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \</span>
-<span class="sd">    3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05  \</span>
-<span class="sd">    4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05  \</span>
-<span class="sd">    ..           ...                        ...           ...  \</span>
+<span class="sd">    0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05</span>
+<span class="sd">    1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05</span>
+<span class="sd">    2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05</span>
+<span class="sd">    3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05</span>
+<span class="sd">    4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05</span>
+<span class="sd">    ..           ...                        ...           ...</span>
 
 <span class="sd">    4. Para ver os metadados, basta chamar o atributo correspondente.</span>
 
@@ -728,44 +728,59 @@ rápida de obter os dados de uma série.</p></li>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="p">):</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="bp">self</span><span class="p">,</span>
+<span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valores</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">VALDATA</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">VALDATA</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;BASNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_sigla</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTSIGLA&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTURL&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplicador</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MULNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">periodicidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PERNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atualizacao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERATUALIZACAO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comentario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERCOMENTARIO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;UNINOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERSTATUS&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PAICODIGO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numerica</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNUMERICA&#39;</span><span class="p">]</span>
+<span class="c1"># DataFrame</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;SERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALDATA&#39;</span><span class="p">:</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALVALOR&#39;</span><span class="p">:</span> <span class="s1">&#39;valor&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NIVNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nivel&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;territorio&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">dados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span>
+
+<span class="c1"># Atributos</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">metadados</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;BASNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_sigla</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTSIGLA&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTURL&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">multiplicador</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MULNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">periodo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PERNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">ultima_atualizacao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERATUALIZACAO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">comentario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERCOMENTARIO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;UNINOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">ativo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERSTATUS&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">tema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">pais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PAICODIGO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">numerica</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNUMERICA&#39;</span><span class="p">]</span>
 
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;DadosAbertosBrasil.ipea: Dados da série &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;&gt;&quot;</span>
+<span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;DadosAbertosBrasil.ipea: Dados da série &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;&gt;&quot;</span>
 
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nome</span>
+<span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nome</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Dados de uma série IPEA.</p>
+<div class="docstring"><p>Dados de uma série IPEA.</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -773,9 +788,9 @@ rápida de obter os dados de uma série.</p></li>
 <li><strong>cod</strong> (str):
 Código da série que se deseja obter os dados.
 Utilize a função <code>ipea.lista_series</code> para identificar a série desejada.
-O código desejado estará na coluna 'SERCODIGO'.</li>
+O código desejado estará na coluna 'codigo'.</li>
 <li><strong>index</strong> (bool, default=False):
-Se True, define a coluna 'SERCODIGO' como index do atributo 'valores'.</li>
+Se True, define a coluna 'codigo' como index do atributo 'valores'.</li>
 </ul>
 
 <h6 id="attributes">Attributes</h6>
@@ -829,19 +844,15 @@ Euro, etc.) ao qual a série está associada.</li>
 </ul>
 
 <h6 id="notes">Notes</h6>
-<ul><li>
-Os atributos <code>dados</code> e <code>valores</code> apresentam os mesmos dados. "Valores" é o
+
+<ul><li>Os atributos <code>dados</code> e <code>valores</code> apresentam os mesmos dados. "Valores" é o
 termo padrão para os dados históricos do Ipeadata, porém o termo "Dados" é
-o padrão do pacote <code><a href="../DadosAbertosBrasil.html">DadosAbertosBrasil</a></code>.    
-</li></ul>
+o padrão do pacote <code><a href="../DadosAbertosBrasil.html">DadosAbertosBrasil</a></code>.</li></ul>
 
 <h6 id="see-also">See Also</h6>
 
-<ul><li>
-<strong><a href="#serie">DadosAbertosBrasil.ipea.serie</a></strong>:
-Função que coleta os mesmos dados históricos desta classe, porém é
-mais simples e não coleta os metadados da série.
-</li></ul>
+<ul><li><a href="#serie">DadosAbertosBrasil.ipea.serie</a>:
+Função que coleta os mesmos dados históricos desta classe, porém é mais simples e não coleta os metadados da série.</li></ul>
 
 <h6 id="examples">Examples</h6>
 
@@ -864,18 +875,18 @@ mais simples e não coleta os metadados da série.
 </ul>
 
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">dados</span>
-<span class="go">       SERCODIGO                    VALDATA      VALVALOR      
-0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05      
-1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05      
-2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05      
-3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05      
-4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05      
-..           ...                        ...           ...  </span>
+<span class="go">       SERCODIGO                    VALDATA      VALVALOR</span>      
+<span class="go">0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05</span>
+<span class="go">1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05</span>
+<span class="go">2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05</span>
+<span class="go">3   PAN4_PIBPMV4  1996-10-01T00:00:00-03:00  2.393163e+05</span>
+<span class="go">4   PAN4_PIBPMV4  1997-01-01T00:00:00-02:00  2.191170e+05</span>
+<span class="go">..           ...                        ...           ...</span>
 </code></pre></div>
 
-<ul><li>
-Para ver os metadados, basta chamar o atributo correspondente.    
-</li></ul>
+<ul>
+<li>Para ver os metadados, basta chamar o atributo correspondente.</li>
+</ul>
 
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">nome</span>
 <span class="go">&#39;PIB nominal&#39;</span>
@@ -885,65 +896,109 @@ Para ver os metadados, basta chamar o atributo correspondente.
 </div>
 
 
-                            <div id="Serie.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#Serie.__init__">#&nbsp;&nbsp</a>
+            <div id="Serie.__init__" class="classattr">
+                        <div class="attr function"><a class="headerlink" href="#Serie.__init__">#&nbsp;&nbsp</a>
 
-        
-            <span class="name">Serie</span><span class="signature">(cod: str, index: bool = False)</span>
-    </div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="p">):</span>
+<span class="name">Serie</span><span class="signature">(cod: str, index: bool = False)</span>
+</div>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valores</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">VALDATA</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">VALDATA</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;BASNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_sigla</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTSIGLA&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fonte_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTURL&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplicador</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MULNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">periodicidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PERNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atualizacao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERATUALIZACAO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comentario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERCOMENTARIO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;UNINOME&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERSTATUS&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PAICODIGO&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">numerica</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNUMERICA&#39;</span><span class="p">]</span>
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="bp">self</span><span class="p">,</span>
+<span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">):</span>
+
+<span class="c1"># DataFrame</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;SERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALDATA&#39;</span><span class="p">:</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALVALOR&#39;</span><span class="p">:</span> <span class="s1">&#39;valor&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NIVNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nivel&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;territorio&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">valores</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">dados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valores</span>
+
+<span class="c1"># Atributos</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cod</span> <span class="o">=</span> <span class="n">cod</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">metadados</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;BASNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_sigla</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTSIGLA&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">fonte_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;FNTURL&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">multiplicador</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MULNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">periodo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PERNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">ultima_atualizacao</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERATUALIZACAO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">comentario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERCOMENTARIO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">unidade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;UNINOME&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">ativo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERSTATUS&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">tema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">pais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;PAICODIGO&#39;</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">numerica</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadados</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;SERNUMERICA&#39;</span><span class="p">]</span>
 </pre></div>
 
-        </details>
+</details>
 
-    
 
-                            </div>
-                </section>
-                <section id="lista_series">
-                            <div class="attr function"><a class="headerlink" href="#lista_series">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_series</span><span class="signature">(index=False) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+            </div>
+</section>
+<section id="lista_series">
+            <div class="attr function"><a class="headerlink" href="#lista_series">#&nbsp;&nbsp</a>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Registros de metadados de todas as séries do IPEA.</span>
+
+<span class="def">def</span>
+<span class="name">lista_series</span><span class="signature">(
+    contendo: Union[str, NoneType] = None,
+    excluindo: Union[str, List[str], NoneType] = None,
+    fonte: Union[str, NoneType] = None,
+    ativo: Union[bool, NoneType] = None,
+    numerica: Union[bool, NoneType] = None,
+    index: bool = False
+) -&gt; pandas.core.frame.DataFrame</span>:
+</div>
+
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_series</span><span class="p">(</span>
+<span class="n">contendo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">excluindo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">fonte</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">ativo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">numerica</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Registros de metadados de todas as séries do IPEA.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    contendo : str, optional</span>
+<span class="sd">        Termo que deve estar contido no nome ou no comentário da série.</span>
+<span class="sd">    excluindo : str | list[str], optional</span>
+<span class="sd">        Termo ou lista de termos que não pode aparecer no nome da série.</span>
+<span class="sd">        Sobrepõe o argumento `contendo`.</span>
+<span class="sd">    fonte : str, optional</span>
+<span class="sd">        Retorna apenas as séries desta fonte.</span>
+<span class="sd">    ativo : bool, optional</span>
+<span class="sd">        Se True, retorna apenas séries ativas.</span>
+<span class="sd">        Se False, retorna apenas séries inativas.</span>
+<span class="sd">        Se None, retorna todas as séries.</span>
+<span class="sd">    numerica : bool, optional</span>
+<span class="sd">        Se True, retorna apenas séries numéricas.</span>
+<span class="sd">        Se False, não retorna as séries numéricas.</span>
+<span class="sd">        Se None, retorna todas as séries.</span>
 <span class="sd">    index : bool, default=False</span>
-<span class="sd">        Se True, define a coluna &#39;SERCODIGO&#39; como index do DataFrame.</span>
+<span class="sd">        Se True, define a coluna &#39;codigo&#39; como index do DataFrame.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -956,7 +1011,7 @@ Para ver os metadados, basta chamar o atributo correspondente.
 <span class="sd">    Forma mais simples da função.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_series()</span>
-<span class="sd">               SERCODIGO                                SERNOME  ...</span>
+<span class="sd">                  codigo                                   nome  ...</span>
 <span class="sd">    0       ABATE_ABPEAV       Abate - aves - peso das carcaças  ...</span>
 <span class="sd">    1       ABATE_ABPEBV    Abate - bovinos - peso das carcaças  ...</span>
 <span class="sd">    2       ABATE_ABPESU     Abate - suínos - peso das carcaças  ...</span>
@@ -968,7 +1023,7 @@ Para ver os metadados, basta chamar o atributo correspondente.
 <span class="sd">    como index do DataFrame.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_series(index=True)</span>
-<span class="sd">                                                SERNOME  ...</span>
+<span class="sd">                                                   nome  ...</span>
 <span class="sd">    SERCODIGO                                            ...</span>
 <span class="sd">    ABATE_ABPEAV       Abate - aves - peso das carcaças  ...</span>
 <span class="sd">    ABATE_ABPEBV    Abate - bovinos - peso das carcaças  ...</span>
@@ -979,18 +1034,83 @@ Para ver os metadados, basta chamar o atributo correspondente.
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Metadados&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Metadados&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contendo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">contendo</span> <span class="o">=</span> <span class="n">contendo</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">SERNOME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">contendo</span><span class="p">)</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">SERCOMENTARIO</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">contendo</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">f1</span> <span class="o">|</span> <span class="n">f2</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">excluindo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">excluindo</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">excluindo</span> <span class="o">=</span> <span class="p">[</span><span class="n">excluindo</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">termo</span> <span class="ow">in</span> <span class="n">excluindo</span><span class="p">:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">SERNOME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">termo</span><span class="o">.</span><span class="n">upper</span><span class="p">())]</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fonte</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">fonte</span> <span class="o">=</span> <span class="n">fonte</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">FNTSIGLA</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">fonte</span><span class="p">)</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">FNTNOME</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">fonte</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">f1</span> <span class="o">|</span> <span class="n">f2</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ativo</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span> <span class="k">if</span> <span class="n">ativo</span> <span class="k">else</span> <span class="s1">&#39;I&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">SERSTATUS</span> <span class="o">==</span> <span class="n">status</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">numerica</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">SERNUMERICA</span> <span class="o">==</span> <span class="n">numerica</span><span class="p">]</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;SERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SERNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nome&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SERCOMENTARIO&#39;</span><span class="p">:</span> <span class="s1">&#39;comentario&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SERATUALIZACAO&#39;</span><span class="p">:</span> <span class="s1">&#39;ultima_atualizacao&#39;</span><span class="p">,</span>
+<span class="s1">&#39;BASNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FNTSIGLA&#39;</span><span class="p">:</span> <span class="s1">&#39;fonte_sigla&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FNTNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;fonte_nome&#39;</span><span class="p">,</span>
+<span class="s1">&#39;FNTURL&#39;</span><span class="p">:</span> <span class="s1">&#39;fonte_url&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PERNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;periodo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;UNINOME&#39;</span><span class="p">:</span> <span class="s1">&#39;unidade&#39;</span><span class="p">,</span>
+<span class="s1">&#39;MULNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;multiplicador&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SERSTATUS&#39;</span><span class="p">:</span> <span class="s1">&#39;ativo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;tema&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PAICODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo_pai&#39;</span><span class="p">,</span>
+<span class="s1">&#39;SERNUMERICA&#39;</span><span class="p">:</span> <span class="s1">&#39;numerica&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">ativo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ativo</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;codigo&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Registros de metadados de todas as séries do IPEA.</p>
+<div class="docstring"><p>Registros de metadados de todas as séries do IPEA.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
+<li><strong>contendo</strong> (str, optional):
+Termo que deve estar contido no nome ou no comentário da série.</li>
+<li><strong>excluindo</strong> (str | list[str], optional):
+Termo ou lista de termos que não pode aparecer no nome da série.
+Sobrepõe o argumento <code>contendo</code>.</li>
+<li><strong>fonte</strong> (str, optional):
+Retorna apenas as séries desta fonte.</li>
+<li><strong>ativo</strong> (bool, optional):
+Se True, retorna apenas séries ativas.
+Se False, retorna apenas séries inativas.
+Se None, retorna todas as séries.</li>
+<li><strong>numerica</strong> (bool, optional):
+Se True, retorna apenas séries numéricas.
+Se False, não retorna as séries numéricas.
+Se None, retorna todas as séries.</li>
 <li><strong>index</strong> (bool, default=False):
-Se True, define a coluna 'SERCODIGO' como index do DataFrame.</li>
+Se True, define a coluna 'codigo' como index do DataFrame.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -1000,13 +1120,12 @@ Se True, define a coluna 'SERCODIGO' como index do DataFrame.</li>
 do IPEA.</li>
 </ul>
 
-<h6 id="example">Examples</h6>
+<h6 id="example">Example</h6>
 
-<ul><li>
-Forma mais simples da função.    
-</li></ul>
+<ul><li>Forma mais simples da função.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_series</span><span class="p">()</span>
-<span class="go">           SERCODIGO                                SERNOME  ...</span>
+<span class="go">              codigo                                   nome  ...</span>
 <span class="go">0       ABATE_ABPEAV       Abate - aves - peso das carcaças  ...</span>
 <span class="go">1       ABATE_ABPEBV    Abate - bovinos - peso das carcaças  ...</span>
 <span class="go">2       ABATE_ABPESU     Abate - suínos - peso das carcaças  ...</span>
@@ -1015,13 +1134,11 @@ Forma mais simples da função.
 <span class="gp">... </span>             <span class="o">...</span>                                    <span class="o">...</span>  <span class="o">...</span>
 </code></pre></div>
 
-<ul><li>
-Utilize o argumento <code>index=True</code> para colocar a coluna 'SERCODIGO'
-como index do DataFrame.    
-</li></ul>
+<ul><li>Utilize o argumento <code>index=True</code> para colocar a coluna <code>codigo</code> como index do DataFrame.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">                                            SERNOME  ...</span>
-<span class="go">SERCODIGO                                            ...</span>
+<span class="go">                                               nome  ...</span>
+<span class="go">codigo                                               ...</span>
 <span class="go">ABATE_ABPEAV       Abate - aves - peso das carcaças  ...</span>
 <span class="go">ABATE_ABPEBV    Abate - bovinos - peso das carcaças  ...</span>
 <span class="go">ABATE_ABPESU     Abate - suínos - peso das carcaças  ...</span>
@@ -1032,32 +1149,36 @@ como index do DataFrame.
 </div>
 
 
-                </section>
-                <section id="lista_temas">
-                            <div class="attr function"><a class="headerlink" href="#lista_temas">#&nbsp;&nbsp</a>
+</section>
+<section id="lista_temas">
+            <div class="attr function"><a class="headerlink" href="#lista_temas">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_temas</span><span class="signature">(
+
+<span class="def">def</span>
+<span class="name">lista_temas</span><span class="signature">(
     cod: Union[int, NoneType] = None,
+    pai: Union[int, NoneType] = None,
     index: bool = False
 ) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+</div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_temas</span><span class="p">(</span>
-        <span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Registros de todos os temas cadastrados.</span>
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_temas</span><span class="p">(</span>
+<span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">pai</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Registros de todos os temas cadastrados.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cod : int, optional</span>
 <span class="sd">        Código do tema, caso queira ver os dados deste tema exclusivamente.</span>
+<span class="sd">    pai : int, optional</span>
+<span class="sd">        Filtrar temas por código pai.</span>
 <span class="sd">    index : bool, default=False</span>
-<span class="sd">        Se True, define a coluna &#39;TEMCODIGO&#39; como index do DataFrame.</span>
+<span class="sd">        Se True, define a coluna &#39;codigo&#39; como index do DataFrame.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1066,7 +1187,7 @@ como index do DataFrame.
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
-<span class="sd">    Forma mais simples da função.</span>
+<span class="sd">    Busca todos os temas.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_temas()</span>
 <span class="sd">        TEMCODIGO  TEMCODIGO_PAI                  TEMNOME</span>
@@ -1077,7 +1198,17 @@ como index do DataFrame.
 <span class="sd">    4           5            NaN        Comércio exterior</span>
 <span class="sd">    ..        ...            ...                      ...</span>
 
-<span class="sd">    Utilize o argumento `index=True` para colocar a coluna &#39;TEMCODIGO&#39;</span>
+<span class="sd">    Busca todos os subtemas do código 18.</span>
+
+<span class="sd">    &gt;&gt;&gt; ipea.lista_temas(pai=18)</span>
+<span class="sd">        TEMCODIGO  TEMCODIGO_PAI            TEMNOME</span>
+<span class="sd">    11         54           18.0  Deputado Estadual</span>
+<span class="sd">    12         55           18.0   Deputado Federal</span>
+<span class="sd">    16         63           18.0         Eleitorado</span>
+<span class="sd">    22         56           18.0         Governador</span>
+<span class="sd">    ..        ...            ...                ...</span>
+
+<span class="sd">    Utilize o argumento `index=True` para colocar a coluna &#39;codigo&#39;</span>
 <span class="sd">    como index do DataFrame.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_temas(index=True)</span>
@@ -1091,26 +1222,42 @@ como index do DataFrame.
 <span class="sd">    ...                  ...                      ...</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">if</span> <span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Temas&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cod</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Temas(</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Código do tema deve ser um número inteiro.&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Temas&#39;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cod</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Temas(</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Código do tema deve ser um número inteiro.&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">pai</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">TEMCODIGO_PAI</span> <span class="o">==</span> <span class="n">pai</span><span class="p">]</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;TEMCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TEMCODIGO_PAI&#39;</span><span class="p">:</span> <span class="s1">&#39;pai&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TEMNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nome&#39;</span><span class="p">,</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;codigo&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Registros de todos os temas cadastrados.</p>
+<div class="docstring"><p>Registros de todos os temas cadastrados.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
 <li><strong>cod</strong> (int, optional):
 Código do tema, caso queira ver os dados deste tema exclusivamente.</li>
+<li><strong>pai</strong> (int, optional):
+Filtrar temas por código pai.</li>
 <li><strong>index</strong> (bool, default=False):
-Se True, define a coluna 'TEMCODIGO' como index do DataFrame.</li>
+Se True, define a coluna 'codigo' como index do DataFrame.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -1120,12 +1267,11 @@ Se True, define a coluna 'TEMCODIGO' como index do DataFrame.</li>
 </ul>
 
 <h6 id="examples">Examples</h6>
-<ul><li>
-Forma mais simples da função.    
-</li></ul>
+
+<ul><li>Busca todos os temas.</li></ul>
 
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_temas</span><span class="p">()</span>
-<span class="go">    TEMCODIGO  TEMCODIGO_PAI                  TEMNOME</span>
+<span class="go">       codigo            pai                     nome</span>
 <span class="go">0          28            NaN             Agropecuária</span>
 <span class="go">1          23            NaN       Assistência social</span>
 <span class="go">2          10            NaN    Balanço de pagamentos</span>
@@ -1134,14 +1280,22 @@ Forma mais simples da função.
 <span class="go">..        ...            ...                      ...</span>
 </code></pre></div>
 
-<ul><li>
-Utilize o argumento <code>index=True</code> para colocar a coluna 'TEMCODIGO'
-como index do DataFrame.    
-</li></ul>
+<ul><li>Busca todos os subtemas do código 18.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_temas</span><span class="p">(</span><span class="n">pai</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="go">       codigo            pai               nome</span>
+<span class="go">11         54           18.0  Deputado Estadual</span>
+<span class="go">12         55           18.0   Deputado Federal</span>
+<span class="go">16         63           18.0         Eleitorado</span>
+<span class="go">22         56           18.0         Governador</span>
+<span class="go">..        ...            ...                ...</span>
+</code></pre></div>
+
+<ul><li>Utilize o argumento <code>index=True</code> para colocar a coluna <code>codigo</code> como index do DataFrame.</li></ul>
 
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_temas</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">           TEMCODIGO_PAI                  TEMNOME</span>
-<span class="go">TEMCODIGO                                        </span>
+<span class="go">                     pai                     nome</span>
+<span class="go">codigo                                           </span>
 <span class="go">28                   NaN             Agropecuária</span>
 <span class="go">23                   NaN       Assistência social</span>
 <span class="go">10                   NaN    Balanço de pagamentos</span>
@@ -1152,25 +1306,25 @@ como index do DataFrame.
 </div>
 
 
-                </section>
-                <section id="lista_paises">
-                            <div class="attr function"><a class="headerlink" href="#lista_paises">#&nbsp;&nbsp</a>
+</section>
+<section id="lista_paises">
+            <div class="attr function"><a class="headerlink" href="#lista_paises">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_paises</span><span class="signature">(
+
+<span class="def">def</span>
+<span class="name">lista_paises</span><span class="signature">(
     cod: Union[str, NoneType] = None,
     index: bool = False
 ) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+</div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_paises</span><span class="p">(</span>
-        <span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Registros de todos os países cadastrados.</span>
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_paises</span><span class="p">(</span>
+<span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Registros de todos os países cadastrados.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -1178,7 +1332,7 @@ como index do DataFrame.
 <span class="sd">        Sigla de três letras do país, caso queira ver os dados deste</span>
 <span class="sd">        país exclusivamente.</span>
 <span class="sd">    index : bool, default=False</span>
-<span class="sd">        Se True, define a coluna &#39;PAICODIGO&#39; como index do DataFrame.</span>
+<span class="sd">        Se True, define a coluna &#39;codigo&#39; como index do DataFrame.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1190,7 +1344,7 @@ como index do DataFrame.
 <span class="sd">    Forma mais simples da função.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_paises()</span>
-<span class="sd">       PAICODIGO          PAINOME</span>
+<span class="sd">          codigo             nome</span>
 <span class="sd">    0        AFG      Afeganistão</span>
 <span class="sd">    1        ZAF    África do Sul</span>
 <span class="sd">    2        DEU         Alemanha</span>
@@ -1202,8 +1356,8 @@ como index do DataFrame.
 <span class="sd">    como index do DataFrame.</span>
 
 <span class="sd">    &gt;&gt;&gt; ipea.lista_paises(index=True)</span>
-<span class="sd">                      PAINOME</span>
-<span class="sd">    PAICODIGO                             </span>
+<span class="sd">                          nome</span>
+<span class="sd">    codigo                    </span>
 <span class="sd">    AFG            Afeganistão</span>
 <span class="sd">    ZAF          África do Sul</span>
 <span class="sd">    DEU               Alemanha</span>
@@ -1213,19 +1367,29 @@ como index do DataFrame.
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Paises&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cod</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Paises(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-            <span class="s1">&#39;Código do país deve ser um string de três letras maísculas.&#39;</span>
-        <span class="p">)</span>
+<span class="k">if</span> <span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Paises&#39;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cod</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Paises(&#39;</span><span class="si">{</span><span class="n">cod</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+<span class="s1">&#39;Código do país deve ser um string de três letras maísculas.&#39;</span>
+<span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;PAICODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;PAINOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nome&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;codigo&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Registros de todos os países cadastrados.</p>
+<div class="docstring"><p>Registros de todos os países cadastrados.</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -1234,7 +1398,7 @@ como index do DataFrame.
 Sigla de três letras do país, caso queira ver os dados deste
 país exclusivamente.</li>
 <li><strong>index</strong> (bool, default=False):
-Se True, define a coluna 'PAICODIGO' como index do DataFrame.</li>
+Se True, define a coluna 'codigo' como index do DataFrame.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
@@ -1245,11 +1409,10 @@ Se True, define a coluna 'PAICODIGO' como index do DataFrame.</li>
 
 <h6 id="examples">Examples</h6>
 
-<ul><li>
-Forma mais simples da função.    
-</li></ul>
+<ul><li>Forma mais simples da função.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_paises</span><span class="p">()</span>
-<span class="go">   PAICODIGO          PAINOME</span>
+<span class="go">      codigo             nome</span>
 <span class="go">0        AFG      Afeganistão</span>
 <span class="go">1        ZAF    África do Sul</span>
 <span class="go">2        DEU         Alemanha</span>
@@ -1258,13 +1421,11 @@ Forma mais simples da função.
 <span class="go">..       ...              ...</span>
 </code></pre></div>
 
-<ul><li>
-Utilize o argumento <code>index=True</code> para colocar a coluna 'PAICODIGO'
-como index do DataFrame.    
-</li></ul>
+<ul><li>Utilize o argumento <code>index=True</code> para colocar a coluna <code>codigo</code> como index do DataFrame.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_paises</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">                  PAINOME</span>
-<span class="go">PAICODIGO                             </span>
+<span class="go">                      nome</span>
+<span class="go">codigo                    </span>
 <span class="go">AFG            Afeganistão</span>
 <span class="go">ZAF          África do Sul</span>
 <span class="go">DEU               Alemanha</span>
@@ -1275,34 +1436,46 @@ como index do DataFrame.
 </div>
 
 
-                </section>
-                <section id="lista_territorios">
-                            <div class="attr function"><a class="headerlink" href="#lista_territorios">#&nbsp;&nbsp</a>
+</section>
+<section id="lista_territorios">
+            <div class="attr function"><a class="headerlink" href="#lista_territorios">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_territorios</span><span class="signature">(
+
+<span class="def">def</span>
+<span class="name">lista_territorios</span><span class="signature">(
+    capital: Union[bool, NoneType] = None,
+    amc: Union[bool, NoneType] = None,
     cod: Union[int, NoneType] = None,
     nivel: Union[str, NoneType] = None
 ) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
+</div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_territorios</span><span class="p">(</span>
-        <span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">nivel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Registros de todos os territórios brasileiros cadastrados.</span>
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_territorios</span><span class="p">(</span>
+<span class="n">capital</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">amc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">cod</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="n">nivel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Registros de todos os territórios brasileiros cadastrados.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
+<span class="sd">    capital : bool, optional</span>
+<span class="sd">        Se True, retorna apenas territórios que são capitais.</span>
+<span class="sd">        Se False, retorna apenas territórios que não são capitais.</span>
+<span class="sd">        Se None, retorna todos os territórios.</span>
+<span class="sd">    amc : bool, optional</span>
+<span class="sd">        Se True, retorna apenas territórios que são AMC.</span>
+<span class="sd">        Se False, retorna apenas territórios que não são AMC.</span>
+<span class="sd">        Se None, retorna todos os territórios.</span>
 <span class="sd">    cod : int, optional</span>
 <span class="sd">        Código do território, caso queira ver os dados deste</span>
 <span class="sd">        território exclusivamente.</span>
 <span class="sd">    nivel : str, optional</span>
 <span class="sd">        Nome do nível territorial.</span>
-<span class="sd">        Utilize a função ipea.niveis_territoriais() para verificar</span>
+<span class="sd">        Utilize a função `ipea.niveis_territoriais` para verificar</span>
 <span class="sd">        as opções disponíveis.</span>
 <span class="sd">    </span>
 <span class="sd">    Returns</span>
@@ -1311,39 +1484,87 @@ como index do DataFrame.
 <span class="sd">        DataFrame contendo o registro de todos os territórios</span>
 <span class="sd">        das séries do IPEA.</span>
 
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    O número de municípios brasileiros aumentou de 3.951 em 1970 para 5.507</span>
+<span class="sd">    em 2000. As mudanças nos contornos e áreas geográficas dos municípios</span>
+<span class="sd">    devidas à criação de novos municípios impedem comparações intertemporais</span>
+<span class="sd">    consistentes de variáveis demográficas, econômicas e sociais em nível</span>
+<span class="sd">    municipal. Para isso, é necessário agregar municípios em &quot;Áreas Mínimas</span>
+<span class="sd">    Comparáveis&quot; (AMC). Acesse o &quot;Dicionário de Conceitos&quot; do IPEA para mais</span>
+<span class="sd">    informações.</span>
+
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
+<span class="sd">    Buscar todos os territórios.</span>
+
 <span class="sd">    &gt;&gt;&gt; ipea.lista_territorios()</span>
-<span class="sd">           NIVNOME  TERCODIGO                TERNOME  \</span>
-<span class="sd">    0                                 (não definido)  \</span>
-<span class="sd">    1       Brasil          0                 Brasil  \</span>
-<span class="sd">    2      Regiões          1           Região Norte  \</span>
-<span class="sd">    3      Estados         11               Rondônia  \</span>
-<span class="sd">    4   Municípios    1100015  Alta Floresta D&#39;Oeste  \</span>
-<span class="sd">    ..         ...        ...                    ...  \</span>
+<span class="sd">             nivel     codigo                   nome  ...  \</span>
+<span class="sd">    0                                 (não definido)  ...</span>
+<span class="sd">    1       Brasil          0                 Brasil  ...</span>
+<span class="sd">    2      Regiões          1           Região Norte  ...</span>
+<span class="sd">    3      Estados         11               Rondônia  ...</span>
+<span class="sd">    4   Municípios    1100015  Alta Floresta D&#39;Oeste  ...</span>
+<span class="sd">    ..         ...        ...                    ...  ...</span>
+
+<span class="sd">    Buscar apenas capitais.</span>
+
+<span class="sd">    &gt;&gt;&gt; ipea.lista_territorios(capital=True)</span>
+<span class="sd">                nivel   codigo            nome     nome_padrao capital  ...  \</span>
+<span class="sd">    26     Municípios  1100205     Porto Velho     PORTO VELHO    True  ...   </span>
+<span class="sd">    109    Municípios  1200401      Rio Branco      RIO BRANCO    True  ...   </span>
+<span class="sd">    263    Municípios  1302603          Manaus          MANAUS    True  ...   </span>
+<span class="sd">    360    Municípios  1400100       Boa Vista       BOA VISTA    True  ...</span>
+<span class="sd">    ...           ...      ...             ...             ...     ...  ...</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">nivel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Territorios&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;Municipios&#39;</span> <span class="k">if</span> <span class="n">nivel</span> <span class="o">==</span> <span class="s1">&#39;Municípios&#39;</span> <span class="k">else</span> <span class="n">nivel</span>        
-        <span class="k">return</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Territorios(TERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;,NIVNOME=&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">cod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">nivel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="s1">&#39;Territorios&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;Municipios&#39;</span> <span class="k">if</span> <span class="n">nivel</span> <span class="o">==</span> <span class="s1">&#39;Municípios&#39;</span> <span class="k">else</span> <span class="n">nivel</span>        
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Territorios(TERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;,NIVNOME=&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;NIVNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nivel&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nome&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERNOMEPADRAO&#39;</span><span class="p">:</span> <span class="s1">&#39;nome_padrao&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERCAPITAL&#39;</span><span class="p">:</span> <span class="s1">&#39;capital&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERAREA&#39;</span><span class="p">:</span> <span class="s1">&#39;area&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NIVAMC&#39;</span><span class="p">:</span> <span class="s1">&#39;amc&#39;</span><span class="p">,</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">capital</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">capital</span> <span class="o">==</span> <span class="n">capital</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">amc</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">amc</span> <span class="o">==</span> <span class="n">amc</span><span class="p">]</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Registros de todos os territórios brasileiros cadastrados.</p>
+<div class="docstring"><p>Registros de todos os territórios brasileiros cadastrados.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
+<li><strong>capital</strong> (bool, optional):
+Se True, retorna apenas territórios que são capitais.
+Se False, retorna apenas territórios que não são capitais.
+Se None, retorna todos os territórios.</li>
+<li><strong>amc</strong> (bool, optional):
+Se True, retorna apenas territórios que são AMC.
+Se False, retorna apenas territórios que não são AMC.
+Se None, retorna todos os territórios.</li>
 <li><strong>cod</strong> (int, optional):
 Código do território, caso queira ver os dados deste
 território exclusivamente.</li>
 <li><strong>nivel</strong> (str, optional):
 Nome do nível territorial.
-Utilize a função ipea.niveis_territoriais() para verificar
+Utilize a função <code>ipea.niveis_territoriais</code> para verificar
 as opções disponíveis.</li>
 </ul>
 
@@ -1354,33 +1575,56 @@ as opções disponíveis.</li>
 das séries do IPEA.</li>
 </ul>
 
+<h6 id="notes">Notes</h6>
+
+<ul><li>O número de municípios brasileiros aumentou de 3.951 em 1970 para 5.507
+em 2000. As mudanças nos contornos e áreas geográficas dos municípios
+devidas à criação de novos municípios impedem comparações intertemporais
+consistentes de variáveis demográficas, econômicas e sociais em nível
+municipal. Para isso, é necessário agregar municípios em "Áreas Mínimas
+Comparáveis" (AMC). Acesse o "Dicionário de Conceitos" do IPEA para mais
+informações.</li></ul>
+
 <h6 id="examples">Examples</h6>
 
+<ul><li>Buscar todos os territórios.</li></ul>
+
 <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_territorios</span><span class="p">()</span>
-<span class="go">       NIVNOME  TERCODIGO                TERNOME      
-0                                 (não definido)      
-1       Brasil          0                 Brasil      
-2      Regiões          1           Região Norte      
-3      Estados         11               Rondônia      
-4   Municípios    1100015  Alta Floresta D&#39;Oeste      
-..         ...        ...                    ...</span>
+<span class="go">         nivel     codigo                   nome  ...</span>
+<span class="go">0                                 (não definido)  ...</span>
+<span class="go">1       Brasil          0                 Brasil  ...</span>
+<span class="go">2      Regiões          1           Região Norte  ...</span>
+<span class="go">3      Estados         11               Rondônia  ...</span>
+<span class="go">4   Municípios    1100015  Alta Floresta D&#39;Oeste  ...</span>
+<span class="go">..         ...        ...                    ...  ...</span>
+</code></pre></div>
+
+<ul><li>Buscar apenas capitais.</li></ul>
+
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ipea</span><span class="o">.</span><span class="n">lista_territorios</span><span class="p">(</span><span class="n">capital</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">            nivel   codigo            nome     nome_padrao capital  ...</span>
+<span class="go">26     Municípios  1100205     Porto Velho     PORTO VELHO    True  ...</span>
+<span class="go">109    Municípios  1200401      Rio Branco      RIO BRANCO    True  ...</span>
+<span class="go">263    Municípios  1302603          Manaus          MANAUS    True  ...</span>
+<span class="go">360    Municípios  1400100       Boa Vista       BOA VISTA    True  ...</span>
+<span class="gp">... </span>          <span class="o">...</span>      <span class="o">...</span>             <span class="o">...</span>             <span class="o">...</span>     <span class="o">...</span>  <span class="o">...</span>
 </code></pre></div>
 </div>
 
 
-                </section>
-                <section id="lista_niveis">
-                            <div class="attr function"><a class="headerlink" href="#lista_niveis">#&nbsp;&nbsp</a>
+</section>
+<section id="lista_niveis">
+            <div class="attr function"><a class="headerlink" href="#lista_niveis">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">lista_niveis</span><span class="signature">() -&gt; List[str]</span>:
-    </div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_niveis</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Lista dos possíveis níveis territoriais.</span>
+<span class="def">def</span>
+<span class="name">lista_niveis</span><span class="signature">() -&gt; List[str]</span>:
+</div>
+
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">lista_niveis</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="sd">&quot;&quot;&quot;Lista dos possíveis níveis territoriais.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1394,29 +1638,29 @@ das séries do IPEA.</li>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="p">[</span>
-        <span class="s1">&#39;Brasil&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Regiões&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Estados&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Microrregiões&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Mesorregiões&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Municípios&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Municípios por bacia&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Área metropolitana&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Estado/RM&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 20-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 40-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 60-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 1872-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 91-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;AMC 70-00&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Outros Países&#39;</span>
-    <span class="p">]</span>
+<span class="k">return</span> <span class="p">[</span>
+<span class="s1">&#39;Brasil&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Regiões&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Estados&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Microrregiões&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Mesorregiões&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Municípios&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Municípios por bacia&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Área metropolitana&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Estado/RM&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 20-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 40-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 60-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 1872-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 91-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;AMC 70-00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Outros Países&#39;</span>
+<span class="p">]</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Lista dos possíveis níveis territoriais.</p>
+<div class="docstring"><p>Lista dos possíveis níveis territoriais.</p>
 
 <h6 id="returns">Returns</h6>
 
@@ -1432,31 +1676,31 @@ das séries do IPEA.</li>
 </div>
 
 
-                </section>
-                <section id="serie">
-                            <div class="attr function"><a class="headerlink" href="#serie">#&nbsp;&nbsp</a>
+</section>
+<section id="serie">
+            <div class="attr function"><a class="headerlink" href="#serie">#&nbsp;&nbsp</a>
 
-        
-            <span class="def">def</span>
-            <span class="name">serie</span><span class="signature">(cod: str, index: bool = False) -&gt; pandas.core.frame.DataFrame</span>:
-    </div>
 
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">serie</span><span class="p">(</span>
-        <span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Valores de uma série IPEA.</span>
+<span class="def">def</span>
+<span class="name">serie</span><span class="signature">(cod: str, index: bool = False) -&gt; pandas.core.frame.DataFrame</span>:
+</div>
+
+<details>
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">serie</span><span class="p">(</span>
+<span class="n">cod</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="n">index</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="sd">&quot;&quot;&quot;Valores de uma série IPEA.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    cod : str</span>
 <span class="sd">        Código da série que se deseja obter os dados.</span>
 <span class="sd">        Utilize a função `ipea.lista_series` para identificar a série desejada.</span>
-<span class="sd">        O código desejado estará na coluna &#39;SERCODIGO&#39;.</span>
+<span class="sd">        O código desejado estará na coluna &#39;codigo&#39;.</span>
 <span class="sd">    index : bool, default=False</span>
-<span class="sd">        Se True, define a coluna &#39;VALDATA&#39; como index do atributo &#39;valores&#39;.</span>
+<span class="sd">        Se True, define a coluna &#39;data&#39; como index do DataFrame.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1472,7 +1716,7 @@ das séries do IPEA.</li>
 <span class="sd">    2. Utilize o código encontrado como argumento da função `serie`.</span>
 <span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; ipea.serie(&#39;PAN4_PIBPMV4&#39;)</span>
-<span class="sd">           SERCODIGO                    VALDATA      VALVALOR  \</span>
+<span class="sd">              codigo                       data         valor  \</span>
 <span class="sd">    0   PAN4_PIBPMV4  1996-01-01T00:00:00-02:00  1.893233e+05  \</span>
 <span class="sd">    1   PAN4_PIBPMV4  1996-04-01T00:00:00-03:00  2.046107e+05  \</span>
 <span class="sd">    2   PAN4_PIBPMV4  1996-07-01T00:00:00-03:00  2.215132e+05  \</span>
@@ -1488,16 +1732,27 @@ das séries do IPEA.</li>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">VALDATA</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">VALDATA</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
-    <span class="k">if</span> <span class="n">index</span><span class="p">:</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;VALDATA&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">_get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metadados(SERCODIGO=&#39;</span><span class="si">{</span><span class="n">cod</span><span class="si">}</span><span class="s2">&#39;)/Valores&quot;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
+<span class="s1">&#39;SERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;codigo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALDATA&#39;</span><span class="p">:</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span>
+<span class="s1">&#39;VALVALOR&#39;</span><span class="p">:</span> <span class="s1">&#39;valor&#39;</span><span class="p">,</span>
+<span class="s1">&#39;NIVNOME&#39;</span><span class="p">:</span> <span class="s1">&#39;nivel&#39;</span><span class="p">,</span>
+<span class="s1">&#39;TERCODIGO&#39;</span><span class="p">:</span> <span class="s1">&#39;territorio&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">utc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+<span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">return</span> <span class="n">df</span>
 </pre></div>
 
-        </details>
+</details>
 
-            <div class="docstring"><p>Valores de uma série IPEA.</p>
+<div class="docstring"><p>Valores de uma série IPEA.</p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -1505,9 +1760,9 @@ das séries do IPEA.</li>
 <li><strong>cod</strong> (str):
 Código da série que se deseja obter os dados.
 Utilize a função <code>ipea.lista_series</code> para identificar a série desejada.
-O código desejado estará na coluna 'SERCODIGO'.</li>
+O código desejado estará na coluna 'codigo'.</li>
 <li><strong>index</strong> (bool, default=False):
-Se True, define a coluna 'VALDATA' como index do atributo 'valores'.</li>
+Se True, define a coluna 'data' como index do DataFrame.</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
